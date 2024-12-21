@@ -16,20 +16,21 @@ public static class Bank
         OnCoinsValueChangedEvent?.Invoke(sender, oldValue, Coins);
     }
 
-    public static void SpendCoins(object sender, int coins)
+    public static bool SpendCoins(object sender, int coins)
     {
         if (coins < 1)
             throw new ArgumentException("Number of coins should be positive");
 
-        if (IsEnoughCoins(coins))
-            return;
+        if (!HasEnoughCoins(coins))
+            return false;
 
         var oldValue = Coins;
         Coins -= coins;
         OnCoinsValueChangedEvent?.Invoke(sender, oldValue, Coins);
+        return true;
     }
 
-    public static bool IsEnoughCoins(int number)
+    public static bool HasEnoughCoins(int number)
     {
         return Coins >= number;
     }

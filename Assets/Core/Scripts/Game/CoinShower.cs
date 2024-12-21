@@ -10,6 +10,7 @@ namespace Client.Game
 
         private void OnEnable()
         {
+            Text.text = Bank.Coins.ToString();
             Bank.OnCoinsValueChangedEvent += ChangeText;
         }
 

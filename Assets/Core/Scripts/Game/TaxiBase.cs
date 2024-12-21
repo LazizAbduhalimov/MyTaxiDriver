@@ -7,15 +7,29 @@ namespace Client.Game
 {
     public class TaxiBase : MouseHoldCount
     {
-        [FormerlySerializedAs("OpaqueGFX")] public PathFollower Follower;
-        public Transform TransparentGFX;
-        
+        public bool IsDriving => _isDriving;
         public int Level;
         public float Speed;
         public int MoneyForCircle;
         
-        public bool IsDriving;
-        
+        private PathFollower _follower;
+        private Transform _transparentGfx;
+        private bool _isDriving;
+
+        public void Configurate(CarsConfig carsConfig)
+        {
+            Speed = carsConfig.GetSpeed(Level);
+            MoneyForCircle = (int)carsConfig.GetProfit(Level);
+        }
+
+        private void Start()
+        {
+            _follower = GetComponentInChildren<PathFollower>(true);
+            _transparentGfx = GetComponentInChildren<TransparentGFX>(true).transform;
+            _follower.speed = Speed;
+            _follower.pathCreator = Links.Instance.PathCreator;
+        }
+
         public virtual void Earn()
         {
             Bank.AddCoins(this, MoneyForCircle);
@@ -28,15 +42,16 @@ namespace Client.Game
 
         private void ChangeState()
         {
-            IsDriving = !IsDriving;
-            Follower.enabled = IsDriving;
-            TransparentGFX.gameObject.SetActive(IsDriving);
-            Follower.GetComponent<BoxCollider>().enabled = IsDriving;
+            _follower.distanceTravelled = 0;
+            _isDriving = !_isDriving;
+            _follower.enabled = _isDriving;
+            _transparentGfx.gameObject.SetActive(_isDriving);
+            _follower.GetComponent<BoxCollider>().enabled = _isDriving;
             
-            if (!IsDriving)
+            if (!_isDriving)
             {
-                Follower.transform.localPosition = new Vector3(2, 0 ,4);
-                Follower.transform.localRotation = Quaternion.identity;
+                _follower.transform.localPosition = new Vector3(2, 0 ,4);
+                _follower.transform.localRotation = Quaternion.identity;
             }
         }
     }

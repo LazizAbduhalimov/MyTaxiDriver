@@ -1,26 +1,36 @@
+using System.Linq;
+using Client;
 using Client.Game;
 using LGrid;
 using UnityEngine;
 
 public class DragAndDrop : MouseHoldCount
 {
-    public TaxiBase TaxiBase;
-    public Grid Grid;
-
+    private TaxiBase _taxiBase;
+    private Grid Grid => Links.Instance.Grid;
     private Vector3 _offset;
     private Camera _mainCamera;
     private Vector3 _initialPoint;
+    private static readonly Vector2 Boundaries = new (10, 9);
 
     void Start()
     {
+        _taxiBase = GetComponent<TaxiBase>();
+        _mainCamera = Camera.main;
+        if (_taxiBase == null) Debug.LogError("Null taxi");
+        if (Time.frameCount != 1) return;
         var cellToWorld = GetSnappedPosition(transform.position);
         FillCell(Vector3Int.RoundToInt(cellToWorld));
-        _mainCamera = Camera.main;
+    }
+
+    private void OnEnable()
+    {
+        _mainCamera ??= Camera.main;
     }
 
     protected override bool ShouldHandleClick()
     {
-        return PassedTime >= SleepTime && !TaxiBase.IsDriving;
+        return PassedTime >= SleepTime;
     }
 
     protected override void HandleDown()
@@ -33,12 +43,12 @@ public class DragAndDrop : MouseHoldCount
     {
         base.HandleDrag();
         if (ConditionVerified)
-            transform.position = GetMouseWorldPosition2();
+            transform.position = GetLimitedMousePosition();
     }
 
     protected override void HandleClick()
     {
-        var cellToWorld = GetSnappedPosition(GetMouseWorldPosition2());
+        var cellToWorld = GetSnappedPosition(GetLimitedMousePosition());
         if (!Map.Instance.IsCellExists(cellToWorld, out var cell))
         {
             cell = Map.Instance.CreateCell(Vector3Int.RoundToInt(cellToWorld));
@@ -57,21 +67,30 @@ public class DragAndDrop : MouseHoldCount
                 initialCell.TaxiBase = null;
             }
 
-            cell.TaxiBase = TaxiBase;
+            cell.TaxiBase = _taxiBase;
             transform.position = cellToWorld;
             return;
         }
-
-        if (cell.TaxiBase.Level == TaxiBase.Level)
+        
+        if (cell.TaxiBase.Level == _taxiBase.Level &&
+            !cell.TaxiBase.IsDriving)
         {
-            Debug.Log($"Upgrade! from level {TaxiBase.Level} to {TaxiBase.Level+1}");
+            if (AllVehicles.Instance.CarsPool.Length > _taxiBase.Level)
+                Debug.Log("Max Level Reached!");
+            Debug.Log($"Upgrade! from level {_taxiBase.Level} to {_taxiBase.Level+1}");
             if (Map.Instance.IsCellExists(GetSnappedPosition(_initialPoint), out var initialCell))
             {
-                Destroy(initialCell.TaxiBase.gameObject);
+                initialCell.TaxiBase.gameObject.SetActive(false);
                 initialCell.TaxiBase = null;
             }
-            Destroy(cell.TaxiBase.gameObject);
-            cell.TaxiBase = null;
+            cell.TaxiBase.gameObject.SetActive(false);
+            var pool = AllVehicles.Instance.CarsPool[_taxiBase.Level];
+            var createdObject = pool.GetFromPool(cell.Position);
+            cell.TaxiBase = createdObject.GetComponent<TaxiBase>();
+        }
+        else
+        {
+            transform.position = GetSnappedPosition(_initialPoint);
         }
     }
 
@@ -81,17 +100,39 @@ public class DragAndDrop : MouseHoldCount
         {
             cell = Map.Instance.CreateCell(cellPosition);
         }
-        if (TaxiBase == null) Debug.LogError("Null taxi");
-        cell.TaxiBase = TaxiBase;
-        transform.position = cellPosition;
+        else
+        {
+            if (cell.TaxiBase != null)
+            {
+                var emptyCell = Map.Instance.Cells.Values.FirstOrDefault(c => c.TaxiBase == null);
+                if (emptyCell == null)
+                {
+                    Debug.LogError("Too many objects");
+                    gameObject.SetActive(false);
+                    return;
+                }
+
+                cell = emptyCell;
+            }
+        }
+        cell.TaxiBase = _taxiBase;
+        transform.position = cell.Position;
     }
     
-    private Vector3 GetMouseWorldPosition2()
+    private Vector3 GetMouseWorldPosition()
     {
         var mouseScreenPosition = Input.mousePosition;
         var plane = new Plane(Vector3.up, Vector3.zero);
         var ray = _mainCamera.ScreenPointToRay(mouseScreenPosition);
         return plane.Raycast(ray, out var distance) ? ray.GetPoint(distance) : Vector3.zero;
+    }
+
+    private Vector3 GetLimitedMousePosition()
+    {
+        var mousePosition = GetMouseWorldPosition();
+        mousePosition = mousePosition.WithX(Mathf.Clamp(mousePosition.x, -Boundaries.x, Boundaries.x));
+        mousePosition = mousePosition.WithZ(Mathf.Clamp(mousePosition.z, -Boundaries.y, Boundaries.y));
+        return mousePosition;
     }
 
     private Vector3 GetSnappedPosition(Vector3 position)

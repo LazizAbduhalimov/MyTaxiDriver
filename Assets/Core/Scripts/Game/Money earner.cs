@@ -5,9 +5,9 @@ public class Moneyearner : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<TaxiBase>(out var taxi))
+        if (other.TryGetComponent<Collector>(out var taxi))
         {
-            taxi.Earn();
+            taxi.TaxiBase.Earn();
         }
     }
 }

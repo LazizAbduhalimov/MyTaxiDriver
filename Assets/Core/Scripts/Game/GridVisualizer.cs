@@ -2,13 +2,12 @@ using LGrid;
 using UnityEngine;
 
 [RequireComponent(typeof(Grid))]
-public class GridDrawerWithGaps : MonoBehaviour
+public class GridMb : MonoBehaviour
 {
-    private Grid grid;
+    [HideInInspector] public Grid grid;
 
     public int rows = 100;    // Количество ячеек по Z (в обе стороны)
     public int columns = 100; // Количество ячеек по X (в обе стороны)
-    public int height = 100;  // Количество ячеек по Y (в обе стороны)
 
     private void OnDrawGizmos()
     {
@@ -18,23 +17,17 @@ public class GridDrawerWithGaps : MonoBehaviour
         var effectiveCellSize = cellSize + cellGap;
         var gridOrigin = grid.transform.position;
         
-        Gizmos.color = Color.gray;
-        for (int x = -columns; x <= columns; x++)
+        Gizmos.color = Color.white;
+        for (var x = -columns; x <= columns; x++)
         {
-            for (int y = -height; y <= height; y++)
+            for (var z = -rows; z <= rows; z++)
             {
-                for (int z = -rows; z <= rows; z++)
-                {
-                    // Позиция центра ячейки
-                    Vector3 cellCenter = gridOrigin + new Vector3(
-                        x * effectiveCellSize.x,
-                        y * effectiveCellSize.y,
-                        z * effectiveCellSize.z
-                    );
-                    cellCenter.AddX(cellSize.x / 2).AddZ(cellSize.z / 2);
-                    // Рисуем границы вокруг этой ячейки
-                    DrawCellBoundary(cellCenter, effectiveCellSize);
-                }
+                var cellCenter = gridOrigin + new Vector3(
+                    x * effectiveCellSize.x + cellSize.x / 2,
+                    effectiveCellSize.y,
+                    z * effectiveCellSize.z + cellSize.z / 2
+                );
+                DrawCellBoundary(cellCenter, effectiveCellSize);
             }
         }
     }

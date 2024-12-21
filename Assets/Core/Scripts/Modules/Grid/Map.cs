@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace LGrid
@@ -9,6 +10,17 @@ namespace LGrid
         private static Map _instance;
         
         public Dictionary<Vector3Int, Cell> Cells = new();
+
+        public bool HasFreeCell(out KeyValuePair<Vector3Int, Cell> value)
+        {
+            value = new KeyValuePair<Vector3Int, Cell>();
+            foreach (var pair in Cells.Where(pair => pair.Value.TaxiBase == null))
+            {
+                value = pair;
+                return true;
+            }
+            return false;
+        }
 
         public Cell CreateCell(Vector3Int position)
         {
