@@ -1,0 +1,48 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace LGrid
+{
+    public class Map
+    {
+        public static Map Instance => _instance ??= new Map();
+        private static Map _instance;
+        
+        public Dictionary<Vector3Int, Cell> Cells = new();
+
+        public Cell CreateCell(Vector3Int position)
+        {
+            if (IsCellExists(position, out var cell)) return cell;
+
+            var newCell = new Cell(position);
+            Cells.Add(position, newCell);
+            return newCell;
+        }
+        
+        public bool IsCellExists(Vector3Int position, out Cell cell)
+        {
+            cell = null;
+            return Cells.TryGetValue(position, out cell);
+        }
+        
+        public bool IsCellExists(Vector3 position, out Cell cell)
+        {
+            cell = null;
+            return Cells.TryGetValue(Vector3Int.RoundToInt(position), out cell);
+        }
+        
+        public void RemoveCell(Vector3 position)
+        {
+            var positionInt = Vector3Int.RoundToInt(position);
+            if (Cells.ContainsKey(positionInt))
+            {
+                Cells.Remove(positionInt);
+            }
+        }
+
+        public void Clear()
+        {
+            Cells.Clear();
+        }
+    }
+}

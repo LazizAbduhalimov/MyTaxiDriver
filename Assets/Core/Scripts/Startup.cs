@@ -48,14 +48,14 @@ namespace Client {
         private void AddInitSystems()
         {
             _initSystems
-                .Add(new InitSystemTest())
+                .Add(new InitTaxiCoords())
                 ;
         }
         
         private void AddRunSystems() 
         {
             _updateSystems
-                .Add(new RunSystemTest())
+                .Add(new DragAndDropSystem())
                 ;
         }
 
