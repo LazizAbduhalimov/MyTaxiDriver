@@ -35,6 +35,7 @@ namespace Client.Game
                     else
                     {
                         var cell = Instantiate(CellMb, transform);
+                        cell.transform.localScale = grid.cellSize;
                         cell.transform.position = cellCenter;
                         Map.Instance.CreateCell(Vector3Int.RoundToInt(cellCenter));
                     }

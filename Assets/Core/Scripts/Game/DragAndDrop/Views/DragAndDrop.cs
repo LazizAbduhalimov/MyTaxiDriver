@@ -51,7 +51,8 @@ public class DragAndDrop : MouseHoldCount
     {
         var cellToWorld = GetSnappedPosition(GetLimitedMousePosition());
         if (!Map.Instance.IsCellExists(cellToWorld, out var cell) ||
-            cellToWorld == _initialPoint)
+            cellToWorld == _initialPoint ||
+            _taxiBase.IsDriving)
         {
             transform.position = _initialPoint;
             return;

@@ -24,7 +24,7 @@ public class CameraFieldViewChanger : MonoBehaviour
         var defaultView = 16f / 9f;
         var aspectRatio = Screen.width > Screen.height ? (float)Screen.width / Screen.height : (float)Screen.height / Screen.width;
 
-        var multiplier = Mathf.Clamp(aspectRatio / defaultView, 0.8f, 1.2f);
+        var multiplier = Mathf.Clamp(aspectRatio / defaultView, 0.8f, 1.3f);
         
         _portraitFieldOfView *= multiplier;
         _landscapeFieldOfView *= multiplier;

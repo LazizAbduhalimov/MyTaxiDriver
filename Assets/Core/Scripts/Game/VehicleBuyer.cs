@@ -16,6 +16,7 @@ namespace Client.Game
         private int Cost => DefaultCost * PurchaseNumber * PurchaseNumber;
         private const int DefaultCost = 5;
         private Sequence? _sequence;
+        private int BuyingCarLevel => (PurchaseNumber >= 64) ? 1 : 0; 
 
         private void OnEnable()
         {
@@ -38,7 +39,7 @@ namespace Client.Game
             if (Map.Instance.HasFreeCell(out var pair))
             {
                 if (!Bank.SpendCoins(this,Cost)) return;
-                var vehicle = AllVehicles.Instance.CarsPool[0].GetFromPool(pair.Key);
+                var vehicle = AllVehicles.Instance.CarsPool[BuyingCarLevel].GetFromPool(pair.Key);
                 pair.Value.TaxiBase = vehicle.GetComponent<TaxiBase>();
                 PurchaseNumber++;
                 ChangeCostText();    

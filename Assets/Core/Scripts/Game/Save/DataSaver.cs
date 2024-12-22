@@ -28,6 +28,7 @@ namespace Client.Game.Save
 
         private void SaveGame()
         {
+            if (_saveFileSetup == null) return;
             var saveFile = _saveFileSetup.GetSaveFile();
             SaveCells(saveFile);
             SaveCoins(saveFile);

@@ -16,6 +16,7 @@ namespace Client.Game
         [HideInInspector] public PathFollower Follower;
         private Transform _transparentGfx;
         private bool _isDriving;
+        private Vector3 _defaultOffset;
 
         public void Configurate(CarsConfig carsConfig)
         {
@@ -29,6 +30,8 @@ namespace Client.Game
             _transparentGfx = GetComponentInChildren<TransparentGFX>(true).transform;
             Follower.speed = Speed;
             Follower.pathCreator = Links.Instance.PathCreator;
+            _defaultOffset = _transparentGfx.localPosition;
+            Debug.Log(_defaultOffset);
         }
 
         public virtual void Earn()
@@ -50,7 +53,7 @@ namespace Client.Game
             Follower.GetComponent<BoxCollider>().enabled = _isDriving;
             if (!_isDriving)
             {
-                Follower.transform.localPosition = new Vector3(2, 0 ,4);
+                Follower.transform.localPosition = _defaultOffset;
                 Follower.transform.localRotation = Quaternion.identity;
             }
             
