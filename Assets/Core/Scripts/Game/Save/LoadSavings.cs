@@ -9,23 +9,35 @@ namespace Client.Game
 {
     public class LoadSavings : MonoBehaviour
     {
-        public int CoinsGainedIfZero;
+        public long CoinsGainedIfZero;
         private SaveFileSetup _setup;
         
-        public void Start()
+        public void Init()
         {
             _setup = GetComponent<SaveFileSetup>();
             var file = _setup.GetSaveFile();
             LoadCellsData(file);
             LoadCoins(file);
+            LoadCost(file);
+            file.Save();
             Debug.Log("Loaded!");
+        }
+
+        private void LoadCost(SaveFile file)
+        {
+            if (file.HasData("PurchaseNumber"))
+            {
+                Links.Instance.VehicleBuyer.PurchaseNumber = file.GetData<int>("PurchaseNumber");
+                Links.Instance.VehicleBuyer.ChangeCostText();
+            }
         }
 
         private static void LoadCellsData(SaveFile file)
         {
-            if (file.HasData("CellNumber"))
+            string text = "CellNumber";
+            if (file.HasData(text))
             {
-                var cellNumber = file.GetData<int>("CellNumber");
+                var cellNumber = file.GetData<int>(text);
                 for (var i = 0; i < cellNumber; i++)
                 {
                     var cellsData = file.GetData<CellsData>($"Cell{i}");
@@ -34,10 +46,12 @@ namespace Client.Game
                     if (Map.Instance.IsCellExists(position, out var cell))
                     {
                         var pool = AllVehicles.Instance.CarsPool[level - 1];
-                        var poolObject = pool.GetFromPool(position);
-                        cell.TaxiBase = poolObject.GetComponent<TaxiBase>();
+                        pool.GetFromPool(position);
+                        Debug.Log("Cell loaded!");
                     }
+                    file.DeleteData($"Cell{i}");
                 }
+                file.DeleteData(text);
             }
         }
 
@@ -45,8 +59,9 @@ namespace Client.Game
         {
             if (file.HasData("Coins"))
             {
-                Bank.SpendCoins(this, Bank.Coins);
-                Bank.AddCoins(this, file.GetData<int>("Coins"));
+                var number = file.GetData<long>("Coins");
+                Bank.SetCoins(this, number);
+                Debug.Log("Coins loaded!");
             }
             else
             {

@@ -33,8 +33,8 @@ public class CameraFieldViewChanger : MonoBehaviour
     private void SetRotationView()
     {
         if (Screen.width > Screen.height)
-            _camera.fieldOfView = _landscapeFieldOfView;
+            _camera.orthographicSize = _landscapeFieldOfView;
         else
-            _camera.fieldOfView = _portraitFieldOfView;
+            _camera.orthographicSize = _portraitFieldOfView;
     }
 }

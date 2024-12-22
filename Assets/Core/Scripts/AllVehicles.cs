@@ -6,12 +6,14 @@ namespace Client
 {
     public class AllVehicles : MonoBehaviour
     {
+        public CarsConfig CarsConfig;
         public PoolContainer[] CarsPool;
         public static AllVehicles Instance => _instance;
         private static AllVehicles _instance;
 
         private void Awake()
         {
+            CarsConfig.Configurate();
             if (_instance == null)
             {
                 _instance = this;

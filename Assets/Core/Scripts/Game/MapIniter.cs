@@ -10,7 +10,7 @@ namespace Client.Game
         private int columns = 2; 
         private int rows = 1;
         
-        public void Start()
+        public void Init()
         {
             var grid = Links.Instance.Grid;
             var cellSize = grid.cellSize;
@@ -36,7 +36,6 @@ namespace Client.Game
                     {
                         var cell = Instantiate(CellMb, transform);
                         cell.transform.position = cellCenter;
-                        Debug.DrawRay(cellCenter, Vector3.up, Color.red, 5f);
                         Map.Instance.CreateCell(Vector3Int.RoundToInt(cellCenter));
                     }
                 }

@@ -2,11 +2,19 @@ using System;
 
 public static class Bank
 {
-    public static int Coins { get; private set; }
+    public static long Coins { get; private set; }
 
-    public static Action<object, int, int> OnCoinsValueChangedEvent;
+    public static Action<object, long, long> OnCoinsValueChangedEvent;
 
-    public static void AddCoins(object sender, int coins)
+    public static void SetCoins(object sender, long coins)
+    {
+        if (coins < 0) throw new ArgumentException("Negative number");
+        var oldValue = Coins;
+        Coins = coins;
+        OnCoinsValueChangedEvent.Invoke(sender, oldValue, Coins);
+    }
+
+    public static void AddCoins(object sender, long coins)
     {
         if (coins < 1)
             throw new ArgumentException("Number of coins should be positive");
@@ -16,7 +24,7 @@ public static class Bank
         OnCoinsValueChangedEvent?.Invoke(sender, oldValue, Coins);
     }
 
-    public static bool SpendCoins(object sender, int coins)
+    public static bool SpendCoins(object sender, long coins)
     {
         if (coins < 1)
             throw new ArgumentException("Number of coins should be positive");
@@ -30,7 +38,7 @@ public static class Bank
         return true;
     }
 
-    public static bool HasEnoughCoins(int number)
+    public static bool HasEnoughCoins(long number)
     {
         return Coins >= number;
     }

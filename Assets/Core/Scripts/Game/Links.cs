@@ -11,6 +11,8 @@ namespace Client.Game
         public PathCreator PathCreator;
         public CarsConfig CarsConfig;
         public PoolContainer PopupsPool;
+        public PoolContainer MergeEffect;
+        public VehicleBuyer VehicleBuyer;
         
         public static Links Instance => _instance;
         private static Links _instance;

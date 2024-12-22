@@ -30,7 +30,7 @@ public class CarsConfig : ScriptableObject
     }
 
     [ContextMenu("Configurate")]
-    private void Configurate()
+    public void Configurate()
     {
         foreach (var taxiBase in Cars)
         {

@@ -8,14 +8,26 @@ namespace Client.Game
 {
     public class SpeedBooster : MonoBehaviour
     {
+        private TaxiBase _taxiBase;
+        public GameObject Particle;
         private Transform _trails;
         private float _boostPercentage = 5f;
         private PathFollower _pathFollower;
         private bool _canBeBoosted = true;
         private float _boostCoolDown = 5f;
+        private Tween? _tween;
+
+        private void OnEnable()
+        {
+            if (_taxiBase == null) _taxiBase = GetComponentInParent<TaxiBase>();
+            _taxiBase.OnDrivingStateChange += OnStateChanged;
+        }
+
+        private void OnDisable() => _taxiBase.OnDrivingStateChange -= OnStateChanged;
 
         private void Start()
         {
+            _taxiBase = GetComponentInParent<TaxiBase>();
             _pathFollower = GetComponent<PathFollower>();
             _trails = GetComponentsInChildren<Transform>()[1];
             _trails.gameObject.SetActive(false);
@@ -24,9 +36,10 @@ namespace Client.Game
         private void OnMouseDown()
         {
             if (!_canBeBoosted) return;
-            SoundManager.Instance.PlayFX(AllSfxSounds.Woosh, transform.position);
+            SetBoostAccessState(false);
             _trails.gameObject.SetActive(true);
-            _canBeBoosted = false;
+            SoundManager.Instance.PlayFX(AllSfxSounds.Woosh, transform.position);
+            
             var startSpeed = _pathFollower.speed;
             var boostedSpeed = startSpeed + startSpeed * _boostPercentage;
             var sequence = Sequence.Create(cycles: 2, CycleMode.Yoyo, Ease.OutSine)
@@ -34,13 +47,28 @@ namespace Client.Game
                     value => _pathFollower.speed = value))
                 .Chain(Tween.Delay(1f));
             
-            sequence.OnComplete(Boost);
+            sequence.OnComplete(StartCoolDown);
         }
 
-        private void Boost()
+        private void StartCoolDown()
         {
-            Tween.Delay(_boostCoolDown, () => _canBeBoosted = true);
+            _tween = Tween.Delay(_boostCoolDown, () => SetBoostAccessState(true));
             _trails.gameObject.SetActive(false);
+        }
+
+        public void SetBoostAccessState(bool isActive)
+        {
+            _canBeBoosted = isActive;
+            if (Particle != null)
+                Particle.SetActive(isActive);
+        }
+
+        private void OnStateChanged(bool isDriving)
+        {
+            _tween?.Stop();
+            SetBoostAccessState(false);
+            if (isDriving)
+                StartCoolDown();
         }
     }
 }

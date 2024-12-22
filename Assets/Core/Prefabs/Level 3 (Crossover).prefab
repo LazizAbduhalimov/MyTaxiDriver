@@ -56,6 +56,34 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 1.33
       objectReference: {fileID: 0}
+    - target: {fileID: 4437702525381709408, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.b
+      value: 0.80392164
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437702525381709408, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.g
+      value: 0.54901963
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437702525381709408, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.r
+      value: 0.5647059
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437702525381709408, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.b
+      value: 0.80392164
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437702525381709408, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.g
+      value: 0.54901963
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437702525381709408, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.r
+      value: 0.5647059
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437702525381709408, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.m_ColorSpace
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4737510822163946395, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -75,6 +103,46 @@ PrefabInstance:
     - target: {fileID: 5463786891663518868, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
       propertyPath: MoneyForCircle
       value: 37
+      objectReference: {fileID: 0}
+    - target: {fileID: 6666363637681888000, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.b
+      value: 0.8078432
+      objectReference: {fileID: 0}
+    - target: {fileID: 6666363637681888000, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.g
+      value: 0.5529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 6666363637681888000, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.r
+      value: 0.5686275
+      objectReference: {fileID: 0}
+    - target: {fileID: 6666363637681888000, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.b
+      value: 0.98039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 6666363637681888000, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.g
+      value: 0.2470588
+      objectReference: {fileID: 0}
+    - target: {fileID: 6666363637681888000, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.r
+      value: 0.6279855
+      objectReference: {fileID: 0}
+    - target: {fileID: 6666363637681888000, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key2.b
+      value: 0.86415094
+      objectReference: {fileID: 0}
+    - target: {fileID: 6666363637681888000, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key2.g
+      value: 0.2657671
+      objectReference: {fileID: 0}
+    - target: {fileID: 6666363637681888000, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key2.r
+      value: 0.40243867
+      objectReference: {fileID: 0}
+    - target: {fileID: 6666363637681888000, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.m_ColorSpace
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6744096419636603757, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
       propertyPath: m_Mesh

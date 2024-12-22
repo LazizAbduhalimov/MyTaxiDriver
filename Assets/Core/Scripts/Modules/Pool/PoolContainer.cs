@@ -18,7 +18,7 @@ namespace PoolSystem.Alternative
                 _container = transform;
         }
 
-        private void Start()
+        private void Awake()
         {
             Pool = new PoolMono<PoolObject>(_poolObject, _poolCount, _container);
             Pool.AutoExpand = _autoExpand;

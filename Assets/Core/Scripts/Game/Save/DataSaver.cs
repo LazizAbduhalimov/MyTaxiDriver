@@ -16,30 +16,33 @@ namespace Client.Game.Save
             _saveFileSetup = GetComponent<SaveFileSetup>();
         }
 
-        void OnApplicationPause(bool isPaused)
+        void OnApplicationQuit()
         {
-            if (isPaused)
-            {
-                SaveGame();
-            }
+            SaveGame();
         }
 
         private void SaveGame()
         {
-            SaveCoins();
-            SaveCells();
+            var saveFile = _saveFileSetup.GetSaveFile();
+            SaveCells(saveFile);
+            SaveCoins(saveFile);
+            SaveCost(saveFile);
+            saveFile.Save();
+            Debug.Log("Игра сохранена!");
         }
 
-        private void SaveCoins()
+        private void SaveCost(SaveFile saveFile)
         {
-            var saveFile = _saveFileSetup.GetSaveFile();
+            saveFile.AddOrUpdateData("PurchaseNumber", Links.Instance.VehicleBuyer.PurchaseNumber);
+        }
+
+        private void SaveCoins(SaveFile saveFile)
+        {
             saveFile.AddOrUpdateData("Coins", Bank.Coins);
-            saveFile.Save();
         }
         
-        private void SaveCells()
+        private void SaveCells(SaveFile saveFile)
         {
-            var saveFile = _saveFileSetup.GetSaveFile();
             var i = 0;
             foreach (var pair in Map.Instance.Cells)
             {
@@ -54,8 +57,6 @@ namespace Client.Game.Save
                 i++;
             }
             saveFile.AddOrUpdateData("CellNumber", i);
-            saveFile.Save();
-            Debug.Log("Игра сохранена!");
         }
     }
 }

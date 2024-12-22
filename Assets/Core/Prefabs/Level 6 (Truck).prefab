@@ -68,6 +68,38 @@ PrefabInstance:
       propertyPath: m_IsKinematic
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4437702525381709408, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.atime1
+      value: 26214
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437702525381709408, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.atime2
+      value: 39321
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437702525381709408, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.b
+      value: 0.18679237
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437702525381709408, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.g
+      value: 0.33129472
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437702525381709408, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.a
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437702525381709408, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.b
+      value: 0.088679194
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437702525381709408, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.g
+      value: 0.088679194
+      objectReference: {fileID: 0}
+    - target: {fileID: 4437702525381709408, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key2.a
+      value: 0.78431374
+      objectReference: {fileID: 0}
     - target: {fileID: 4737510822163946395, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -87,6 +119,54 @@ PrefabInstance:
     - target: {fileID: 5463786891663518868, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
       propertyPath: MoneyForCircle
       value: 133
+      objectReference: {fileID: 0}
+    - target: {fileID: 6666363637681888000, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.atime1
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 6666363637681888000, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.ctime0
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6666363637681888000, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.ctime1
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 6666363637681888000, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6666363637681888000, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.b
+      value: 0.18679237
+      objectReference: {fileID: 0}
+    - target: {fileID: 6666363637681888000, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.g
+      value: 0.33129472
+      objectReference: {fileID: 0}
+    - target: {fileID: 6666363637681888000, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6666363637681888000, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.b
+      value: 0.088679194
+      objectReference: {fileID: 0}
+    - target: {fileID: 6666363637681888000, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.g
+      value: 0.088679194
+      objectReference: {fileID: 0}
+    - target: {fileID: 6666363637681888000, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6666363637681888000, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.m_NumAlphaKeys
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6666363637681888000, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.m_NumColorKeys
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6744096419636603757, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
       propertyPath: m_Mesh
@@ -141,3 +221,4 @@ MonoBehaviour:
   Level: 6
   Speed: 130.00465
   MoneyForCircle: 133
+  Follower: {fileID: 0}

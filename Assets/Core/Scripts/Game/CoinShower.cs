@@ -19,7 +19,7 @@ namespace Client.Game
             Bank.OnCoinsValueChangedEvent -= ChangeText;
         }
 
-        private void ChangeText(object sender, int oldValue, int newValue)
+        private void ChangeText(object sender, long oldValue, long newValue)
         {
             Text.text = newValue.ToString();
         }

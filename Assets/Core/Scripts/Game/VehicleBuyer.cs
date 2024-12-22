@@ -3,16 +3,17 @@ using LGrid;
 using PrimeTween;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Client.Game
 {
     public class VehicleBuyer : MonoBehaviour
     {
+        [HideInInspector] public int PurchaseNumber = 1;
         public Button Button;
         public TMP_Text Text;
-        private int Cost => DefaultCost * _purchaseNumber * _purchaseNumber;
-        private int _purchaseNumber = 1;
+        private int Cost => DefaultCost * PurchaseNumber * PurchaseNumber;
         private const int DefaultCost = 5;
         private Sequence? _sequence;
 
@@ -39,7 +40,7 @@ namespace Client.Game
                 if (!Bank.SpendCoins(this,Cost)) return;
                 var vehicle = AllVehicles.Instance.CarsPool[0].GetFromPool(pair.Key);
                 pair.Value.TaxiBase = vehicle.GetComponent<TaxiBase>();
-                _purchaseNumber++;
+                PurchaseNumber++;
                 ChangeCostText();    
                 SoundManager.Instance.PlayUISound(AllUiSounds.Purchased, pitchRange: 0.1f);
                 _sequence?.Complete();
@@ -49,12 +50,12 @@ namespace Client.Game
             }
         }
 
-        private void ChangeCostText()
+        public void ChangeCostText()
         {
             Text.text = $"Buy {Cost}";
         }
 
-        private void ButtonState(object o, int i, int arg3)
+        private void ButtonState(object o, long i, long arg3)
         {
             Button.interactable = Bank.HasEnoughCoins(Cost);
             var color = Color.white;
