@@ -52,6 +52,9 @@ namespace Client.Game
                 _follower.transform.localPosition = new Vector3(2, 0 ,4);
                 _follower.transform.localRotation = Quaternion.identity;
             }
+
+            var sound = _isDriving ? AllSfxSounds.ToPark : AllSfxSounds.BackToPark;
+            SoundManager.Instance.PlayFX(sound, transform.position);
         }
     }
 }

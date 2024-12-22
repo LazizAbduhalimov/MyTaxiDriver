@@ -82,6 +82,9 @@ public class DragAndDrop : MouseHoldCount
             var pool = AllVehicles.Instance.CarsPool[_taxiBase.Level];
             var createdObject = pool.GetFromPool(cell.Position);
             cell.TaxiBase = createdObject.GetComponent<TaxiBase>();
+            
+            var mergeSound = Random.Range(1, 3) == 1 ? AllSfxSounds.Merge : AllSfxSounds.Merge2;
+            SoundManager.Instance.PlayFX(mergeSound, cell.Position);
         }
         else
         {

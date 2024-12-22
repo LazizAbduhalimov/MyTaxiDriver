@@ -37,7 +37,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  ProfitBoundries: {x: 10, y: 10000}
+  ProfitBoundries: {x: 10, y: 2000}
   Profit:
     serializedVersion: 2
     m_Curve:
@@ -53,11 +53,11 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 1.0590653
-      outSlope: 1.0590653
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.08505154
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

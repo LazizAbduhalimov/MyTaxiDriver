@@ -24,6 +24,7 @@ namespace Client.Game
         private void OnMouseDown()
         {
             if (!_canBeBoosted) return;
+            SoundManager.Instance.PlayFX(AllSfxSounds.Woosh, transform.position);
             _trails.gameObject.SetActive(true);
             _canBeBoosted = false;
             var startSpeed = _pathFollower.speed;

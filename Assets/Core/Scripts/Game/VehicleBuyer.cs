@@ -1,5 +1,6 @@
 using System;
 using LGrid;
+using PrimeTween;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,9 +11,10 @@ namespace Client.Game
     {
         public Button Button;
         public TMP_Text Text;
+        private int Cost => DefaultCost * _purchaseNumber * _purchaseNumber;
         private int _purchaseNumber = 1;
         private const int DefaultCost = 5;
-        private int Cost => DefaultCost * _purchaseNumber * _purchaseNumber;
+        private Sequence? _sequence;
 
         private void OnEnable()
         {
@@ -39,6 +41,11 @@ namespace Client.Game
                 pair.Value.TaxiBase = vehicle.GetComponent<TaxiBase>();
                 _purchaseNumber++;
                 ChangeCostText();    
+                SoundManager.Instance.PlayUISound(AllUiSounds.Purchased, pitchRange: 0.1f);
+                _sequence?.Complete();
+                _sequence = Sequence.Create(2, CycleMode.Yoyo, Ease.InOutSine)
+                    .Chain(Tween.Scale(Button.transform, 1.2f, duration: 0.1f));
+                Button.interactable = Bank.HasEnoughCoins(Cost);
             }
         }
 
@@ -50,6 +57,9 @@ namespace Client.Game
         private void ButtonState(object o, int i, int arg3)
         {
             Button.interactable = Bank.HasEnoughCoins(Cost);
+            var color = Color.white;
+            color.a = 0.3f;
+            Text.color = Button.interactable ? Color.white : color;
         }
     }
 }
