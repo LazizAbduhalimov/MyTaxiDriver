@@ -19,7 +19,7 @@ namespace Client.Game
             var gridOrigin = grid.transform.position;
         
             Gizmos.color = Color.white;
-            for (var x = -columns; x <= columns; x++)
+            for (var x = -columns; x < columns; x++)
             {
                 for (var z = -rows; z <= rows; z++)
                 {

@@ -21,6 +21,11 @@ namespace Client.Game.Save
             SaveGame();
         }
 
+        private void OnApplicationPause(bool pauseStatus)
+        {
+            SaveGame();
+        }
+
         private void SaveGame()
         {
             var saveFile = _saveFileSetup.GetSaveFile();

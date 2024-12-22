@@ -15842,7 +15842,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 502a0e612add4a1c95a99406e6763704, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CoinsGainedIfZero: 999999999
+  CoinsGainedIfZero: 20
 --- !u!114 &1246899755
 MonoBehaviour:
   m_ObjectHideFlags: 0
