@@ -9,7 +9,7 @@ public class GridMb : MonoBehaviour
     public int rows = 100;    // Количество ячеек по Z (в обе стороны)
     public int columns = 100; // Количество ячеек по X (в обе стороны)
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         grid = GetComponent<Grid>();
         var cellSize = grid.cellSize;

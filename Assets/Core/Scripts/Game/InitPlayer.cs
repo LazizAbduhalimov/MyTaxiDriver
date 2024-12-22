@@ -7,7 +7,7 @@ namespace Client.Game
     {
         public void Start()
         {
-            Bank.AddCoins(this, 5);
+            Bank.AddCoins(this, 999999);
         }
     }
 }

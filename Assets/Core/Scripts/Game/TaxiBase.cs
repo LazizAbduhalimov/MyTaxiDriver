@@ -47,7 +47,6 @@ namespace Client.Game
             _follower.enabled = _isDriving;
             _transparentGfx.gameObject.SetActive(_isDriving);
             _follower.GetComponent<BoxCollider>().enabled = _isDriving;
-            
             if (!_isDriving)
             {
                 _follower.transform.localPosition = new Vector3(2, 0 ,4);

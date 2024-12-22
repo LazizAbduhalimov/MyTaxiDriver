@@ -6,6 +6,7 @@ namespace Client.Game
 {
     public class MapIniter : MonoBehaviour
     {
+        public HighlightPlace CellMb;
         private int columns = 2; 
         private int rows = 1;
         
@@ -33,6 +34,8 @@ namespace Client.Game
                     }
                     else
                     {
+                        var cell = Instantiate(CellMb, transform);
+                        cell.transform.position = cellCenter;
                         Debug.DrawRay(cellCenter, Vector3.up, Color.red, 5f);
                         Map.Instance.CreateCell(Vector3Int.RoundToInt(cellCenter));
                     }

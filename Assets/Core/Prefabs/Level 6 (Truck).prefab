@@ -78,15 +78,15 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 8d937782c962a9044a28c21514c73ffb, type: 2}
     - target: {fileID: 5463786891663518868, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
       propertyPath: Level
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5463786891663518868, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
       propertyPath: Speed
-      value: 200
+      value: 130.00465
       objectReference: {fileID: 0}
     - target: {fileID: 5463786891663518868, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
       propertyPath: MoneyForCircle
-      value: 200
+      value: 133
       objectReference: {fileID: 0}
     - target: {fileID: 6744096419636603757, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
       propertyPath: m_Mesh
@@ -115,5 +115,29 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9110471136712900299, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6839679021767247261}
   m_SourcePrefab: {fileID: 100100000, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+--- !u!1 &1757854643116277006 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9110471136712900299, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
+  m_PrefabInstance: {fileID: 7353184425763390405}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6839679021767247261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1757854643116277006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7913cbce8d324461aa2d1385a027e767, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SleepTime: 0.2
+  Level: 6
+  Speed: 130.00465
+  MoneyForCircle: 133

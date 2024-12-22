@@ -11,7 +11,6 @@ public class DragAndDrop : MouseHoldCount
     private Vector3 _offset;
     private Camera _mainCamera;
     private Vector3 _initialPoint;
-    private static readonly Vector2 Boundaries = new (10, 9);
 
     void Start()
     {
@@ -49,17 +48,13 @@ public class DragAndDrop : MouseHoldCount
     protected override void HandleClick()
     {
         var cellToWorld = GetSnappedPosition(GetLimitedMousePosition());
-        if (!Map.Instance.IsCellExists(cellToWorld, out var cell))
+        if (!Map.Instance.IsCellExists(cellToWorld, out var cell) ||
+            cellToWorld == _initialPoint)
         {
-            cell = Map.Instance.CreateCell(Vector3Int.RoundToInt(cellToWorld));
-        }
-
-        if (cellToWorld == _initialPoint)
-        {
-            transform.position = cellToWorld;
+            transform.position = _initialPoint;
             return;
         }
-        
+
         if (cell.TaxiBase == null)
         {
             if (Map.Instance.IsCellExists(GetSnappedPosition(_initialPoint), out var initialCell))
@@ -130,8 +125,6 @@ public class DragAndDrop : MouseHoldCount
     private Vector3 GetLimitedMousePosition()
     {
         var mousePosition = GetMouseWorldPosition();
-        mousePosition = mousePosition.WithX(Mathf.Clamp(mousePosition.x, -Boundaries.x, Boundaries.x));
-        mousePosition = mousePosition.WithZ(Mathf.Clamp(mousePosition.z, -Boundaries.y, Boundaries.y));
         return mousePosition;
     }
 

@@ -66,15 +66,15 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: c0172b2eebb55f74bbb355a1b1fe0557, type: 2}
     - target: {fileID: 5463786891663518868, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
       propertyPath: Level
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5463786891663518868, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
       propertyPath: Speed
-      value: 64.1903
+      value: 36.52649
       objectReference: {fileID: 0}
     - target: {fileID: 5463786891663518868, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
       propertyPath: MoneyForCircle
-      value: 66
+      value: 37
       objectReference: {fileID: 0}
     - target: {fileID: 6744096419636603757, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
       propertyPath: m_Mesh
