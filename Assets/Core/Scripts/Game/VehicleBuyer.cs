@@ -16,7 +16,7 @@ namespace Client.Game
         private int Cost => DefaultCost * PurchaseNumber * PurchaseNumber;
         private const int DefaultCost = 5;
         private Sequence? _sequence;
-        private int BuyingCarLevel => (PurchaseNumber >= 64) ? 1 : 0; 
+        private int BuyingCarLevel => PurchaseNumber >= 63 ? 1 : 0; 
 
         private void OnEnable()
         {
@@ -36,6 +36,7 @@ namespace Client.Game
 
         public void Buy()
         {
+            Debug.Log(PurchaseNumber);
             if (Map.Instance.HasFreeCell(out var pair))
             {
                 if (!Bank.SpendCoins(this,Cost)) return;

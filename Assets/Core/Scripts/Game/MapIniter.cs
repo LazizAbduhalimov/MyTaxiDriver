@@ -1,12 +1,13 @@
 using System;
 using LGrid;
+using PoolSystem.Alternative;
 using UnityEngine;
 
 namespace Client.Game
 {
     public class MapIniter : MonoBehaviour
     {
-        public HighlightPlace CellMb;
+        [SerializeField] private PoolContainer _highlightPlaces;
         private int columns = 2; 
         private int rows = 1;
         
@@ -34,9 +35,8 @@ namespace Client.Game
                     }
                     else
                     {
-                        var cell = Instantiate(CellMb, transform);
-                        cell.transform.localScale = grid.cellSize;
-                        cell.transform.position = cellCenter;
+                        var cell = _highlightPlaces.GetFromPool(cellCenter);
+                        // cell.transform.localScale = grid.cellSize;
                         Map.Instance.CreateCell(Vector3Int.RoundToInt(cellCenter));
                     }
                 }
