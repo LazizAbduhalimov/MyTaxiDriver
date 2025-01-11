@@ -20,9 +20,9 @@ namespace Client.Game
             var gridOrigin = grid.transform.position;
         
             Gizmos.color = Color.white;
-            for (var x = -columns; x < columns; x++)
+            for (var z = -rows; z <= rows; z++)
             {
-                for (var z = -rows; z <= rows; z++)
+                for (var x = -columns; x < columns; x++)
                 {
                     var cellCenter = gridOrigin + new Vector3(
                         x * effectiveCellSize.x,
