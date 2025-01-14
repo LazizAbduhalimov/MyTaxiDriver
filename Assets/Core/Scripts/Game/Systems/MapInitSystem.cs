@@ -1,17 +1,17 @@
-using System;
+using Leopotam.EcsLite;
+using Leopotam.EcsLite.Di;
 using LGrid;
-using PoolSystem.Alternative;
 using UnityEngine;
 
 namespace Client.Game
 {
-    public class MapIniter : MonoBehaviour
+    public class MapInitSystem : IEcsInitSystem
     {
-        [SerializeField] private PoolContainer _highlightPlaces;
-        private int columns = 2; 
-        private int rows = 1;
-        
-        public void Init()
+        private EcsCustomInject<AllPools> _allPools;
+        private const int Columns = 2; 
+        private const int Rows = 1;
+
+        public void Init(IEcsSystems systems)
         {
             var grid = Links.Instance.Grid;
             var cellSize = grid.cellSize;
@@ -20,9 +20,9 @@ namespace Client.Game
             var gridOrigin = grid.transform.position;
         
             Gizmos.color = Color.white;
-            for (var z = -rows; z <= rows; z++)
+            for (var z = -Rows; z <= Rows; z++)
             {
-                for (var x = -columns; x < columns; x++)
+                for (var x = -Columns; x < Columns; x++)
                 {
                     var cellCenter = gridOrigin + new Vector3(
                         x * effectiveCellSize.x,
@@ -35,8 +35,7 @@ namespace Client.Game
                     }
                     else
                     {
-                        var cell = _highlightPlaces.GetFromPool(cellCenter);
-                        // cell.transform.localScale = grid.cellSize;
+                        _allPools.Value.CarPlace.GetFromPool(cellCenter);
                         Map.Instance.CreateCell(Vector3Int.RoundToInt(cellCenter));
                     }
                 }

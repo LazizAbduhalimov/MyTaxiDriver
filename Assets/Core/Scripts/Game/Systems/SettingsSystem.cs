@@ -1,14 +1,13 @@
-using System;
+using Leopotam.EcsLite;
 using UnityEngine;
 
 namespace Client.Game
 {
-    public class Configs : MonoBehaviour
+    public class SettingsSystem : IEcsInitSystem
     {
-        private void Start()
+        public void Init(IEcsSystems systems)
         {
             Application.targetFrameRate = 120;
-            
         }
     }
 }

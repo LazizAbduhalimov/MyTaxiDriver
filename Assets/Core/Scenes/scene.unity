@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -558,7 +558,7 @@ MonoBehaviour:
       - 0
       globalNormalsAngle: 90
       flipNormals: 0
-    vertexPathUpToDate: 0
+    vertexPathUpToDate: 1
     vertexPathMaxAngleError: 5
     vertexPathMinVertexSpacing: 0
     showTransformTool: 1
@@ -2851,6 +2851,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 193191815}
+  - component: {fileID: 193191816}
   m_Layer: 0
   m_Name: Pools
   m_TagString: Untagged
@@ -2875,6 +2876,21 @@ Transform:
   - {fileID: 202774624}
   m_Father: {fileID: 1817141158}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &193191816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193191814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a507a7f29a84787897da38a62b89c92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CarPlace: {fileID: 202774625}
+  PopupsPool: {fileID: 1251326650}
+  MergeEffect: {fileID: 116839166}
 --- !u!4 &197621409 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: b82e76f4092b7d24aaeecddf36fe8d3b, type: 3}
@@ -3225,7 +3241,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 608220950}
     m_Modifications:
     - target: {fileID: 4364354964670000192, guid: 3801a320e9ae1bf44a14efa194c86c3f, type: 3}
       propertyPath: m_Name
@@ -3234,6 +3250,14 @@ PrefabInstance:
     - target: {fileID: 4364354964670000192, guid: 3801a320e9ae1bf44a14efa194c86c3f, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364354964670000193, guid: 3801a320e9ae1bf44a14efa194c86c3f, type: 3}
+      propertyPath: ShapeModule.m_Scale.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364354964670000193, guid: 3801a320e9ae1bf44a14efa194c86c3f, type: 3}
+      propertyPath: ShapeModule.m_Scale.z
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 4364354964670000193, guid: 3801a320e9ae1bf44a14efa194c86c3f, type: 3}
       propertyPath: InitialModule.startSize.scalar
@@ -3265,7 +3289,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4364354964670000255, guid: 3801a320e9ae1bf44a14efa194c86c3f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.542688
+      value: -6.0426884
       objectReference: {fileID: 0}
     - target: {fileID: 4364354964670000255, guid: 3801a320e9ae1bf44a14efa194c86c3f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3281,15 +3305,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4364354964670000255, guid: 3801a320e9ae1bf44a14efa194c86c3f, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4364354964670000255, guid: 3801a320e9ae1bf44a14efa194c86c3f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4364354964670000255, guid: 3801a320e9ae1bf44a14efa194c86c3f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4364354964670000255, guid: 3801a320e9ae1bf44a14efa194c86c3f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -7858,6 +7882,7 @@ Transform:
   - {fileID: 1972802919}
   - {fileID: 1662672052}
   - {fileID: 501890626}
+  - {fileID: 1233608421}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &608560153 stripped
@@ -15877,6 +15902,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b82e76f4092b7d24aaeecddf36fe8d3b, type: 3}
+--- !u!4 &1233608421 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4364354964670000255, guid: 3801a320e9ae1bf44a14efa194c86c3f, type: 3}
+  m_PrefabInstance: {fileID: 210899050}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1239162209 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 8b680e0f7699a254c84ed6737b7eb53d, type: 3}
@@ -17227,6 +17257,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1351456799}
   - component: {fileID: 1351456798}
+  - component: {fileID: 1351456800}
   m_Layer: 0
   m_Name: Bootstrap
   m_TagString: Untagged
@@ -17246,7 +17277,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fe28eb92f8e483ebefaf9be76acda25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapIniter: {fileID: 1899818400}
   LoadSavings: {fileID: 1246899754}
 --- !u!4 &1351456799
 Transform:
@@ -17263,6 +17293,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1351456800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351456797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af4935b5d8fed8441b7989c9c5e865cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1365687810 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: b82e76f4092b7d24aaeecddf36fe8d3b, type: 3}
@@ -22025,6 +22067,7 @@ MonoBehaviour:
   CarsConfig: {fileID: 11400000, guid: 60708c68b822fc844beff8edc3c7a0fb, type: 2}
   PopupsPool: {fileID: 1251326650}
   MergeEffect: {fileID: 116839166}
+  AllPools: {fileID: 193191816}
   VehicleBuyer: {fileID: 753473707}
 --- !u!4 &1817141158
 Transform:
@@ -22849,7 +22892,6 @@ GameObject:
   - component: {fileID: 1899818398}
   - component: {fileID: 1899818397}
   - component: {fileID: 1899818399}
-  - component: {fileID: 1899818400}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -22896,22 +22938,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78aa624f932b9a64c805181850885587, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grid: {fileID: 1899818397}
+  Grid: {fileID: 1899818397}
   rows: 10
   columns: 10
---- !u!114 &1899818400
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1899818396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 792319066155490f8da02160b1f10c5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _highlightPlaces: {fileID: 202774625}
 --- !u!4 &1901843112 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 2509cc5763ca17f4598bf61fd585a93e, type: 3}
@@ -26231,5 +26260,4 @@ SceneRoots:
   - {fileID: 1817141158}
   - {fileID: 1008835859}
   - {fileID: 1888756468}
-  - {fileID: 210899050}
   - {fileID: 1351456799}

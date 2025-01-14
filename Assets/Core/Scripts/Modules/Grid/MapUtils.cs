@@ -5,14 +5,12 @@ namespace LGrid
 {
     public static class MapUtils
     {
-        public static EcsWorld World;
-        
-        public static bool TryGetCellOccupier<T>(Vector3Int cell, out T standable) 
+        public static bool TryGetCellOccupier<T>(Vector3Int cell, EcsWorld world, out T standable) 
             where T: struct, ICellStandable
         {
-            foreach (var entity in World.Filter<T>().End())
+            foreach (var entity in world.Filter<T>().End())
             {
-                ref var data = ref World.GetPool<T>().Get(entity);
+                ref var data = ref world.GetPool<T>().Get(entity);
                 if (data.Coords == cell)
                 {
                     standable = data;

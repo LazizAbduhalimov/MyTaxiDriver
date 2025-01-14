@@ -1,22 +1,20 @@
-using LGrid;
-using PoolSystem.Alternative;
 using UnityEngine;
 
 [RequireComponent(typeof(Grid))]
 public class GridMb : MonoBehaviour
 {
-    [HideInInspector] public Grid grid;
+    [HideInInspector] public Grid Grid;
 
     public int rows = 100;    // Количество ячеек по Z (в обе стороны)
     public int columns = 100; // Количество ячеек по X (в обе стороны)
 
     private void OnDrawGizmosSelected()
     {
-        grid = GetComponent<Grid>();
-        var cellSize = grid.cellSize;
-        var cellGap = grid.cellGap;
+        Grid = GetComponent<Grid>();
+        var cellSize = Grid.cellSize;
+        var cellGap = Grid.cellGap;
         var effectiveCellSize = cellSize + cellGap;
-        var gridOrigin = grid.transform.position;
+        var gridOrigin = Grid.transform.position;
         
         Gizmos.color = Color.white;
         for (var x = -columns; x <= columns; x++)

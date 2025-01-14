@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using Client.Game;
 using LGrid;
 using UnityEngine;
@@ -8,13 +6,10 @@ namespace Core.Scripts.Game
 {
     public class EntryPoint : MonoBehaviour
     {
-        [SerializeField] private MapIniter mapIniter;
         [SerializeField] private LoadSavings LoadSavings;
-        // [SerializeField] private
 
         private void Start()
         {
-            mapIniter.Init();
             LoadSavings.Init();
         }
 

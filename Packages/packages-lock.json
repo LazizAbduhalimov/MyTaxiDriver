@@ -27,6 +27,13 @@
       "dependencies": {},
       "hash": "99347c110c316a54c1cf2f0b268950f02612662d"
     },
+    "com.leopotam.ecslite.extendedsystems": {
+      "version": "https://github.com/Leopotam/ecslite-extendedsystems.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "6ca6bdbb364ca43e572e524df8a8b2b2106ae994"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
