@@ -7,6 +7,7 @@ using Core.Scripts.Game;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.ExtendedSystems;
 using Module.Bank;
+using UI;
 
 namespace Client {
     public sealed class Startup : MonoBehaviour
@@ -26,6 +27,7 @@ namespace Client {
 
             Utilities.World = _world;
             Utilities.EventsWorld = _eventsWorld;
+            Bank.EventsWorld = _eventsWorld;
             
             AddInitSystems();
             AddRunSystems();
@@ -55,6 +57,8 @@ namespace Client {
                 .Add(new MapInitSystem())
                 .Add(new SettingsSystem())
                 .Add(new InitTaxiCoords())
+                .Add(new InitUIInterface())
+                .Add(new InitUIButtons())
                 ;
         }
         
@@ -63,11 +67,16 @@ namespace Client {
             _updateSystems
                 .AddWorld(_eventsWorld, "events")
                 .Add(new DragAndDropSystem())
-                
                 .Add(new EarnMoneySystem())
-                .Add(new BankSystem())
+                
+                .Add(new VehiclePurchaseSystem())
+                .Add(new VehiclePurchaseButtonStateHandleSystem())
+                
+                .Add(new CoinDisplaySystem())
                 
                 .DelHere<EEarnMoney>("events")
+                .DelHere<EBankValueChanged>("events")
+                .AddUIEventsDestroyers()
                 ;
         }
 
@@ -94,9 +103,11 @@ namespace Client {
         private void InjectAllSystems(params IEcsSystems[] systems)
         {
             var premadePools = FindObjectOfType<AllPools>();
+            var gameData = new GameData();
             foreach (var system in systems)
             {
                 system.Inject(premadePools)
+                      .Inject(gameData)
                     ;
             }
         }

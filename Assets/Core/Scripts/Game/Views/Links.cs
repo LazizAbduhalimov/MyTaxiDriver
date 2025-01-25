@@ -13,7 +13,6 @@ namespace Client.Game
         public PoolContainer PopupsPool;
         public PoolContainer MergeEffect;
         public AllPools AllPools;
-        public VehicleBuyer VehicleBuyer;
         
         public static Links Instance => _instance;
         private static Links _instance;

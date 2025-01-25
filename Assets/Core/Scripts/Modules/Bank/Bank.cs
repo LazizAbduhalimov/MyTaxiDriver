@@ -1,7 +1,10 @@
 using System;
+using Leopotam.EcsLite;
+using Module.Bank;
 
 public static class Bank
 {
+    public static EcsWorld EventsWorld;
     public static long Coins { get; private set; }
 
     public static Action<object, long, long> OnCoinsValueChangedEvent;
@@ -11,7 +14,7 @@ public static class Bank
         if (coins < 0) throw new ArgumentException("Negative number");
         var oldValue = Coins;
         Coins = coins;
-        OnCoinsValueChangedEvent.Invoke(sender, oldValue, Coins);
+        Notify(oldValue);
     }
 
     public static void AddCoins(object sender, long coins)
@@ -21,7 +24,7 @@ public static class Bank
         
         var oldValue = Coins;
         Coins += coins;
-        OnCoinsValueChangedEvent?.Invoke(sender, oldValue, Coins);
+        Notify(oldValue);
     }
 
     public static bool SpendCoins(object sender, long coins)
@@ -34,12 +37,17 @@ public static class Bank
 
         var oldValue = Coins;
         Coins -= coins;
-        OnCoinsValueChangedEvent?.Invoke(sender, oldValue, Coins);
+        Notify(oldValue);
         return true;
     }
 
     public static bool HasEnoughCoins(long number)
     {
         return Coins >= number;
+    }
+
+    private static void Notify(long oldValue)
+    {
+        EventsWorld.GetPool<EBankValueChanged>().Add(EventsWorld.NewEntity()).Invoke(oldValue, Coins);
     }
 }

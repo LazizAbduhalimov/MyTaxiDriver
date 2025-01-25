@@ -32,15 +32,15 @@ namespace Client.Game.Save
             var saveFile = _saveFileSetup.GetSaveFile();
             SaveCells(saveFile);
             SaveCoins(saveFile);
-            SaveCost(saveFile);
+            // SaveCost(saveFile);
             saveFile.Save();
             Debug.Log("Игра сохранена!");
         }
 
-        private void SaveCost(SaveFile saveFile)
-        {
-            saveFile.AddOrUpdateData("PurchaseNumber", Links.Instance.VehicleBuyer.PurchaseNumber);
-        }
+        // private void SaveCost(SaveFile saveFile)
+        // {
+        //     saveFile.AddOrUpdateData("PurchaseNumber", Links.Instance.VehicleBuyer.PurchaseNumber);
+        // }
 
         private void SaveCoins(SaveFile saveFile)
         {

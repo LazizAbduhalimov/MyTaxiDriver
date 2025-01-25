@@ -2888,6 +2888,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a507a7f29a84787897da38a62b89c92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CarsPool:
+  - {fileID: 702269082}
+  - {fileID: 1194604705}
+  - {fileID: 1183215291}
+  - {fileID: 761063489}
+  - {fileID: 192463302}
+  - {fileID: 267975574}
+  - {fileID: 466862797}
+  - {fileID: 720744242}
+  - {fileID: 130631710}
   CarPlace: {fileID: 202774625}
   PopupsPool: {fileID: 1251326650}
   MergeEffect: {fileID: 116839166}
@@ -9457,7 +9467,6 @@ GameObject:
   - component: {fileID: 753473710}
   - component: {fileID: 753473709}
   - component: {fileID: 753473708}
-  - component: {fileID: 753473707}
   m_Layer: 5
   m_Name: BuyButton
   m_TagString: Untagged
@@ -9485,21 +9494,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 300}
   m_SizeDelta: {x: 400, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &753473707
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 753473705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85cdccca5e3c4727885dfc73b865c44d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PurchaseNumber: 1
-  Button: {fileID: 753473708}
-  Text: {fileID: 133699717}
 --- !u!114 &753473708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9543,19 +9537,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 753473709}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 753473707}
-        m_TargetAssemblyTypeName: Client.Game.VehicleBuyer, Assembly-CSharp
-        m_MethodName: Buy
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &753473709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12596,7 +12578,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1080, y: 1920}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -16050,7 +16032,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1246899753
 Transform:
   m_ObjectHideFlags: 0
@@ -16086,7 +16068,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1246899752}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ecc8b7e7a23d422d9e035ab1f6a8d9d4, type: 3}
   m_Name: 
@@ -16295,7 +16277,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _poolCount: 15
   _autoExpand: 1
-  _poolObject: {fileID: 7955779038992677307, guid: 0137f47ea15b184448a68b44e9cc91f9, type: 3}
+  _poolObject: {fileID: 1301818765841066010, guid: 0137f47ea15b184448a68b44e9cc91f9, type: 3}
   _container: {fileID: 1251326649}
 --- !u!1001 &1252362743
 PrefabInstance:
@@ -17256,7 +17238,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1351456799}
-  - component: {fileID: 1351456798}
   - component: {fileID: 1351456800}
   m_Layer: 0
   m_Name: Bootstrap
@@ -17265,19 +17246,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1351456798
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1351456797}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fe28eb92f8e483ebefaf9be76acda25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LoadSavings: {fileID: 1246899754}
 --- !u!4 &1351456799
 Transform:
   m_ObjectHideFlags: 0
@@ -22043,6 +22011,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1817141158}
   - component: {fileID: 1817141157}
+  - component: {fileID: 1817141159}
   m_Layer: 0
   m_Name: Links
   m_TagString: Untagged
@@ -22068,7 +22037,6 @@ MonoBehaviour:
   PopupsPool: {fileID: 1251326650}
   MergeEffect: {fileID: 116839166}
   AllPools: {fileID: 193191816}
-  VehicleBuyer: {fileID: 753473707}
 --- !u!4 &1817141158
 Transform:
   m_ObjectHideFlags: 0
@@ -22090,6 +22058,20 @@ Transform:
   - {fileID: 193191815}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1817141159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817141156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b4dc29cff6e4aa1ad61a1de96fc34bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BuyVehicleCostText: {fileID: 133699717}
+  BuyVehicleButton: {fileID: 753473708}
 --- !u!4 &1823047936 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: b82e76f4092b7d24aaeecddf36fe8d3b, type: 3}
@@ -22938,9 +22920,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78aa624f932b9a64c805181850885587, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Grid: {fileID: 1899818397}
-  rows: 10
-  columns: 10
 --- !u!4 &1901843112 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 2509cc5763ca17f4598bf61fd585a93e, type: 3}

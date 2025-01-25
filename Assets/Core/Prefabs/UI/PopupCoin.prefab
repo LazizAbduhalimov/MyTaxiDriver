@@ -110,7 +110,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 43.545, y: 0}
   m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6536390448915690567
@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 2114462224713153379}
   - component: {fileID: 7076056376167078654}
   - component: {fileID: 5023734976328124142}
-  - component: {fileID: 7955779038992677307}
+  - component: {fileID: 1301818765841066010}
   m_Layer: 5
   m_Name: PopupCoin
   m_TagString: Untagged
@@ -317,7 +317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5be7e95c7f40ffa9e3c7851db6c6f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7955779038992677307
+--- !u!114 &1301818765841066010
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -18,19 +18,19 @@ namespace Client.Game
             var file = _setup.GetSaveFile();
             LoadCellsData(file);
             LoadCoins(file);
-            LoadCost(file);
+            // LoadCost(file);
             file.Save();
             Debug.Log("Loaded!");
         }
 
-        private void LoadCost(SaveFile file)
-        {
-            if (file.HasData("PurchaseNumber"))
-            {
-                Links.Instance.VehicleBuyer.PurchaseNumber = file.GetData<int>("PurchaseNumber");
-                Links.Instance.VehicleBuyer.ChangeCostText();
-            }
-        }
+        // private void LoadCost(SaveFile file)
+        // {
+        //     if (file.HasData("PurchaseNumber"))
+        //     {
+        //         Links.Instance.VehicleBuyer.PurchaseNumber = file.GetData<int>("PurchaseNumber");
+        //         Links.Instance.VehicleBuyer.ChangeCostText();
+        //     }
+        // }
 
         private static void LoadCellsData(SaveFile file)
         {

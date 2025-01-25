@@ -19,7 +19,7 @@ namespace Client.Game
                 collector.TaxiBase.Earn();
                 var position = collector.transform.position;
                 SoundManager.Instance.PlayFX(AllSfxSounds.Earned, position);
-                var poolObject = _allPools.Value.PopupsPool.GetFromPool(position.AddY(10f)) as PopupCoin;
+                var poolObject = _allPools.Value.PopupsPool.GetFromPool(position.AddY(10f)) as Popup;
                 if (poolObject != null)
                 {
                     poolObject.Text.text = $"+{collector.TaxiBase.MoneyForCircle}";

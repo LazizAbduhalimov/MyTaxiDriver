@@ -15,18 +15,24 @@ namespace Client.Game
         {
             var displayer = Object.FindObjectOfType<CoinShower>();
             _cCoinDisplayer.NewEntity(out _).Invoke(displayer.Text);
+            ChangeCoins();
+            Bank.AddCoins(this, 20);
         }
         
         public void Run(IEcsSystems systems)
         {
             foreach (var entity in _eBankValueChagedFilter.Value)
             {
-                ref var changedData = ref _eBankValueChagedFilter.Pools.Inc1.Get(entity);
-                foreach (var displayerEntity in _cCoinDisplayerFilter.Value)
-                {
-                    ref var displayer = ref _cCoinDisplayerFilter.Pools.Inc1.Get(displayerEntity);
-                    displayer.Text.text = changedData.NewValue.ToString();
-                }
+                ChangeCoins();
+            }
+        }
+
+        private void ChangeCoins()
+        {
+            foreach (var displayerEntity in _cCoinDisplayerFilter.Value)
+            {
+                ref var displayer = ref _cCoinDisplayerFilter.Pools.Inc1.Get(displayerEntity);
+                displayer.Text.text = Bank.Coins.ToString();
             }
         }
     }

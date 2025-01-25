@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace PoolSystem.Alternative
 {
@@ -20,6 +19,8 @@ namespace PoolSystem.Alternative
 
         private void Awake()
         {
+            if (_poolObject == null)
+                Debug.Log(name);
             Pool = new PoolMono<PoolObject>(_poolObject, _poolCount, _container);
             Pool.AutoExpand = _autoExpand;
         }
