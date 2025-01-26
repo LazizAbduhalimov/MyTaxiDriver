@@ -1,9 +1,9 @@
-using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Game
 {
     public struct CMusic
     {
-        public AudioClip Clip;
+        public AssetReferenceAudioClip ReferenceAudioClip;
     }
 }

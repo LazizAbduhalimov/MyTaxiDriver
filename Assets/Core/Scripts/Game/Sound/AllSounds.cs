@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Audio;
 
 namespace Game
@@ -6,8 +7,7 @@ namespace Game
     public class AllSounds : MonoBehaviour
     {
         [Space(5f)] 
-        public AudioClip[] Musics;
-        
+        public AssetReferenceAudioClip[] MusicsAssetReference; 
         public AudioMixerGroup MusicMixerGroup;
         public AudioMixerGroup SfxMixerGroup;
     }

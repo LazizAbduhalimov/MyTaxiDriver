@@ -20363,10 +20363,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2346a6c84bd4d2aa0941fcc3939ee91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Musics:
-  - {fileID: 8300000, guid: 5b0886779c6043e4fa829569e5824314, type: 3}
-  - {fileID: 8300000, guid: 514f0b3d0e7de22408b2b18105869bd4, type: 3}
-  - {fileID: 8300000, guid: 67765300cd39f1646aa7660a8aa631e9, type: 3}
+  MusicsAssetReference:
+  - m_AssetGUID: 5b0886779c6043e4fa829569e5824314
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: 514f0b3d0e7de22408b2b18105869bd4
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: 67765300cd39f1646aa7660a8aa631e9
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
   MusicMixerGroup: {fileID: -5330574486646628202, guid: 61d64b3f3afe331479846d7b7dadbf5b, type: 2}
   SfxMixerGroup: {fileID: -4520574902174507016, guid: 61d64b3f3afe331479846d7b7dadbf5b, type: 2}
 --- !u!114 &1614909085

@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: d1e900c64821e76428438ee0687ba730
   m_SerializeEntries:
   - m_GUID: 5b0886779c6043e4fa829569e5824314
-    m_Address: muxic_alone
+    m_Address: music_alone
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
