@@ -1,13 +1,12 @@
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-using SevenBoldPencil.EasyEvents;
 using UnityEngine;
 
 namespace LGrid
 {
     public class MousePositionConvertSystem : IEcsInitSystem, IEcsRunSystem
     {
-        private EcsCustomInject<EventsBus> _bus;
+        private EcsPoolInject<EMouseOnGrid> _eMouseOnGrid;
         private EcsPoolInject<CMousePosition> _mousePositionPool;
 
         private Camera _camera;
@@ -33,7 +32,7 @@ namespace LGrid
             var ray = _camera.ScreenPointToRay(mousePosition);
             if (Physics.Raycast(ray, out var hit, 100, rayCastLayerMask))
             {
-                _bus.Value.NewEvent(new EMouseOnGrid());
+                _eMouseOnGrid.NewEntity(out _);
                 _lastPosition = hit.point;
             }
             return _lastPosition;

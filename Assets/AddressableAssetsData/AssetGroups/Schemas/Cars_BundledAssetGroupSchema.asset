@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5d17a21594effb4e9591490b009e7aa, type: 3}
-  m_Name: Cars_BundledAssetGroupSchema
+  m_Name: Default Local Group_BundledAssetGroupSchema
   m_EditorClassIdentifier: 
   m_Group: {fileID: 11400000, guid: a07b0f6b74aeda14a9578737ad7bfa34, type: 2}
   m_InternalBundleIdMode: 1
@@ -37,7 +37,7 @@ MonoBehaviour:
     m_Id: 93f5b5247014df547a4324cc69ee84af
   m_LoadPath:
     m_Id: 96b75f0d6ddd0844a9d18ba6e774f151
-  m_BundleMode: 0
+  m_BundleMode: 2
   m_AssetBundleProviderType:
     m_AssemblyName: Unity.ResourceManager, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
     m_ClassName: UnityEngine.ResourceManagement.ResourceProviders.AssetBundleProvider
