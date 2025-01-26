@@ -32,6 +32,7 @@ namespace Game
                     musicSource.AudioSource.clip = music.Clip;
                     musicSource.AudioSource.Play();
                 }
+                _ePlayMusicFilter.Pools.Inc1.Del(entity);
             }  
         }
     }

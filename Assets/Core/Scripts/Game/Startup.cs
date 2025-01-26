@@ -4,9 +4,12 @@ using AB_Utility.FromSceneToEntityConverter;
 using Client.Game;
 using Client.Game.Test;
 using Core.Scripts.Game;
+using Game;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.ExtendedSystems;
+using LSound;
 using Module.Bank;
+using PoolSystem.Alternative;
 using UI;
 
 namespace Client {
@@ -74,6 +77,11 @@ namespace Client {
                 
                 .Add(new CoinDisplaySystem())
                 
+                .Add(new SoundBridgeSystem())
+                .Add(new MusicBridgeSystem())
+                .Add(new SoundSystem())
+                .Add(new MusicSystem())
+                
                 .DelHere<EEarnMoney>("events")
                 .DelHere<EBankValueChanged>("events")
                 .AddUIEventsDestroyers()
@@ -103,11 +111,13 @@ namespace Client {
         private void InjectAllSystems(params IEcsSystems[] systems)
         {
             var premadePools = FindObjectOfType<AllPools>();
+            var poolService = new PoolService("Pools");
             var gameData = new GameData();
             foreach (var system in systems)
             {
                 system.Inject(premadePools)
                       .Inject(gameData)
+                      .Inject(poolService)
                     ;
             }
         }

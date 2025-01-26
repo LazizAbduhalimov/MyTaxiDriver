@@ -1,7 +1,6 @@
 using System;
 using PathCreation.Examples;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Client.Game
 {

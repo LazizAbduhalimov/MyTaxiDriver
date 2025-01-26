@@ -20202,6 +20202,8 @@ GameObject:
   - component: {fileID: 1614909081}
   - component: {fileID: 1614909083}
   - component: {fileID: 1614909082}
+  - component: {fileID: 1614909085}
+  - component: {fileID: 1614909084}
   m_Layer: 0
   m_Name: Sound
   m_TagString: Untagged
@@ -20349,6 +20351,37 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 189385345}
+--- !u!114 &1614909084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614909080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2346a6c84bd4d2aa0941fcc3939ee91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Musics:
+  - {fileID: 8300000, guid: 5b0886779c6043e4fa829569e5824314, type: 3}
+  - {fileID: 8300000, guid: 514f0b3d0e7de22408b2b18105869bd4, type: 3}
+  - {fileID: 8300000, guid: 67765300cd39f1646aa7660a8aa631e9, type: 3}
+  MusicMixerGroup: {fileID: -5330574486646628202, guid: 61d64b3f3afe331479846d7b7dadbf5b, type: 2}
+  SfxMixerGroup: {fileID: -4520574902174507016, guid: 61d64b3f3afe331479846d7b7dadbf5b, type: 2}
+--- !u!114 &1614909085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614909080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0ec674f46b8499a8a50ba1c9f30a4d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SoundSourceObject: {fileID: 4726662495315044780, guid: 1eccf0a28fc2bdd4cacbe7f8e57b42b6, type: 3}
 --- !u!1001 &1617017103
 PrefabInstance:
   m_ObjectHideFlags: 0
