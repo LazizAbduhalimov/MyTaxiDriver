@@ -1,14 +1,15 @@
-using System;
 using System.Linq;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using LSound;
 using PrimeTween;
+using UnityEngine;
 using Object = UnityEngine.Object;
+using Random = System.Random;
 
 namespace Game
 {
-    public class MusicBridgeSystem : IEcsInitSystem
+    public class MusicBridgeSystem : IEcsInitSystem, IEcsRunSystem
     {
         private EcsFilterInject<Inc<CMusic>, Exc<CPlayed>> _unPlayedMusics;
         private EcsFilterInject<Inc<CMusic, CPlayed>> _playedMusics;
@@ -18,6 +19,7 @@ namespace Game
         private EcsPoolInject<PlayMusic> _ePlayMusic = "events";
         
         private AllSounds _allSounds;
+        private Tween? _tween;
         
         public void Init(IEcsSystems systems)
         {
@@ -44,8 +46,16 @@ namespace Game
             {
                 foreach (var entity in _playedMusics.Value) _cPlayed.Value.Del(entity);
             }
+            _tween?.Stop();
+            _tween = Tween.Delay(musicLength, PlayRandomMusic);
+        }
 
-            Tween.Delay(musicLength, PlayRandomMusic);
+        public void Run(IEcsSystems systems)
+        {
+            if (Input.GetKeyDown(KeyCode.N))
+            {
+                PlayRandomMusic();
+            }
         }
     }
 }
