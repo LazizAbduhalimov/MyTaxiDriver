@@ -42,8 +42,6 @@ namespace Game
                 if (_assetReference != null)
                     AddressableUtility.Release(_assetReference);
                 _assetReference = _cMusic.Value.Get(entity).ReferenceAudioClip;
-                await AddressableUtility.LoadAssetAsync<AudioClip>("music_warm");
-                await AddressableUtility.LoadAssetAsync<AudioClip>("music_warm");
                 var task = AddressableUtility.LoadAssetAsync<AudioClip>(_assetReference);
                 await task;
                 _ePlayMusic.NewEntity(out _).Invoke(task.Result, _allSounds.MusicMixerGroup);
