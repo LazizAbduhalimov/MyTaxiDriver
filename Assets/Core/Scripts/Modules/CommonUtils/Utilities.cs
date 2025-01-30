@@ -15,7 +15,6 @@ namespace Client
         {
             World = world;
             EventsWorld = eventsWorld;
-            _mainCamera = Camera.main;
         }
 
         public static int FastUnpack(this EcsPackedEntity packed)
@@ -28,14 +27,6 @@ namespace Client
         public static ref T UnpackAndGetFromPool<T>(this EcsPackedEntity packed) where T : struct
         {
             return ref World.GetPool<T>().Get(packed.FastUnpack());
-        }
-        
-        public static Vector3 GetMouseWorldPosition()
-        {
-            var mouseScreenPosition = Input.mousePosition;
-            var plane = new Plane(Vector3.up, Vector3.zero);
-            var ray = _mainCamera.ScreenPointToRay(mouseScreenPosition);
-            return plane.Raycast(ray, out var distance) ? ray.GetPoint(distance) : Vector3.zero;
         }
     }
 }

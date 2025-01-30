@@ -6,6 +6,7 @@ using Client.Game.Test;
 using Game;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.ExtendedSystems;
+using LGrid;
 using LSound;
 using Module.Bank;
 using PoolSystem.Alternative;
@@ -56,6 +57,7 @@ namespace Client {
             _initSystems
                 .AddWorld(_eventsWorld, "events")
                 .Add(new MapInitSystem())
+                .Add(new GridInitSystem())
                 .Add(new SettingsSystem())
                 .Add(new InitTaxiCoords())
                 .Add(new InitUIInterface())
@@ -112,6 +114,7 @@ namespace Client {
 
         private void InjectAllSystems(params IEcsSystems[] systems)
         {
+            var map = new Map();
             var premadePools = FindObjectOfType<AllPools>();
             var poolService = new PoolService("Pools");
             var gameData = new GameData();
@@ -120,6 +123,7 @@ namespace Client {
                 system.Inject(premadePools)
                       .Inject(gameData)
                       .Inject(poolService)
+                      .Inject(map)
                     ;
             }
         }

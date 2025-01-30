@@ -9,6 +9,7 @@ namespace Client
 {
     public class VehiclePurchaseSystem : IEcsRunSystem
     {
+        private EcsCustomInject<Map> _map;
         private EcsCustomInject<AllPools> _allPools;
         private EcsCustomInject<GameData> _gameData;
         private EcsFilterInject<Inc<EBuyVehicleClicked>> _eBuyVehicleClickedFilter;
@@ -20,7 +21,7 @@ namespace Client
         {
             foreach (var entity in _eBuyVehicleClickedFilter.Value)
             {
-                if (Map.Instance.HasFreeCell(out var pair))
+                if (_map.Value.HasFreeCell(out var pair))
                 {
                     var button = _cBuyVehicle.Value.Get(entity).Handler.Button;
                     if (!Bank.SpendCoins(this, _gameData.Value.GetVehicleCost())) return;

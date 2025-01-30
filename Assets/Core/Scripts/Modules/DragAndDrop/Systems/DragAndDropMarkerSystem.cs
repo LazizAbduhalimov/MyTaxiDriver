@@ -23,7 +23,7 @@ namespace Client.Game.Test
             ref var dragData = ref _eDragStart.Pools.Inc1.Get(entity);
             var unpacked = dragData.PackedEntity.FastUnpack();
             ref var dragObject = ref _cDragObject.Value.Get(unpacked);
-            _cDragging.Value.TryAdd(unpacked);
+            _cDragging.Value.TryAdd(unpacked, out _);
             Debug.Log($"Start dragging {dragObject.DragAndDropMb.name}");
         }
         

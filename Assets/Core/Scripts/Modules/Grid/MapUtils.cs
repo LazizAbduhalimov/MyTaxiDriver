@@ -1,3 +1,5 @@
+using System;
+using Client;
 using Leopotam.EcsLite;
 using UnityEngine;
 
@@ -20,6 +22,31 @@ namespace LGrid
 
             standable = default;
             return false;
+        }
+        
+        public static Vector3 GetMouseWorldPosition()
+        {
+            var mouseScreenPosition = Input.mousePosition;
+            var plane = new Plane(Vector3.up, Vector3.zero);
+            var ray = Camera.main.ScreenPointToRay(mouseScreenPosition);
+            return plane.Raycast(ray, out var distance) ? ray.GetPoint(distance) : Vector3.zero;
+        }
+        
+        public static Vector3 GetLimitedMousePosition()
+        {
+            var mousePosition = GetMouseWorldPosition();
+            return mousePosition;
+        }
+
+        public static Vector3 GetSnappedPosition(Vector3 position)
+        {
+            foreach (var entity in Utilities.World.Filter<CGrid>().End())
+            {
+                var grid = Utilities.World.GetPool<CGrid>().Get(entity).Grid;
+                return grid.CellToWorld(grid.WorldToCell(position));
+            }
+
+            throw new Exception("CGrid is not inited!");
         }
     }
 }

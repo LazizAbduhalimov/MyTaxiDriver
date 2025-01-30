@@ -7,6 +7,7 @@ namespace Client.Game
 {
     public class MapInitSystem : IEcsInitSystem
     {
+        private EcsCustomInject<Map> _map;
         private EcsCustomInject<AllPools> _allPools;
         private const int Columns = 2; 
         private const int Rows = 1;
@@ -29,14 +30,14 @@ namespace Client.Game
                         effectiveCellSize.y,
                         z * effectiveCellSize.z
                     );
-                    if (Map.Instance.IsCellExists(cellCenter, out _))
+                    if (_map.Value.IsCellExists(cellCenter, out _))
                     {
                         Debug.LogError("Cell already exists");
                     }
                     else
                     {
                         _allPools.Value.CarPlace.GetFromPool(cellCenter);
-                        Map.Instance.CreateCell(Vector3Int.RoundToInt(cellCenter));
+                        _map.Value.CreateCell(Vector3Int.RoundToInt(cellCenter));
                     }
                 }
             }

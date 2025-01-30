@@ -66,10 +66,15 @@ public static class EcsLiteExtensions
         }
     }
 
-    public static bool TryAdd<T>(this EcsPool<T> pool, int entity) where T : struct
+    public static bool TryAdd<T>(this EcsPool<T> pool, int entity, out T component) where T : struct
     {
         var exists = pool.Has(entity);
-        if (!exists) pool.Add(entity);
+        if (!exists)
+        {
+            component = pool.Add(entity);
+        }
+
+        component = default;
         return exists;
     }
 }
