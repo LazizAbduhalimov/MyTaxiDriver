@@ -22,15 +22,15 @@ namespace Client
             {
                 if (Map.Instance.HasFreeCell(out var pair))
                 {
+                    var button = _cBuyVehicle.Value.Get(entity).Handler.Button;
                     if (!Bank.SpendCoins(this, _gameData.Value.GetVehicleCost())) return;
                     var vehicle = _allPools.Value.CarsPool[_gameData.Value.GetBuyingCarLevel()].GetFromPool(pair.Key);
                     pair.Value.TaxiBase = vehicle.GetComponent<TaxiBase>();
                     _gameData.Value.PurchaseNumber++;
                     
-                    SoundManager.Instance.PlayUISound(AllUiSounds.Purchased, pitchRange: 0.1f);
-                    // _sequence?.Complete();
-                    // _sequence = Sequence.Create(2, CycleMode.Yoyo, Ease.InOutSine)
-                    //     .Chain(Tween.Scale(Button.transform, 1.2f, duration: 0.1f));
+                    _sequence?.Complete();
+                    _sequence = Sequence.Create(2, CycleMode.Yoyo, Ease.InOutSine)
+                        .Chain(Tween.Scale(button.transform, 1.2f, duration: 0.1f));
                 }
             }
         }

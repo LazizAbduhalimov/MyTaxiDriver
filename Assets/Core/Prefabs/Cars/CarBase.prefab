@@ -609,10 +609,10 @@ GameObject:
   m_Component:
   - component: {fileID: 589830473135891568}
   - component: {fileID: 5463786891663518868}
-  - component: {fileID: 8307031085115250057}
   - component: {fileID: 3585924118494706200}
   - component: {fileID: 5461325912281939354}
   - component: {fileID: -1448525846849885508}
+  - component: {fileID: -1937244042975327101}
   m_Layer: 0
   m_Name: CarBase
   m_TagString: Untagged
@@ -654,19 +654,6 @@ MonoBehaviour:
   Speed: 10
   MoneyForCircle: 5
   Follower: {fileID: 0}
---- !u!114 &8307031085115250057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9110471136712900299}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c993950ca825404cac2e84f442286169, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SleepTime: 0.1
 --- !u!65 &3585924118494706200
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -725,6 +712,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a0d3e55b3841c046a9427285f200bf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-1937244042975327101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9110471136712900299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4947fcdcd0e48b8a38c42439784ef32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1570937902462086409

@@ -19,7 +19,7 @@ public class HighlightPlace : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             Mesh.material.color = HighlightColor;
-            Debug.Log("Changing");
+            // Debug.Log("Changing");
         }
     }
 

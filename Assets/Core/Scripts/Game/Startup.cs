@@ -3,7 +3,6 @@ using UnityEngine;
 using AB_Utility.FromSceneToEntityConverter;
 using Client.Game;
 using Client.Game.Test;
-using Core.Scripts.Game;
 using Game;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.ExtendedSystems;
@@ -28,8 +27,7 @@ namespace Client {
             _updateSystems = new EcsSystems (_world);
             _fixedUpdateSystems = new EcsSystems(_world);
 
-            Utilities.World = _world;
-            Utilities.EventsWorld = _eventsWorld;
+            Utilities.Init(_world, _eventsWorld);
             Bank.EventsWorld = _eventsWorld;
             
             AddInitSystems();
@@ -69,7 +67,8 @@ namespace Client {
         {
             _updateSystems
                 .AddWorld(_eventsWorld, "events")
-                .Add(new DragAndDropSystem())
+                .Add(new DragAndDropMarkerSystem())
+                .Add(new DragHandleSystem())
                 .Add(new EarnMoneySystem())
                 
                 .Add(new VehiclePurchaseSystem())
@@ -84,6 +83,9 @@ namespace Client {
                 
                 .DelHere<EEarnMoney>("events")
                 .DelHere<EBankValueChanged>("events")
+                
+                .DelHere<EDragStart>("events")
+                .DelHere<EDragEnd>("events")
                 .AddUIEventsDestroyers()
                 ;
         }

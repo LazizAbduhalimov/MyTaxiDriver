@@ -18,7 +18,6 @@ namespace Client
             foreach (var buttonEntity in _cBuyVehicleButtonFilter.Value)
             {
                 ref var buyButton = ref _cBuyVehicleButtonFilter.Pools.Inc1.Get(buttonEntity);
-                
                 var cost = _gameData.Value.GetVehicleCost();
                 var hasCoins = Bank.HasEnoughCoins(cost);
                 buyButton.Handler.Button.interactable = hasCoins;
@@ -35,7 +34,6 @@ namespace Client
                 
                 foreach (var entity in _eBankValueChanged.Value)
                 {
-                    ref var changedData = ref _eBankValueChanged.Pools.Inc1.Get(entity);
                     var cost = _gameData.Value.GetVehicleCost();
                     var hasCoins = Bank.HasEnoughCoins(cost);
                     buyButton.Handler.Button.interactable = hasCoins;

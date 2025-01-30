@@ -16,9 +16,8 @@ namespace Client.Game
             {
                 ref var earnData = ref _eEarnMoneyFilter.Pools.Inc1.Get(entity);
                 var collector = earnData.Collector;
-                collector.TaxiBase.Earn();
+                Earn(collector.TaxiBase.MoneyForCircle);
                 var position = collector.transform.position;
-                SoundManager.Instance.PlayFX(AllSfxSounds.Earned, position);
                 var poolObject = _allPools.Value.PopupsPool.GetFromPool(position.AddY(10f)) as Popup;
                 if (poolObject != null)
                 {
@@ -27,6 +26,11 @@ namespace Client.Game
                         .OnComplete(() => poolObject.gameObject.SetActive(false));
                 }
             }
+        }
+        
+        public void Earn(long value)
+        {
+            Bank.AddCoins(this, value);
         }
     }
 }

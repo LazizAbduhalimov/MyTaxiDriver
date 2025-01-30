@@ -30,12 +30,7 @@ namespace Client.Game
             Follower.speed = Speed;
             Follower.pathCreator = Links.Instance.PathCreator;
             _defaultOffset = _transparentGfx.localPosition;
-            Debug.Log(_defaultOffset);
-        }
-
-        public virtual void Earn()
-        {
-            Bank.AddCoins(this, MoneyForCircle);
+            // Debug.Log(_defaultOffset);
         }
 
         protected override void HandleClick()

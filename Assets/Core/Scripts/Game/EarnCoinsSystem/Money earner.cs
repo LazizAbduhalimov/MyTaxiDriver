@@ -1,5 +1,5 @@
+using Client;
 using Client.Game;
-using Core.Scripts.Game;
 using UnityEngine;
 
 public class Moneyearner : MonoBehaviour
