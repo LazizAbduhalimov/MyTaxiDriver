@@ -36,6 +36,7 @@ namespace Client
                 pair.Value.IsOccupied = true;
                 _cActive.Value.Add(taxiEntity);
                 _gameData.Value.PurchaseNumber++;
+                SoundManager.Instance.PlayUISound(AllUiSounds.Purchased, pitchRange: 0.1f);
                 _sequence?.Complete();
                 _sequence = Sequence.Create(2, CycleMode.Yoyo, Ease.InOutSine)
                     .Chain(Tween.Scale(button.transform, 1.2f, duration: 0.1f));

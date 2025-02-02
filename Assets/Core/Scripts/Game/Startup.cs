@@ -3,6 +3,7 @@ using UnityEngine;
 using AB_Utility.FromSceneToEntityConverter;
 using Client.Game;
 using Client.Game.Test;
+using Client.Saving;
 using Game;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.ExtendedSystems;
@@ -28,7 +29,7 @@ namespace Client {
             _updateSystems = new EcsSystems (_world);
             _fixedUpdateSystems = new EcsSystems(_world);
 
-            Utilities.Init(_world, _eventsWorld);
+            CommonUtilities.Init(_world, _eventsWorld);
             Bank.EventsWorld = _eventsWorld;
             
             AddInitSystems();
@@ -61,6 +62,7 @@ namespace Client {
                 .Add(new GridInitSystem())
                 .Add(new CarsInitSystem())
                 .Add(new InitCarsCoords())
+                .Add(new LoadDataSystem())
                 .Add(new InitUIInterface())
                 .Add(new InitUIButtons())
                 ;
@@ -77,18 +79,30 @@ namespace Client {
                 .Add(new VehiclePurchaseSystem())
                 .Add(new VehiclePurchaseButtonStateHandleSystem())
                 
+                .Add(new CoinPopupSystem())
                 .Add(new CoinDisplaySystem())
+
+                #region Bridges
                 
                 .Add(new SoundBridgeSystem())
                 .Add(new MusicBridgeSystem())
+                .Add(new ParticleBridgeSystem())
+                
+                #endregion
+                
                 .Add(new SoundSystem())
                 .Add(new MusicSystem())
+                
+                .Add(new DropDataSystem())
                 
                 .DelHere<EEarnMoney>("events")
                 .DelHere<EBankValueChanged>("events")
                 
                 .DelHere<EDragStart>("events")
                 .DelHere<EDragEnd>("events")
+                
+                .DelHere<EMerged>("events")
+                
                 .AddUIEventsDestroyers()
                 ;
         }
@@ -103,6 +117,8 @@ namespace Client {
 
             _world?.Destroy ();
             _world = null;
+            
+            Debug.Log("Destroy");
         }
 
         private void AddEditorSystems() 
@@ -115,16 +131,13 @@ namespace Client {
 
         private void InjectAllSystems(params IEcsSystems[] systems)
         {
-            var map = new Map();
-            var premadePools = FindObjectOfType<AllPools>();
-            var poolService = new PoolService("Pools");
             var gameData = new GameData();
             foreach (var system in systems)
             {
-                system.Inject(premadePools)
+                system.Inject(gameData.AllPools)
                       .Inject(gameData)
-                      .Inject(poolService)
-                      .Inject(map)
+                      .Inject(gameData.PoolService)
+                      .Inject(gameData.Map)
                     ;
             }
         }

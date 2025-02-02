@@ -1,7 +1,7 @@
 using PoolSystem.Alternative;
 using UnityEngine;
 
-namespace Client.Game
+namespace Client
 {
     public class AllPools : MonoBehaviour
     {

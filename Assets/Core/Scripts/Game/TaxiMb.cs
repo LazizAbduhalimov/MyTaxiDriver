@@ -2,7 +2,6 @@ using Client.Game.Test;
 using Leopotam.EcsLite;
 using PathCreation.Examples;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Client.Game
 {
@@ -14,7 +13,7 @@ namespace Client.Game
         public int MoneyForCircle;
 
         [HideInInspector] public PathFollower Follower;
-        [FormerlySerializedAs("_transparentGfx")] public Transform TransparentGfx;
+        [HideInInspector] public Transform TransparentGfx;
         private Vector3 _defaultOffset;
         
         private void SetLinks()
@@ -34,7 +33,7 @@ namespace Client.Game
 
         public void Init()
         {
-            var world = Utilities.World;
+            var world = CommonUtilities.World;
             var dragAndDrop = GetComponent<DragAndDropMb>();
             var entity = world.NewEntity();
             var packedEntity = world.PackEntity(entity);
@@ -47,7 +46,7 @@ namespace Client.Game
 
         public void Drive()
         {
-            Follower.distanceTravelled = 0;
+            Follower.distanceTravelled = Random.Range(0, 15);
             Follower.enabled = true;
             Follower.transform.localPosition = _defaultOffset;
             Follower.transform.localRotation = Quaternion.identity;

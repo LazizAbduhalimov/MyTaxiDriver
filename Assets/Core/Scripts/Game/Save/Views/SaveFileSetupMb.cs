@@ -1,46 +1,44 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Esper.ESave;
 using LGrid;
 using UnityEngine;
 
-namespace Client.Game.Save
+namespace Client.Saving
 {
-    public class DataSaver : MonoBehaviour
+    public class SaveFileSetupMb : MonoBehaviour
     {
-        private SaveFileSetup _saveFileSetup;
-
-        private void Start()
-        {
-            _saveFileSetup = GetComponent<SaveFileSetup>();
-        }
-
-        void OnApplicationQuit()
+        public long CoinsGainedIfZero;
+        public SaveFileSetup File;
+        
+        private void OnApplicationQuit()
         {
             SaveGame();
         }
 
         private void OnApplicationPause(bool pauseStatus)
         {
+            if (GameData.Instance == null) return;
             SaveGame();
         }
-
+        
+        public void Drop()
+        {
+            CommonUtilities.EventsWorld.GetPool<EDropData>().NewEntity(out _);
+        }
+        
         private void SaveGame()
         {
-            if (_saveFileSetup == null) return;
-            var saveFile = _saveFileSetup.GetSaveFile();
+            var saveFile = File.GetSaveFile();
             SaveCells(saveFile);
             SaveCoins(saveFile);
-            // SaveCost(saveFile);
+            SaveCost(saveFile);
             saveFile.Save();
             Debug.Log("Игра сохранена!");
         }
 
-        // private void SaveCost(SaveFile saveFile)
-        // {
-        //     saveFile.AddOrUpdateData("PurchaseNumber", Links.Instance.VehicleBuyer.PurchaseNumber);
-        // }
+        private void SaveCost(SaveFile saveFile)
+        {
+            saveFile.AddOrUpdateData("PurchaseNumber", GameData.Instance.PurchaseNumber);
+        }
 
         private void SaveCoins(SaveFile saveFile)
         {
@@ -50,13 +48,13 @@ namespace Client.Game.Save
         private void SaveCells(SaveFile saveFile)
         {
             var i = 0;
-            foreach (var pair in Map.Instance.Cells)
+            foreach (var pair in GameData.Instance.Map.Cells)
             {
-                if (pair.Value.TaxiMb == null) continue;
+                if (!MapUtils.TryGetCellOccupier<CTaxi>(pair.Key, CommonUtilities.World, out var taxi)) continue;
                 var cellSaveData = new CellsData
                 {
                     CellPositions = ((Vector3)pair.Key).ToSavable(),
-                    TaxiLevel = pair.Value.TaxiMb.Level
+                    TaxiLevel = taxi.TaxiMb.Level
                 };
                 var id = $"Cell{i}";
                 saveFile.AddOrUpdateData(id, cellSaveData);

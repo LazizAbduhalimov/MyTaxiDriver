@@ -8,7 +8,7 @@ public class Moneyearner : MonoBehaviour
     {
         if (other.TryGetComponent<Collector>(out var collector))
         {
-            var world = Utilities.EventsWorld;
+            var world = CommonUtilities.EventsWorld;
             world.GetPool<EEarnMoney>().Add(world.NewEntity()).Invoke(collector);
         }
     }

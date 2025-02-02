@@ -1,8 +1,7 @@
-using System;
+using Client;
 using Client.Game;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-using LSound;
 using UI.Buttons;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -14,6 +13,7 @@ namespace Game
         private AllSounds _allSounds;
         private EcsFilterInject<Inc<EBuyVehicleClicked>> _eBuyVehicleClickedFilter;
         private EcsFilterInject<Inc<EEarnMoney>> _eEarnMoneyFilter = "events";
+        private EcsFilterInject<Inc<EMerged>> _eMergedFilter = "events";
         
         public void Init(IEcsSystems systems)
         {
@@ -29,8 +29,16 @@ namespace Game
 
             foreach (var entity in _eBuyVehicleClickedFilter.Value)
             {
-                SoundManager.Instance.PlayUISound(AllUiSounds.Purchased, pitchRange: 0.1f);
+                
             }
+
+            foreach (var entity in _eMergedFilter.Value) PlayMergeSound(entity);
+        }
+
+        private void PlayMergeSound(int entity)
+        {
+            ref var merged = ref _eMergedFilter.Pools.Inc1.Get(entity);
+            SoundManager.Instance.PlayFX(AllSfxSounds.Merge, merged.Target.transform.position);
         }
     }
 }

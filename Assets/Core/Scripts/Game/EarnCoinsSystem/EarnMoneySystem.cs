@@ -1,13 +1,12 @@
-using Core.Scripts.Game;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-using PrimeTween;
 
 namespace Client.Game
 {
     public class EarnMoneySystem : IEcsRunSystem
     {
         private EcsCustomInject<AllPools> _allPools;
+        private EcsFilterInject<Inc<EMerged>> _eMergedFilter = "events";
         private EcsFilterInject<Inc<EEarnMoney>> _eEarnMoneyFilter = "events";
         
         public void Run(IEcsSystems systems)
@@ -17,18 +16,17 @@ namespace Client.Game
                 ref var earnData = ref _eEarnMoneyFilter.Pools.Inc1.Get(entity);
                 var collector = earnData.Collector;
                 Earn(collector.TaxiMb.MoneyForCircle);
-                var position = collector.transform.position;
-                var poolObject = _allPools.Value.PopupsPool.GetFromPool(position.AddY(10f)) as Popup;
-                if (poolObject != null)
-                {
-                    poolObject.Text.text = $"+{collector.TaxiMb.MoneyForCircle}";
-                    Tween.LocalPositionY(poolObject.transform, poolObject.transform.position.y + 5f, duration: 0.5f, Ease.OutSine)
-                        .OnComplete(() => poolObject.gameObject.SetActive(false));
-                }
+            }
+
+            foreach (var entity in _eMergedFilter.Value)
+            {
+                ref var mergedData = ref _eMergedFilter.Pools.Inc1.Get(entity);
+                Earn(mergedData.Source.MoneyForCircle);
+                Earn(mergedData.Target.MoneyForCircle);
             }
         }
-        
-        public void Earn(long value)
+
+        private void Earn(long value)
         {
             Bank.AddCoins(this, value);
         }

@@ -10,9 +10,6 @@ namespace Client.Game
         public Grid Grid;
         public PathCreator PathCreator;
         public CarsConfig CarsConfig;
-        public PoolContainer PopupsPool;
-        public PoolContainer MergeEffect;
-        public AllPools AllPools;
         
         public static Links Instance => _instance;
         private static Links _instance;

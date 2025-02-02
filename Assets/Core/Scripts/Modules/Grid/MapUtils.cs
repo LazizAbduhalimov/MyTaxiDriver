@@ -40,9 +40,9 @@ namespace LGrid
 
         public static Vector3 GetSnappedPosition(Vector3 position)
         {
-            foreach (var entity in Utilities.World.Filter<CGrid>().End())
+            foreach (var entity in CommonUtilities.World.Filter<CGrid>().End())
             {
-                var grid = Utilities.World.GetPool<CGrid>().Get(entity).Grid;
+                var grid = CommonUtilities.World.GetPool<CGrid>().Get(entity).Grid;
                 return grid.CellToWorld(grid.WorldToCell(position));
             }
 

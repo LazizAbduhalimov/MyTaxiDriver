@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Client
 {
-    public static class Utilities
+    public static class CommonUtilities
     {
         public static EcsWorld World;
         public static EcsWorld EventsWorld;

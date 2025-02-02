@@ -1,5 +1,6 @@
 using Client.Game;
 using Client.Game.Test;
+using Core.Scripts.Game;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using LGrid;
@@ -19,6 +20,8 @@ namespace Client
         private EcsFilterInject<Inc<CDragObject, CDragging>> _cDraggingFilter;
 
         private EcsPoolInject<CActive> _cActive;
+        private EcsPoolInject<CTaxi> _cTaxi;
+        private EcsPoolInject<EMerged> _eMerged = "events";
 
         private const float XOffset = 2f;
         private const float Duration = 0.5f;
@@ -28,25 +31,6 @@ namespace Client
         {
             foreach (var entity in _cDraggingFilter.Value) Drag(entity);
             foreach (var entity in _eDragEnd.Value) Drop(entity);
-
-            #region Debug
-            if (Input.GetMouseButtonDown(1))
-            {
-                var cellPos = Vector3Int.RoundToInt(MapUtils.GetSnappedMousePosition());
-                if (MapUtils.TryGetCellOccupier<CTaxi>(cellPos, _world.Value, out var standable))
-                {
-                    Debug.Log($"Have standable {standable.TaxiMb.name}");
-                }
-                else
-                {
-                    Debug.Log("Cell is empty");
-                }
-                if (_map.Value.IsCellExists(cellPos, out var cell))
-                {
-                    Debug.Log($"Cell is occupied {cell.IsOccupied}");
-                }
-            }
-            #endregion
         }
 
         private void Drag(int entity)
@@ -59,7 +43,9 @@ namespace Client
         private void Drop(int entity)
         {
             var packedDragEntity = _eDragEnd.Pools.Inc1.Get(entity).PackedEntity;
-            ref var drag = ref _cDraggingFilter.Pools.Inc1.Get(packedDragEntity.FastUnpack());
+            var dragEntity = packedDragEntity.FastUnpack();
+            ref var drag = ref _cDraggingFilter.Pools.Inc1.Get(dragEntity);
+            ref var cTaxi = ref _cTaxi.Value.Get(dragEntity);
             var transform = drag.DragAndDropMb.transform;
             var initialCell = _map.Value.GetCell(drag.LastDragInitialPoint);
             var cellToWorld = MapUtils.GetSnappedPosition(MapUtils.GetLimitedMousePosition());
@@ -78,7 +64,7 @@ namespace Client
                 return;
             }
                 
-            var draggedTaxi = drag.DragAndDropMb.GetComponent<TaxiMb>();
+            var draggedTaxi = cTaxi.TaxiMb;
             var mergingTaxi = droppedCellOccupier.TaxiMb;
             if (_allPools.Value.CarsPool.Length <= draggedTaxi.Level)
             {
@@ -87,43 +73,42 @@ namespace Client
             else if (mergingTaxi.Level == draggedTaxi.Level)
             {
                 initialCell.IsOccupied = false;
-                MergeAnimation(draggedTaxi, mergingTaxi, draggedTaxi.Level);
+                MergeAnimation(draggedTaxi, mergingTaxi);
                 return;
             }
             
             transform.position = initialCell.Position;
         }
         
-        private void MergeAnimation(TaxiMb dragged, TaxiMb merging, int carLevel)
+        private void MergeAnimation(TaxiMb dragged, TaxiMb merging)
         {
             Debug.Log($"Upgrade! from level {dragged.Level} to {dragged.Level+1}");
-            var dragTransfrom = dragged.transform;
+            var dragTransform = dragged.transform;
             var mergeTransform = merging.transform;
-            dragTransfrom.position = mergeTransform.position;
+            dragTransform.position = mergeTransform.position;
+            dragged.GetDragAndDropMb().SetEnabled(false);
+            merging.GetDragAndDropMb().SetEnabled(false);
             Sequence.Create(2, CycleMode.Yoyo, Ease.OutSine)
-                .Group(Tween.PositionX(dragTransfrom, dragTransfrom.position.x + XOffset, HalfDuration))
+                .Group(Tween.PositionX(dragTransform, dragTransform.position.x + XOffset, HalfDuration))
                 .Group(Tween.PositionX(mergeTransform, mergeTransform.position.x - XOffset, HalfDuration))
-                .OnComplete(() =>
-                {
-                    _cActive.Value.Del(dragged.PackedEntity.FastUnpack());
-                    _cActive.Value.Del(merging.PackedEntity.FastUnpack());
-                    dragged.gameObject.SetActive(false);
-                    merging.gameObject.SetActive(false);
-                    PlayMergeEffect(dragged, merging, carLevel);
-                });
+                .OnComplete(() => PlayMergeEffect(dragged, merging));
         }
         
-        private void PlayMergeEffect(TaxiMb dragged, TaxiMb merging, int carLevel)
+        private void PlayMergeEffect(TaxiMb dragged, TaxiMb merging)
         {
-            var pool = _allPools.Value.CarsPool[carLevel];
+            _cActive.Value.Del(dragged.PackedEntity.FastUnpack());
+            _cActive.Value.Del(merging.PackedEntity.FastUnpack());
+            dragged.GetDragAndDropMb().SetEnabled(true);
+            merging.GetDragAndDropMb().SetEnabled(true);
+            dragged.gameObject.SetActive(false);
+            merging.gameObject.SetActive(false);
+            
+            var pool = _allPools.Value.CarsPool[dragged.Level];
             var taxiMb = pool.GetFromPool(merging.transform.position);
             taxiMb.Drive();
             _cActive.Value.Add(taxiMb.PackedEntity.FastUnpack());
-            _allPools.Value.MergeEffect.GetFromPool(dragged.Follower.transform.position);
-            _allPools.Value.MergeEffect.GetFromPool(merging.Follower.transform.position);
-            _allPools.Value.MergeEffect.GetFromPool(merging.TransparentGfx.transform.position);
-            var mergeSound = Random.Range(1, 3) == 1 ? AllSfxSounds.Merge : AllSfxSounds.Merge2;
-            SoundManager.Instance.PlayFX(mergeSound, merging.transform.position);
+            
+            _eMerged.NewEntity(out _).Invoke(dragged, merging);
         }
         
         // private void FillCell(Vector3Int cellPosition)

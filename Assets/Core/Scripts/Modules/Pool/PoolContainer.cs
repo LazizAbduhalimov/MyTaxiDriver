@@ -25,6 +25,13 @@ namespace PoolSystem.Alternative
             Pool.AutoExpand = _autoExpand;
         }
 
+        public T GetFromPool<T>(Vector3 position) where T : PoolObject
+        {
+            var poolObject = Pool.GetFreeElement();
+            poolObject.transform.position = position;
+            return (T)poolObject;
+        }
+        
         public PoolObject GetFromPool(Vector3 position)
         {
             var poolObject = Pool.GetFreeElement();

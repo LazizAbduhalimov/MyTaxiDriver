@@ -16,7 +16,6 @@ namespace Client.Game
             var displayer = Object.FindObjectOfType<CoinShower>();
             _cCoinDisplayer.NewEntity(out _).Invoke(displayer.Text);
             ChangeCoins();
-            Bank.AddCoins(this, 5000);
         }
         
         public void Run(IEcsSystems systems)
