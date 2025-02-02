@@ -252,7 +252,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 60
+  orthographic size: 30
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -14948,7 +14948,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1246899757}
-        m_TargetAssemblyTypeName: Core.Scripts.Game.Save.ProgressDropper, Assembly-CSharp
+        m_TargetAssemblyTypeName: Client.Saving.SaveFileSetupMb, Assembly-CSharp
         m_MethodName: Drop
         m_Mode: 1
         m_Arguments:
@@ -16023,8 +16023,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1246899753}
   - component: {fileID: 1246899756}
-  - component: {fileID: 1246899755}
-  - component: {fileID: 1246899754}
   - component: {fileID: 1246899757}
   m_Layer: 0
   m_Name: Saver
@@ -16032,7 +16030,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1246899753
 Transform:
   m_ObjectHideFlags: 0
@@ -16048,31 +16046,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1817141158}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1246899754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1246899752}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 502a0e612add4a1c95a99406e6763704, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CoinsGainedIfZero: 20
---- !u!114 &1246899755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1246899752}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecc8b7e7a23d422d9e035ab1f6a8d9d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1246899756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16104,9 +16077,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1246899752}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4cdca7c8a1e4ea48b2774a86d7b1c3f, type: 3}
+  m_Script: {fileID: 11500000, guid: a5b4d0ff57264620abbbb8f7a69abf3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CoinsGainedIfZero: 20
   File: {fileID: 1246899756}
 --- !u!1001 &1247250883
 PrefabInstance:
@@ -22076,9 +22050,6 @@ MonoBehaviour:
   Grid: {fileID: 1899818397}
   PathCreator: {fileID: 25231308}
   CarsConfig: {fileID: 11400000, guid: 60708c68b822fc844beff8edc3c7a0fb, type: 2}
-  PopupsPool: {fileID: 1251326650}
-  MergeEffect: {fileID: 116839166}
-  AllPools: {fileID: 193191816}
 --- !u!4 &1817141158
 Transform:
   m_ObjectHideFlags: 0
