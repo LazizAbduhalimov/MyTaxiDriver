@@ -24,13 +24,13 @@ namespace PoolSystem.Alternative
         {
             _pool = new List<T>();
 
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
             {
                 CreateObject();
             }
         }
 
-        private T CreateObject(bool isActivateByDefault = false)
+        public T CreateObject(bool isActivateByDefault = false)
         {
             var createdObjcet = UnityEngine.Object.Instantiate(Prefab, Container);
             createdObjcet.gameObject.SetActive(isActivateByDefault);

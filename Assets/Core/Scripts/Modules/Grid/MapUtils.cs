@@ -10,7 +10,7 @@ namespace LGrid
         public static bool TryGetCellOccupier<T>(Vector3Int cell, EcsWorld world, out T standable) 
             where T: struct, ICellStandable
         {
-            foreach (var entity in world.Filter<T>().End())
+            foreach (var entity in world.Filter<T>().Inc<CActive>().End())
             {
                 ref var data = ref world.GetPool<T>().Get(entity);
                 if (data.Coords == cell)
@@ -47,6 +47,11 @@ namespace LGrid
             }
 
             throw new Exception("CGrid is not inited!");
+        }
+
+        public static Vector3 GetSnappedMousePosition()
+        {
+            return GetSnappedPosition(GetMouseWorldPosition());
         }
     }
 }

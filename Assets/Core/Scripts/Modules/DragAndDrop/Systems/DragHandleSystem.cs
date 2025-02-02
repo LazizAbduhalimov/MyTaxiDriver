@@ -1,3 +1,4 @@
+using Client.Game;
 using Client.Game.Test;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
@@ -9,16 +10,43 @@ namespace Client
 {
     public class DragHandleSystem : IEcsRunSystem
     {
+        private EcsWorldInject _world;
         private EcsCustomInject<Map> _map;
+        private EcsCustomInject<AllPools> _allPools;
         private EcsFilterInject<Inc<EDragStart>> _eDragStart = "events";
         private EcsFilterInject<Inc<EDragEnd>> _eDragEnd = "events";
 
         private EcsFilterInject<Inc<CDragObject, CDragging>> _cDraggingFilter;
+
+        private EcsPoolInject<CActive> _cActive;
+
+        private const float XOffset = 2f;
+        private const float Duration = 0.5f;
+        private const float HalfDuration = Duration / 2f;
         
         public void Run(IEcsSystems systems)
         {
             foreach (var entity in _cDraggingFilter.Value) Drag(entity);
             foreach (var entity in _eDragEnd.Value) Drop(entity);
+
+            #region Debug
+            if (Input.GetMouseButtonDown(1))
+            {
+                var cellPos = Vector3Int.RoundToInt(MapUtils.GetSnappedMousePosition());
+                if (MapUtils.TryGetCellOccupier<CTaxi>(cellPos, _world.Value, out var standable))
+                {
+                    Debug.Log($"Have standable {standable.TaxiMb.name}");
+                }
+                else
+                {
+                    Debug.Log("Cell is empty");
+                }
+                if (_map.Value.IsCellExists(cellPos, out var cell))
+                {
+                    Debug.Log($"Cell is occupied {cell.IsOccupied}");
+                }
+            }
+            #endregion
         }
 
         private void Drag(int entity)
@@ -33,71 +61,94 @@ namespace Client
             var packedDragEntity = _eDragEnd.Pools.Inc1.Get(entity).PackedEntity;
             ref var drag = ref _cDraggingFilter.Pools.Inc1.Get(packedDragEntity.FastUnpack());
             var transform = drag.DragAndDropMb.transform;
-            var initialPoint = drag.LastDragInitialPoint;
+            var initialCell = _map.Value.GetCell(drag.LastDragInitialPoint);
             var cellToWorld = MapUtils.GetSnappedPosition(MapUtils.GetLimitedMousePosition());
-            if (!_map.Value.IsCellExists(cellToWorld, out var cell) ||
-                cellToWorld == initialPoint)
+            if (!_map.Value.IsCellExists(cellToWorld, out var cell) || cellToWorld == initialCell.Position)
             {
-                transform.position = initialPoint;
+                transform.position = initialCell.Position;
                 return;
             }
 
-            if (cell.TaxiBase == null)
+            if (!MapUtils.TryGetCellOccupier<CTaxi>(cell.Position, _world.Value, out var droppedCellOccupier))
             {
-                if (_map.Value.IsCellExists(MapUtils.GetSnappedPosition(initialPoint), out var initialCell))
-                {
-                    initialCell.TaxiBase = null;
-                }
-
-                // cell.TaxiBase = _taxiBase;
+                cell.IsOccupied = true;
+                initialCell.IsOccupied = false;
                 transform.position = cellToWorld;
                 drag.LastDragInitialPoint = cellToWorld;
                 return;
             }
-        
-            // if (cell.TaxiBase.Level == _taxiBase.Level &&
-            //     !cell.TaxiBase.IsDriving)
-            // {
-            //     if (AllVehicles.Instance.CarsPool.Length <= _taxiBase.Level) Debug.Log("Max Level Reached!");
-            //     Debug.Log($"Upgrade! from level {_taxiBase.Level} to {_taxiBase.Level+1}");
-            //     if (_map.Value.IsCellExists(MapUtils.GetSnappedPosition(initialPoint), out var initialCell))
-            //     {
-            //         initialCell.TaxiBase = null;
-            //     }
-            //     MergeEffect(_taxiBase.transform, cell.TaxiBase.transform, cell);
-            // }
-            // else
-            // {
-            //     transform.position = MapUtils.GetSnappedPosition(initialPoint);
-            // }    
+                
+            var draggedTaxi = drag.DragAndDropMb.GetComponent<TaxiMb>();
+            var mergingTaxi = droppedCellOccupier.TaxiMb;
+            if (_allPools.Value.CarsPool.Length <= draggedTaxi.Level)
+            {
+                Debug.Log("Max Level Reached!");
+            }
+            else if (mergingTaxi.Level == draggedTaxi.Level)
+            {
+                initialCell.IsOccupied = false;
+                MergeAnimation(draggedTaxi, mergingTaxi, draggedTaxi.Level);
+                return;
+            }
+            
+            transform.position = initialCell.Position;
         }
         
-        // private void MergeEffect(Transform source, Transform target, Cell cell)
+        private void MergeAnimation(TaxiMb dragged, TaxiMb merging, int carLevel)
+        {
+            Debug.Log($"Upgrade! from level {dragged.Level} to {dragged.Level+1}");
+            var dragTransfrom = dragged.transform;
+            var mergeTransform = merging.transform;
+            dragTransfrom.position = mergeTransform.position;
+            Sequence.Create(2, CycleMode.Yoyo, Ease.OutSine)
+                .Group(Tween.PositionX(dragTransfrom, dragTransfrom.position.x + XOffset, HalfDuration))
+                .Group(Tween.PositionX(mergeTransform, mergeTransform.position.x - XOffset, HalfDuration))
+                .OnComplete(() =>
+                {
+                    _cActive.Value.Del(dragged.PackedEntity.FastUnpack());
+                    _cActive.Value.Del(merging.PackedEntity.FastUnpack());
+                    dragged.gameObject.SetActive(false);
+                    merging.gameObject.SetActive(false);
+                    PlayMergeEffect(dragged, merging, carLevel);
+                });
+        }
+        
+        private void PlayMergeEffect(TaxiMb dragged, TaxiMb merging, int carLevel)
+        {
+            var pool = _allPools.Value.CarsPool[carLevel];
+            var taxiMb = pool.GetFromPool(merging.transform.position);
+            taxiMb.Drive();
+            _cActive.Value.Add(taxiMb.PackedEntity.FastUnpack());
+            _allPools.Value.MergeEffect.GetFromPool(dragged.Follower.transform.position);
+            _allPools.Value.MergeEffect.GetFromPool(merging.Follower.transform.position);
+            _allPools.Value.MergeEffect.GetFromPool(merging.TransparentGfx.transform.position);
+            var mergeSound = Random.Range(1, 3) == 1 ? AllSfxSounds.Merge : AllSfxSounds.Merge2;
+            SoundManager.Instance.PlayFX(mergeSound, merging.transform.position);
+        }
+        
+        // private void FillCell(Vector3Int cellPosition)
         // {
-        //     const float xOffset = 2f;
-        //     const float duration = 0.5f;
-        //     source.position = target.position;
-        //     var halfDuration = duration / 2f;
-        //     Sequence.Create(2, CycleMode.Yoyo, Ease.OutSine)
-        //         .Group(Tween.PositionX(source, source.position.x + xOffset, halfDuration))
-        //         .Group(Tween.PositionX(target, target.position.x - xOffset, halfDuration))
-        //         .OnComplete(() =>
+        //     if (!Map.Instance.IsCellExists(cellPosition, out var cell))
+        //     {
+        //         cell = Map.Instance.CreateCell(cellPosition);
+        //     }
+        //     else
+        //     {
+        //         if (cell.TaxiMb != null)
         //         {
-        //             source.gameObject.SetActive(false);
-        //             target.gameObject.SetActive(false);
-        //             AfterMergeEffect(cell);
-        //         });
-        // }
+        //             var emptyCell = Map.Instance.Cells.Values.FirstOrDefault(c => c.TaxiMb == null);
+        //             if (emptyCell == null)
+        //             {
+        //                 Debug.LogError("Too many objects");
+        //                 gameObject.SetActive(false);
+        //                 return;
+        //             }
         //
-        // private void AfterMergeEffect(Cell cell)
-        // {
-        //     var pool = AllVehicles.Instance.CarsPool[_taxiBase.Level];
-        //     var createdObject = pool.GetFromPool(cell.Position);
-        //     cell.TaxiBase = createdObject.GetComponent<TaxiBase>();
-        //     var follower = createdObject.GetComponentInChildren<PathFollower>();
-        //     Links.Instance.MergeEffect.GetFromPool(follower.transform.position);
-        //     var mergeSound = Random.Range(1, 3) == 1 ? AllSfxSounds.Merge : AllSfxSounds.Merge2;
-        //     SoundManager.Instance.PlayFX(mergeSound, cell.Position);
+        //             cell = emptyCell;
+        //         }
+        //     }
+        //     cell.TaxiMb = _taxiMb;
+        //     transform.position = cell.Position;
         // }
     }
 }

@@ -6,7 +6,7 @@ namespace Client
     public class AllVehicles : MonoBehaviour
     {
         public CarsConfig CarsConfig;
-        public PoolContainer[] CarsPool;
+        public CarsPoolContainer[] CarsPool;
         public static AllVehicles Instance => _instance;
         private static AllVehicles _instance;
 
@@ -24,7 +24,7 @@ namespace Client
         [ContextMenu("GetChildPools")]
         private void GetChildPools()
         {
-            CarsPool = GetComponentsInChildren<PoolContainer>();
+            CarsPool = GetComponentsInChildren<CarsPoolContainer>();
         }
     }
 }

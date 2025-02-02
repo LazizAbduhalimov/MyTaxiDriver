@@ -1,3 +1,4 @@
+using LGrid;
 using UnityEngine;
 
 namespace Client.Game.Test
@@ -10,7 +11,6 @@ namespace Client.Game.Test
         public void Invoke(DragAndDropMb dragAndDropMb)
         {
             DragAndDropMb = dragAndDropMb;
-            LastDragInitialPoint = dragAndDropMb.transform.position;
         }
     }
 }

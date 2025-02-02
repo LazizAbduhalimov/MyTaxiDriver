@@ -14,7 +14,7 @@ namespace LGrid
         public bool HasFreeCell(out KeyValuePair<Vector3Int, Cell> value)
         {
             value = new KeyValuePair<Vector3Int, Cell>();
-            foreach (var pair in Cells.Where(pair => pair.Value.TaxiBase == null))
+            foreach (var pair in Cells.Where(pair => !pair.Value.IsOccupied))
             {
                 value = pair;
                 return true;
@@ -41,6 +41,12 @@ namespace LGrid
         {
             cell = null;
             return Cells.TryGetValue(Vector3Int.RoundToInt(position), out cell);
+        }
+
+        public Cell GetCell(Vector3 position)
+        {
+            IsCellExists(position, out var cell);
+            return cell;
         }
         
         public void RemoveCell(Vector3 position)

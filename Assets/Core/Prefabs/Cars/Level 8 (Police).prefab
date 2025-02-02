@@ -207,7 +207,7 @@ PrefabInstance:
     - target: {fileID: 6744096419637701037, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: ad27bb0b519a61e42a6f0ddff0580956, type: 2}
+      objectReference: {fileID: 2100000, guid: ca1eb6db662c95e47b63cb150cf463f9, type: 2}
     - target: {fileID: 9110471136712900299, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
       propertyPath: m_Name
       value: Level 8 (Police)

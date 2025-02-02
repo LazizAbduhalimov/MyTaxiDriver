@@ -56,10 +56,11 @@ namespace Client {
         {
             _initSystems
                 .AddWorld(_eventsWorld, "events")
+                .Add(new SettingsSystem())
                 .Add(new MapInitSystem())
                 .Add(new GridInitSystem())
-                .Add(new SettingsSystem())
-                .Add(new InitTaxiCoords())
+                .Add(new CarsInitSystem())
+                .Add(new InitCarsCoords())
                 .Add(new InitUIInterface())
                 .Add(new InitUIButtons())
                 ;

@@ -52,11 +52,11 @@ namespace Client.Game.Save
             var i = 0;
             foreach (var pair in Map.Instance.Cells)
             {
-                if (pair.Value.TaxiBase == null) continue;
+                if (pair.Value.TaxiMb == null) continue;
                 var cellSaveData = new CellsData
                 {
                     CellPositions = ((Vector3)pair.Key).ToSavable(),
-                    TaxiLevel = pair.Value.TaxiBase.Level
+                    TaxiLevel = pair.Value.TaxiMb.Level
                 };
                 var id = $"Cell{i}";
                 saveFile.AddOrUpdateData(id, cellSaveData);

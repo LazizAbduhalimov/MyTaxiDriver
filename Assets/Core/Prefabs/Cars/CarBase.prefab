@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c61b38c67a44f03bd316836077887c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TaxiBase: {fileID: 0}
+  TaxiMb: {fileID: 0}
 --- !u!114 &4279738669952616213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -565,7 +565,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7609343f0e5d8294c8619f1cb6fb85a1, type: 2}
+  - {fileID: 2100000, guid: 24c20333a6b79874298a79151051f9fa, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -609,10 +609,9 @@ GameObject:
   m_Component:
   - component: {fileID: 589830473135891568}
   - component: {fileID: 5463786891663518868}
+  - component: {fileID: -1937244042975327101}
   - component: {fileID: 3585924118494706200}
   - component: {fileID: 5461325912281939354}
-  - component: {fileID: -1448525846849885508}
-  - component: {fileID: -1937244042975327101}
   m_Layer: 0
   m_Name: CarBase
   m_TagString: Untagged
@@ -649,11 +648,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7913cbce8d324461aa2d1385a027e767, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SleepTime: 0.1
   Level: 1
   Speed: 10
   MoneyForCircle: 5
   Follower: {fileID: 0}
+  TransparentGfx: {fileID: 0}
+--- !u!114 &-1937244042975327101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9110471136712900299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4947fcdcd0e48b8a38c42439784ef32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!65 &3585924118494706200
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -702,30 +713,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-1448525846849885508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9110471136712900299}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a0d3e55b3841c046a9427285f200bf7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &-1937244042975327101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9110471136712900299}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4947fcdcd0e48b8a38c42439784ef32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1570937902462086409
 PrefabInstance:
   m_ObjectHideFlags: 0

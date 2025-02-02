@@ -175,7 +175,7 @@ PrefabInstance:
     - target: {fileID: 6744096419637701037, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 58738d9685e3eaf4aa3b0771897bef65, type: 2}
+      objectReference: {fileID: 2100000, guid: 8d937782c962a9044a28c21514c73ffb, type: 2}
     - target: {fileID: 7627002445133212148, guid: 4bb0bdbb91a5fde4ba73234d118190e8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.16
@@ -217,8 +217,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7913cbce8d324461aa2d1385a027e767, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SleepTime: 0.2
   Level: 6
   Speed: 130.00465
   MoneyForCircle: 133
   Follower: {fileID: 0}
+  TransparentGfx: {fileID: 0}

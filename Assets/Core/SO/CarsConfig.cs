@@ -15,7 +15,7 @@ public class CarsConfig : ScriptableObject
     public Vector2 CostBoundries;
     public AnimationCurve Cost;
 
-    public TaxiBase[] Cars;
+    public TaxiMb[] Cars;
 
     public float GetSpeed(int level)
     {

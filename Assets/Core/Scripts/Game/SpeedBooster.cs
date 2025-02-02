@@ -1,14 +1,12 @@
-using System;
 using PathCreation.Examples;
 using PrimeTween;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Client.Game
 {
     public class SpeedBooster : MonoBehaviour
     {
-        private TaxiBase _taxiBase;
+        private TaxiMb _taxiMb;
         public GameObject Particle;
         private Transform _trails;
         private float _boostPercentage = 5f;
@@ -19,15 +17,12 @@ namespace Client.Game
 
         private void OnEnable()
         {
-            if (_taxiBase == null) _taxiBase = GetComponentInParent<TaxiBase>();
-            _taxiBase.OnDrivingStateChange += OnStateChanged;
+            if (_taxiMb == null) _taxiMb = GetComponentInParent<TaxiMb>();
         }
-
-        private void OnDisable() => _taxiBase.OnDrivingStateChange -= OnStateChanged;
 
         private void Start()
         {
-            _taxiBase = GetComponentInParent<TaxiBase>();
+            _taxiMb = GetComponentInParent<TaxiMb>();
             _pathFollower = GetComponent<PathFollower>();
             _trails = GetComponentsInChildren<Transform>()[1];
             _trails.gameObject.SetActive(false);

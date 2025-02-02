@@ -1,15 +1,16 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Client.Game
 {
     public class Collector : MonoBehaviour
     {
-        [HideInInspector] public TaxiBase TaxiBase;
+        [FormerlySerializedAs("TaxiBase")] [HideInInspector] public TaxiMb TaxiMb;
 
         private void Start()
         {
-            TaxiBase = GetComponentInParent<TaxiBase>();
+            TaxiMb = GetComponentInParent<TaxiMb>();
         }
     }
 }

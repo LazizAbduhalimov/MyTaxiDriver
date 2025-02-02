@@ -4,6 +4,6 @@ namespace LGrid
 {
     public interface ICellStandable
     {
-        public Vector3Int Coords { get; set; }
+        public Vector3 Coords { get; }
     }
 }
