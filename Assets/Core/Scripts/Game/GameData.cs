@@ -13,6 +13,7 @@ namespace Client
         public Map Map;
         public PoolService PoolService;
         public AllPools AllPools;
+        public Postponer Postponer;
         
         public GameData()
         {
@@ -20,6 +21,7 @@ namespace Client
             Map = new Map();
             AllPools = Object.FindObjectOfType<AllPools>();
             PoolService = new PoolService("Pools");
+            Postponer = new Postponer(CommonUtilities.EventsWorld);
         }
     }
 

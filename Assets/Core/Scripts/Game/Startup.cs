@@ -61,7 +61,6 @@ namespace Client {
                 .Add(new MapInitSystem())
                 .Add(new GridInitSystem())
                 .Add(new CarsInitSystem())
-                .Add(new InitCarsCoords())
                 .Add(new LoadDataSystem())
                 .Add(new InitUIInterface())
                 .Add(new InitUIButtons())
@@ -78,6 +77,7 @@ namespace Client {
                 
                 .Add(new VehiclePurchaseSystem())
                 .Add(new VehiclePurchaseButtonStateHandleSystem())
+                .Add(new SpeedBoostSystem())
                 
                 .Add(new CoinPopupSystem())
                 .Add(new CoinDisplaySystem())
@@ -96,13 +96,13 @@ namespace Client {
                 .Add(new DropDataSystem())
                 
                 .DelHere<EEarnMoney>("events")
-                .DelHere<EBankValueChanged>("events")
                 
                 .DelHere<EDragStart>("events")
                 .DelHere<EDragEnd>("events")
                 
                 .DelHere<EMerged>("events")
-                
+                .DelHere<EBoostSpeed>("events")
+                .DelHere<EBankValueChanged>("events")
                 .AddUIEventsDestroyers()
                 ;
         }

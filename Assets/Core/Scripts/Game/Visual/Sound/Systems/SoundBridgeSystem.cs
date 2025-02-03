@@ -12,6 +12,7 @@ namespace Game
     {
         private AllSounds _allSounds;
         private EcsFilterInject<Inc<EBuyVehicleClicked>> _eBuyVehicleClickedFilter;
+        private EcsFilterInject<Inc<EBoostSpeed>> _eSpeedBoostFilter = "events";
         private EcsFilterInject<Inc<EEarnMoney>> _eEarnMoneyFilter = "events";
         private EcsFilterInject<Inc<EMerged>> _eMergedFilter = "events";
         
@@ -33,6 +34,13 @@ namespace Game
             }
 
             foreach (var entity in _eMergedFilter.Value) PlayMergeSound(entity);
+            foreach (var entity in _eSpeedBoostFilter.Value) PlayBoostSpeedSound(entity);
+        }
+
+        private void PlayBoostSpeedSound(int entity)
+        {
+            var position = _eSpeedBoostFilter.Pools.Inc1.Get(entity).SpeedBoosterMb.transform.position;
+            SoundManager.Instance.PlayFX(AllSfxSounds.Woosh, position);
         }
 
         private void PlayMergeSound(int entity)

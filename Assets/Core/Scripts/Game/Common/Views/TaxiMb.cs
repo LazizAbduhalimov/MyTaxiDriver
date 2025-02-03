@@ -16,6 +16,22 @@ namespace Client.Game
         [HideInInspector] public Transform TransparentGfx;
         private Vector3 _defaultOffset;
         
+        public void Init()
+        {
+            var world = CommonUtilities.World;
+            var dragAndDrop = GetComponent<DragAndDropMb>();
+            var speedBooster = GetComponentInChildren<SpeedBoosterMb>();
+            var entity = world.NewEntity();
+            var packedEntity = world.PackEntity(entity);
+            PackedEntity = packedEntity;
+            dragAndDrop.PackedEntity = packedEntity;
+            speedBooster.PackedEntity = packedEntity;
+            world.GetPool<CTaxi>().Add(entity).Invoke(this);
+            world.GetPool<CDragObject>().Add(entity).Invoke(dragAndDrop);
+            world.GetPool<CSpeedBooster>().Add(entity).Invoke(speedBooster);
+            SetLinks();
+        }
+        
         private void SetLinks()
         {
             Follower = GetComponentInChildren<PathFollower>(true);
@@ -29,19 +45,6 @@ namespace Client.Game
         {
             Speed = carsConfig.GetSpeed(Level);
             MoneyForCircle = (int)carsConfig.GetProfit(Level);
-        }
-
-        public void Init()
-        {
-            var world = CommonUtilities.World;
-            var dragAndDrop = GetComponent<DragAndDropMb>();
-            var entity = world.NewEntity();
-            var packedEntity = world.PackEntity(entity);
-            PackedEntity = packedEntity;
-            dragAndDrop.PackedEntity = packedEntity;
-            world.GetPool<CTaxi>().Add(entity).Invoke(this);
-            world.GetPool<CDragObject>().Add(entity).Invoke(dragAndDrop);
-            SetLinks();
         }
 
         public void Drive()
