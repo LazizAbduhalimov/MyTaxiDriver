@@ -1,0 +1,340 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Weapons
+  m_EditorClassIdentifier: 
+  m_GroupName: Weapons
+  m_Data:
+    m_SerializedData: []
+  m_GUID: d34dcd467efc8024cb8c48c34b578364
+  m_SerializeEntries:
+  - m_GUID: 3442fa97a9a29e2459df4da4aceef6ee
+    m_Address: SW15
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0fba9115b1cb8474eb7607b9dcd8f05e
+    m_Address: SW14
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1e472be1cfb66404c861af2c60cddc4a
+    m_Address: SW13
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 36ef22ace384a574fba467c76f02d238
+    m_Address: SW12
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 107e257e6ff864b48a30be23f0a7272d
+    m_Address: SW11.002
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ad20d3c0190a6cb4eb7ddc2b88b15b61
+    m_Address: SW10
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dd708ef28a760c2469a13f3e13702c6a
+    m_Address: SW09
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d6f92a4760c7620469aebe4879a85ab6
+    m_Address: SW08
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ab43377b2535aa9419f829f42ba5bad4
+    m_Address: SW07
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b40b634dfdb2b2a46b5a08b1073a6d8c
+    m_Address: SW06
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c4d277835a6752748af88a09f0e6aeda
+    m_Address: SW05
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 79da73c0579311c4baf8de13fd74c674
+    m_Address: SW04
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7892f6dbd0446064b893d4944a8df6dc
+    m_Address: SW03
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7c758ad1b679e3941b8d6460c3d2e0ff
+    m_Address: SW02 2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c2659cb8b1457c84db47dec4fbfd29c4
+    m_Address: SW01 2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 603aa49c288eb5a499ecadfa9d63e3c6
+    m_Address: Sword1_Material_Bronze
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 76ec0f7c7d6c188409b0ddd47bd763d8
+    m_Address: Sword1_Material_Gold
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fa5baed6be3065a459482872af5d2796
+    m_Address: Sword1_Material_Silver
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a5ddb0105fe4c1144968b52a304f3945
+    m_Address: Sword2_Material_Green
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 58e43cc7cb9771d4bbe67f63914f065e
+    m_Address: Sword2_Material_Red
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ee4b8981a11ace3479f8bef2e17e984c
+    m_Address: Sword2_Material_Yellow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6592fe0086859e74c84162de3826b9a5
+    m_Address: Sword3_Material_Red
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4b6de7956318a624aa6b8c140a48b652
+    m_Address: Sword3_Material_Green
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8fbe65689cacd8545904ad29279d3854
+    m_Address: Sword3_Material_Blue
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 33a16add35bcca3468a326685219fd7d
+    m_Address: Sword4_Material_Blue
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5bf9745e4cdf3544db118edd03429750
+    m_Address: Sword4_Material_Yellow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4c4919b0d02151f428dcb09dd55dd98d
+    m_Address: Sword4_Material_Red
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 741357fc19be8c74dab3f57ba2218450
+    m_Address: Sword5_Material_Gold
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 76faf25298597ac4f85cf3a33d6304da
+    m_Address: Sword5_Material_Yellow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b602efdc9b084f94a9414457436f9fdb
+    m_Address: Sword5_Material_Red
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8f16b6367f3f3e145971c36ba0e2ae5c
+    m_Address: Sword5_Material_Blue
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 602e7e4cb7c849340a157ea612777f14
+    m_Address: Sword6_Material_Blue
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1513e28ac8bfeb5479f03c202f6127d1
+    m_Address: Sword6_Material_Yellow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9b468e68d2e1d36499dc32c5a138ab91
+    m_Address: Sword6_Material_Red
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f7bc641c2694d174880b6740ddc9d615
+    m_Address: Sword8_Material_Corrupted
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 287f1f4aea3b970499ca92b90a328c15
+    m_Address: Sword8_Material_Gold
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cd652b8de7a38904aaa89a9a1c0ce503
+    m_Address: Sword8_Material_White
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8046cf35ef91b0e4688574b6e9084f32
+    m_Address: Sword9_Material_Purple
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 72bcee339808e42418cd87c782e2038c
+    m_Address: Sword9_Material_Red
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 07f19b2562ee57443a704bf6e0a59c02
+    m_Address: Sword9_Material_Green
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6ad9eaa16c0d35a4baa300d84fb7bd91
+    m_Address: Sword9_Material_White
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eb402d4b807ff8f41b678f805af64c62
+    m_Address: Sword9_Material_Blue
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d1a93d013d9159c40a4c483801aad7a0
+    m_Address: Sword10_Material_Bone
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7c079598e25f0254baff8031cb076111
+    m_Address: Sword10_Material_Brown
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dd236475abad42440b4df1413462e085
+    m_Address: Sword10_Material_Dark
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 145145c843892ac44b405716fb4d77c4
+    m_Address: Sword11_Material_Bone
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 06a63dded40ae3c4da5e6fd287e763f6
+    m_Address: Sword11_Material_Blood
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: faa043329ba53f24d956f4890e9b0acd
+    m_Address: Sword11_Material_Dark
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a0fc8f3d94fe3e04abf47472225cfafc
+    m_Address: Sword12_Material_Purple
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b03e868047761a54a988a324987935c9
+    m_Address: Sword12_Material_Green
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5e852c0c6cb6946449056929e2b7270a
+    m_Address: Sword12_Material_Red
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 914271d59ff026e4f8fc9a6e484b6c15
+    m_Address: Sword13_Material_Red
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 16c9654cb81a4474e9ab408d8255b90a
+    m_Address: Sword13_Material_Cyan
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f6a771f5dc3dbd7498a557a26e86f692
+    m_Address: Sword13_Material_Green
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a76a0a1d2599dfe4e8a8eb35cbfca271
+    m_Address: Sword13_Material_Orange
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4e727a3391c170e4d8f10273d3239503
+    m_Address: Sword13_Material_Blue
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b05625817e664d545a36bb169d405065
+    m_Address: Sword14_Material_Red
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 97aa79b7a4e5e614baee4cd7894458b0
+    m_Address: Sword14_Material_Blue
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7a0b40e7498a934419360ad8a890fc3d
+    m_Address: Sword14_Material_Yellow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 80e001b428059e64984957ba855f8066
+    m_Address: Sword15_Material_Frost
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 245c79e92cc471e429174ceadfdbeea1
+    m_Address: Sword15_Material_Lava
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 087a829321254de468b96becfbb11423
+    m_Address: Sword15_Material_Iron
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2a1741a9171aecf439852b79c94fb55b
+    m_Address: Sword15_Material_Earth
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: e0b033071125de9409e69e337ce08a01, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 3861aa28e33a09942a1664c073fbf1bf, type: 2}
+    - {fileID: 11400000, guid: f4efbabb0d97b1f45baf191e313f7965, type: 2}
