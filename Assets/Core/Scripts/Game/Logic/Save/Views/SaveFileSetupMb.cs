@@ -50,7 +50,7 @@ namespace Client.Saving
             var i = 0;
             foreach (var pair in GameData.Instance.Map.Cells)
             {
-                if (!MapUtils.TryGetCellOccupier<CTaxi>(pair.Key, CommonUtilities.World, out var taxi)) continue;
+                if (!MapUtils.TryGetCellOccupier<CTaxi, CActive>(pair.Key, CommonUtilities.World, out var taxi)) continue;
                 var cellSaveData = new CellsData
                 {
                     CellPositions = ((Vector3)pair.Key).ToSavable(),

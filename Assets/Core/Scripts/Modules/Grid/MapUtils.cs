@@ -7,8 +7,9 @@ namespace LGrid
 {
     public static class MapUtils
     {
-        public static bool TryGetCellOccupier<T>(Vector3Int cell, EcsWorld world, out T standable) 
+        public static bool TryGetCellOccupier<T, CActive>(Vector3Int cell, EcsWorld world, out T standable) 
             where T: struct, ICellStandable
+            where CActive : struct
         {
             foreach (var entity in world.Filter<T>().Inc<CActive>().End())
             {
