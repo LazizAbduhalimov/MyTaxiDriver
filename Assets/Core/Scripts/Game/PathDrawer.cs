@@ -37,7 +37,7 @@ namespace Core.Scripts.Game
         public void Update()
         {
             var mousePosition = Vector3Int.RoundToInt(MapUtils.GetMouseWorldPosition());
-            var start = Vector3Int.RoundToInt(Unit.transform.position);
+            var start = Vector3Int.RoundToInt(Unit.position);
             PreviewPath(start, mousePosition);
             DoPath(start, mousePosition);
         }
@@ -62,7 +62,7 @@ namespace Core.Scripts.Game
         private void PreviewPath(Vector3Int start, Vector3Int finish)
         {
             var path = _pathFinder.FindPath(start, finish);
-            var placingCells = _pathFinder.GetPlacedCells(finish);
+            var placingCells = _pathFinder.GetPlacedCells(finish, false);
             foreach (var placingCell in placingCells)
             {
                 if (Map.Instance.IsCellExists(placingCell, out var cell))
