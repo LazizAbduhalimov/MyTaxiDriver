@@ -7,24 +7,32 @@ public class PathFinder
 {
     private Dictionary<Vector3Int, Cell> _grid;
     private Vector2Int _unitSize;
-    private Vector2Int _placedAnchor;
-    private Vector2Int _ghostAnchor;
+    public Vector2Int _anchor;
+    private Vector2Int _fixedAnchor;
 
-    public PathFinder(Dictionary<Vector3Int, Cell> grid, Vector2Int unitSize, Vector2Int placedAnchor)
+    private List<Vector2Int> AllAnchors = new List<Vector2Int>()
+    {
+        new Vector2Int(1, 1),
+        new Vector2Int(2, 1),
+        new Vector2Int(1, 1),
+        new Vector2Int(1, 1),
+    }; 
+
+    public PathFinder(Dictionary<Vector3Int, Cell> grid, Vector2Int unitSize, Vector2Int anchor)
     {
         _grid = grid;
         _unitSize = unitSize;
-        _placedAnchor = placedAnchor;
+        _anchor = anchor;
+        _fixedAnchor = anchor;
     }
 
     public List<Cell> FindPath(Vector3Int start, Vector3Int goal)
     {
-        _ghostAnchor = _placedAnchor;
-        if (!CanPlaceUnitAtGhostAnchor(start) || !CanPlaceUnitAtGhostAnchor(goal))
+        // _anchor = GetAnchor(GetUnitCenter(start, _anchor), goal);
+        //TODO: блокируется один из способов расстановки 
+        if (!CanPlaceUnit(start) || !CanPlaceUnit(goal))
             return new List<Cell>();
-        
-        var anchor3d = new Vector3Int(_ghostAnchor.x, 0, _ghostAnchor.y);
-        Debug.DrawRay(GetUnitCenter(start), Vector3.up, Color.magenta);
+
         var openSet = new HashSet<Vector3Int> { start };
         var cameFrom = new Dictionary<Vector3Int, Vector3Int>();
 
@@ -40,9 +48,11 @@ public class PathFinder
 
             openSet.Remove(current);
 
+            _anchor = GetAnchor(GetUnitCenter(current, _anchor), goal);
+            Debug.Log(_anchor);
             foreach (var neighbor in GetNeighbors(current))
             {
-                if (!CanPlaceUnitAtGhostAnchor(neighbor))
+                if (!CanPlaceUnit(neighbor))
                     continue;
 
                 var tentativeGScore = gScore[current] + Vector3Int.Distance(current, neighbor);
@@ -60,10 +70,22 @@ public class PathFinder
         return new List<Cell>(); // Если пути нет
     }
 
+    
+    private List<Cell> ReconstructPath(Dictionary<Vector3Int, Vector3Int> cameFrom, Vector3Int current)
+    {
+        var path = new List<Cell> { _grid[current] };
+        while (cameFrom.ContainsKey(current))
+        {
+            current = cameFrom[current];
+            path.Add(_grid[current]);
+        }
+        path.Reverse();
+        return path;
+    }
+    
     public static Vector2Int GetAnchor(Vector3 origin, Vector3 point)
     {
         var quadrant = GetQuadrant(origin, point);
-        Debug.Log(quadrant);
         var anchor = quadrant switch
         {
             1 => new Vector2Int(2, 2),
@@ -80,14 +102,11 @@ public class PathFinder
     {
         var dx = point.x - origin.x;
         var dz = point.z - origin.z;
-        Debug.Log($"dx = {dx}");
-        Debug.Log($"dz = {dz}");
         if (dx >= 0 && dz >= 0) return 1;
         if (dx < 0 && dz >= 0) return 2;
         if (dx < 0 && dz < 0) return 3;
         return 4;
     }
-
 
     private float Heuristic(Vector3Int a, Vector3Int b)
     {
@@ -120,13 +139,8 @@ public class PathFinder
         var check2 = cell + dir2;
 
         // Добавляем диагональ только если на всех трёх клетках юнит можно разместить
-        if (CanPlaceUnitAtGhostAnchor(diagonal) && CanPlaceUnitAtGhostAnchor(check1) && CanPlaceUnitAtGhostAnchor(check2))
+        if (CanPlaceUnit(diagonal) && CanPlaceUnit(check1) && CanPlaceUnit(check2))
             neighbors.Add(diagonal);
-    }
-    
-    private bool CanPlaceUnitAtGhostAnchor(Vector3Int position)
-    {
-        return CanPlaceUnit(position, _ghostAnchor);
     }
     
     private bool CanPlaceUnit(Vector3Int position, Vector2Int anchor)
@@ -146,18 +160,22 @@ public class PathFinder
         }
         return canPlace;
     }
+
+    private bool CanPlaceUnit(Vector3Int position)
+    {
+        return CanPlaceUnit(position, _anchor);
+    }
     
-    public Vector3Int[] GetPlacedCells(Vector3Int position, bool isGhostAnchor)
+    public Vector3Int[] GetPlacedCells(Vector3Int position)
     {
         var placedCells = new Vector3Int[_unitSize.x * _unitSize.y];
         var i = 0;
-        var anchor = isGhostAnchor ? _ghostAnchor : _placedAnchor;
         for (var x = 0; x < _unitSize.x; x++)
         {
             for (var z = 0; z < _unitSize.y; z++)
             {
-                var anchorPosX = anchor.x - 1;  
-                var anchorPosY = anchor.y - 1;  
+                var anchorPosX = _anchor.x - 1;  
+                var anchorPosY = _anchor.y - 1;  
                 var checkPos = new Vector3Int(position.x + x - anchorPosX, position.y, position.z + z - anchorPosY);
                 placedCells[i] = checkPos;
                 i++;
@@ -165,26 +183,11 @@ public class PathFinder
         }
         return placedCells;
     }
-
-    private List<Cell> ReconstructPath(Dictionary<Vector3Int, Vector3Int> cameFrom, Vector3Int current)
-    {
-        var path = new List<Cell> { _grid[current] };
-        while (cameFrom.ContainsKey(current))
-        {
-            current = cameFrom[current];
-            path.Add(_grid[current]);
-        }
-        path.Reverse();
-        return path;
-    }
     
-    public Vector3 GetUnitCenter(Vector3Int cellPosition)
+    public Vector3 GetUnitCenter(Vector3Int cellPosition, Vector2Int anchor)
     {
-        // Предполагается, что _unitSize.x - количество клеток по оси X (ширина),
-        // а _unitSize.y - количество клеток по оси Z (глубина) 
-        var centerX = cellPosition.x - (_placedAnchor.x - 1) + (_unitSize.x -1) / 2f;
-        var centerZ = cellPosition.z - (_placedAnchor.y - 1) + (_unitSize.y -1) / 2f;
-        // Оставляем высоту без изменений (anchor.y)
+        var centerX = cellPosition.x - (anchor.x - 1) + (_unitSize.x -1) / 2f;
+        var centerZ = cellPosition.z - (anchor.y - 1) + (_unitSize.y -1) / 2f;
         return new Vector3(centerX, cellPosition.y, centerZ);
     }
 }

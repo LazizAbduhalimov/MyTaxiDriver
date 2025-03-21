@@ -16,6 +16,7 @@ namespace Core.Scripts.Game
         private List<Tile> _unSettableTiles = new();
 
         private List<Cell> _unitCells = new ();
+        private bool isEnabled;
 
         private void Start()
         {
@@ -30,12 +31,16 @@ namespace Core.Scripts.Game
             // Map.Instance.GetCell(cellPosition);
             // cell.IsOccupied = true;
             _pathFinder = new PathFinder(Map.Instance.Cells, unitSize, anchor);
-            Unit.position = _pathFinder.GetUnitCenter(cellPosition);
+            Unit.position = _pathFinder.GetUnitCenter(cellPosition, anchor);
             Unit.localScale = new Vector3(unitSize.x, 1, unitSize.y);
         }
         
         public void Update()
         {
+            if (Input.GetKeyDown(KeyCode.Tab))
+                isEnabled = !isEnabled;
+            if (!isEnabled) return;
+            Debug.Log(isEnabled);
             var mousePosition = Vector3Int.RoundToInt(MapUtils.GetMouseWorldPosition());
             var start = Vector3Int.RoundToInt(Unit.position);
             PreviewPath(start, mousePosition);
@@ -49,7 +54,7 @@ namespace Core.Scripts.Game
                 if (Map.Instance.IsCellExists(finish, out var cell))
                 {
                     if (cell.IsOccupied) return;
-                    Unit.transform.position = _pathFinder.GetUnitCenter(finish);
+                    Unit.transform.position = _pathFinder.GetUnitCenter(finish, _pathFinder._anchor);
                 }
                 
                 if (Map.Instance.IsCellExists(start, out cell))
@@ -62,7 +67,7 @@ namespace Core.Scripts.Game
         private void PreviewPath(Vector3Int start, Vector3Int finish)
         {
             var path = _pathFinder.FindPath(start, finish);
-            var placingCells = _pathFinder.GetPlacedCells(finish, false);
+            var placingCells = _pathFinder.GetPlacedCells(finish);
             foreach (var placingCell in placingCells)
             {
                 if (Map.Instance.IsCellExists(placingCell, out var cell))

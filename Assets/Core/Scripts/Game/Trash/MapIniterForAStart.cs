@@ -29,7 +29,7 @@ namespace Core.Scripts.Game
         }
 
         [ContextMenu("Create map")]
-        public void CreateMap30x30() => CreateMap(30, 30);
+        public void CreateMap30x30() => CreateMap(100, 100);
 
         private void CreateMap(int x, int z)
         {
