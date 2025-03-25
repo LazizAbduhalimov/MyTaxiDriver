@@ -17,18 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: d1e900c64821e76428438ee0687ba730
   m_SerializeEntries:
-  - m_GUID: 5b0886779c6043e4fa829569e5824314
-    m_Address: music_alone
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 514f0b3d0e7de22408b2b18105869bd4
     m_Address: music_vibin
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 67765300cd39f1646aa7660a8aa631e9
-    m_Address: music_warm
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
