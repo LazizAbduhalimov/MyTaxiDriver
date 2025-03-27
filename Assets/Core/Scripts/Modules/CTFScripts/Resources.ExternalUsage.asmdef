@@ -1,0 +1,16 @@
+{
+    "name": "Resources.ExternalUsage",
+    "rootNamespace": "",
+    "references": [
+        "GUID:f2f4e9996fb74c140acb62ae3cbed7e5"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

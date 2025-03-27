@@ -1,5 +1,6 @@
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using Module.Bank;
 
 namespace Client.Game
 {

@@ -55,7 +55,7 @@ namespace Client
                 return;
             }
 
-            if (!MapUtils.TryGetCellOccupier<CTaxi>(cell.Position, _world.Value, out var droppedCellOccupier))
+            if (!MapUtils.TryGetCellOccupier<CTaxi, CActive>(cell.Position, _world.Value, out var droppedCellOccupier))
             {
                 cell.IsOccupied = true;
                 initialCell.IsOccupied = false;

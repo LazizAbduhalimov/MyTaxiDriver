@@ -7,12 +7,13 @@ namespace LGrid
 {
     public static class MapUtils
     {
-        public static bool TryGetCellOccupier<T>(Vector3Int cell, EcsWorld world, out T standable) 
-            where T: struct, ICellStandable
+        public static bool TryGetCellOccupier<TInclude, TExclude>(Vector3Int cell, EcsWorld world, out TInclude standable) 
+            where TInclude: struct, ICellStandable
+            where TExclude : struct
         {
-            foreach (var entity in world.Filter<T>().Inc<CActive>().End())
+            foreach (var entity in world.Filter<TInclude>().Inc<TExclude>().End())
             {
-                ref var data = ref world.GetPool<T>().Get(entity);
+                ref var data = ref world.GetPool<TInclude>().Get(entity);
                 if (data.Coords == cell)
                 {
                     standable = data;

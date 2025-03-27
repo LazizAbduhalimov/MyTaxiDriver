@@ -22,6 +22,7 @@ namespace Client
             AllPools = Object.FindObjectOfType<AllPools>();
             PoolService = new PoolService("Pools");
             Postponer = new Postponer(CommonUtilities.EventsWorld);
+            Debug.Log(CTFConfig.CTFFlag); //TODO: don't show to hackers 
         }
     }
 

@@ -2,6 +2,7 @@ using Esper.ESave;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using LGrid;
+using Module.Bank;
 using UnityEngine;
 
 namespace Client.Saving
@@ -64,6 +65,7 @@ namespace Client.Saving
             if (file.HasData("Coins"))
             {
                 var number = file.GetData<long>("Coins");
+                if (number < 0) number = 0;
                 Bank.SetCoins(this, number);
                 Debug.Log("Coins loaded!");
             }

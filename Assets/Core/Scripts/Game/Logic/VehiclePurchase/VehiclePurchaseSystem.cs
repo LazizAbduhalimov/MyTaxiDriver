@@ -2,6 +2,7 @@ using Client.Game;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using LGrid;
+using Module.Bank;
 using PrimeTween;
 using UI.Buttons;
 using UnityEngine;
