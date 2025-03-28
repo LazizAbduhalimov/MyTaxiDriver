@@ -37,4 +37,9 @@ public static class Vector3Extensions
         value.z += z;
         return value;
     }
+
+    public static Vector3 ToVector3(this Vector3Int a)
+    {
+        return a;
+    }
 }

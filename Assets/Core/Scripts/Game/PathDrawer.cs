@@ -32,7 +32,7 @@ namespace Core.Scripts.Game
             // cell.IsOccupied = true;
             _pathFinder = new PathFinder(Map.Instance.Cells, unitSize, anchor);
             Unit.position = _pathFinder.GetUnitCenter(cellPosition, anchor);
-            Unit.localScale = new Vector3(unitSize.x, 1, unitSize.y);
+            // Unit.localScale = new Vector3(unitSize.x, 1, unitSize.y);
         }
         
         public void Update()
@@ -40,7 +40,6 @@ namespace Core.Scripts.Game
             if (Input.GetKeyDown(KeyCode.Tab))
                 isEnabled = !isEnabled;
             if (!isEnabled) return;
-            Debug.Log(isEnabled);
             var mousePosition = Vector3Int.RoundToInt(MapUtils.GetMouseWorldPosition());
             var start = Vector3Int.RoundToInt(Unit.position);
             PreviewPath(start, mousePosition);
