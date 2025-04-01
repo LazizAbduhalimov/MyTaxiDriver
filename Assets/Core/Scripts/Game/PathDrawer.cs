@@ -37,9 +37,18 @@ namespace Core.Scripts.Game
         
         public void Update()
         {
+            if (Input.GetMouseButtonDown(1))
+            {
+                Path();
+            }
             if (Input.GetKeyDown(KeyCode.Tab))
                 isEnabled = !isEnabled;
             if (!isEnabled) return;
+            Path();
+        }
+
+        private void Path()
+        {
             var mousePosition = Vector3Int.RoundToInt(MapUtils.GetMouseWorldPosition());
             var start = Vector3Int.RoundToInt(Unit.position);
             PreviewPath(start, mousePosition);

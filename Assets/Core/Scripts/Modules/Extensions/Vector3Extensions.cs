@@ -42,4 +42,14 @@ public static class Vector3Extensions
     {
         return a;
     }
+
+    public static Vector3 ToVector3XZ(this Vector2 a)
+    {
+        return new Vector3(a.x, 0, a.y);
+    }
+    
+    public static Vector3 ToVector3XY(this Vector2 a)
+    {
+        return new Vector3(a.x, a.y, 0);
+    }
 }
