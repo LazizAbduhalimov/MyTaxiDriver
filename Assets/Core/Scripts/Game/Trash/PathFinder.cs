@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class PathFinder
 {
+    private static readonly Vector3Int[] Directions = {
+        Vector3Int.right, Vector3Int.left, Vector3Int.forward, Vector3Int.back
+    };
+    
     private Dictionary<Vector3Int, Cell> _grid;
     private Vector2Int _unitSize;
     public Vector2Int _anchor;
@@ -64,10 +68,9 @@ public class PathFinder
 
                 if (!gScore.TryGetValue(neighbor, out var neighborGScore) || tentativeGScore < neighborGScore)
                 {
-                    var neighAnchor = GetAnchor(current, neighbor);
-                    var neighbourCenter = GetUnitCenter(neighbor, neighAnchor);
-                    if (neighbourCenter != unitCenter)
-                        cameFromCenter[neighbourCenter] = unitCenter;
+                    // var neighAnchor = GetAnchor(current, neighbor);
+                    // var neighbourCenter = GetUnitCenter(neighbor, neighAnchor);
+                    cameFromCenter[neighbor] = unitCenter;
                     cameFrom[neighbor] = current;
                     gScore[neighbor] = tentativeGScore;
                     fScore[neighbor] = tentativeGScore + Heuristic(neighbor, goal);
@@ -79,32 +82,29 @@ public class PathFinder
         return new List<Cell>();
     }
 
-    private List<Cell> ReconstructPath(Dictionary<Vector3Int, Vector3Int> cameFrom, Dictionary<Vector3, Vector3> came, Vector3Int current)
+    private List<Cell> ReconstructPath(Dictionary<Vector3Int, Vector3Int> cameFrom, Dictionary<Vector3, Vector3> cameFromCenter, Vector3Int current)
     {
-        // var cur = GetUnitCenter(current, _anchor);
-        // var pathCenter = new List<Vector3> { cur };
-        // var i = 0;
-        // while (came.TryGetValue(cur, out var prev))
-        // {
-        //     cur = prev;
-        //     pathCenter.Add(prev);
-        //     Debug.DrawRay(prev, Vector3.up, Color.yellow, 5f);
-        //     i++;
-        //     if (i > 100_000)
-        //     {
-        //         Debug.LogError("Infinite");
-        //         return null;
-        //     }
-        // }
-        // pathCenter.Reverse();
-        
+        var cur = GetUnitCenter(current, _anchor);
+        var pathCenter = new List<Vector3> { cur };
         var path = new List<Cell> { _grid[current] };
+        
         while (cameFrom.TryGetValue(current, out var prev))
         {
+            if (cameFromCenter.TryGetValue(current, out var val))
+            {
+                pathCenter.Add(val);
+            }
+            else
+                Debug.Log("!");
             current = prev;
             path.Add(_grid[current]);
         }
         path.Reverse();
+        pathCenter.Reverse();
+        foreach (var pos in pathCenter)
+        {
+            Debug.DrawRay(pos, Vector3.up, Color.yellow, 1f);
+        }
         return path;
     }
 
@@ -136,11 +136,6 @@ public class PathFinder
         return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.z - b.z);
     }
 
-    private static readonly Vector3Int[] Directions =
-    {
-        Vector3Int.right, Vector3Int.left, Vector3Int.forward, Vector3Int.back
-    };
-
     private List<Vector3Int> GetNeighbors(Vector3Int cell)
     {
         var neighbors = new List<Vector3Int>(8);
@@ -162,6 +157,7 @@ public class PathFinder
 
     private void TryAddDiagonalNeighbor(List<Vector3Int> neighbors, Vector3Int cell, Vector3Int dir1, Vector3Int dir2)
     {
+        // var unitCenter = GetUnitCenter(cell, _anchor);
         var diagonal = cell + dir1 + dir2;
         var direction1 = cell + dir1;
         var direction2 = cell + dir2;
@@ -169,6 +165,10 @@ public class PathFinder
         var anchorDiagonal = GetAnchor(cell, diagonal);
         var anchor1 = GetAnchor(cell, direction1);
         var anchor2 = GetAnchor(cell, direction2);
+        // Debug.Log((unitCenter - diagonal).sqrMagnitude);
+        // if ((diagonal - unitCenter).sqrMagnitude > 4)
+        //     if (GetNeighborCells(cell, 1).Any(c => c.IsOccupied))
+        //         return;
 
         if (CanPlaceUnit(diagonal, anchorDiagonal) && CanPlaceUnit(direction1, anchor1) && CanPlaceUnit(direction2, anchor2))
             neighbors.Add(diagonal);
@@ -213,5 +213,24 @@ public class PathFinder
         var centerX = cellPosition.x - (anchor.x - 1) + (_unitSize.x - 1) / 2f;
         var centerZ = cellPosition.z - (anchor.y - 1) + (_unitSize.y - 1) / 2f;
         return new Vector3(centerX, cellPosition.y, centerZ);
+    }
+    
+    private List<Cell> GetNeighborCells(Vector3Int position, int radius)
+    {
+        var neighbors = new List<Cell>();
+
+        for (var dx = -radius; dx <= radius; dx++)
+        {
+            for (var dz = -radius; dz <= radius; dz++)
+            {
+                if (dx == 0 && dz == 0) continue;
+                var cellPosition = new Vector3Int(position.x + dx, position.y, position.z + dz);
+                if (Map.Instance.IsCellExists(cellPosition, out var cell))
+                {
+                    neighbors.Add(cell);
+                }
+            }
+        }
+        return neighbors;
     }
 }

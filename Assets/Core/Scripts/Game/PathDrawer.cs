@@ -53,6 +53,7 @@ namespace Core.Scripts.Game
             var start = Vector3Int.RoundToInt(Unit.position);
             PreviewPath(start, mousePosition);
             DoPath(start, mousePosition);
+            Debug.Log(mousePosition);
         }
 
         private void DoPath(Vector3Int start, Vector3Int finish)
