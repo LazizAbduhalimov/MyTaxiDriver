@@ -10407,7 +10407,7 @@ MonoBehaviour:
   m_HideSoftKeyboard: 1
   m_CharacterValidation: 0
   m_RegexValue: 
-  m_GlobalPointSize: 48
+  m_GlobalPointSize: 24
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
@@ -10436,7 +10436,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: bitwalls_ctf{h3110_m4_n1@@a}
+  m_Text: 62697477616c6c735f6374667b68333131305f6d345f6e314040617d
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 1
@@ -11958,7 +11958,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "bitwalls_ctf{h3110_m4_n1@@a}\u200B"
+  m_text: "62697477616c6c735f6374667b68333131305f6d345f6e314040617d\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -11985,8 +11985,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48
-  m_fontSizeBase: 48
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -23030,7 +23030,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6debd0048ab06343b4ac80a0997d6e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameObject1: {fileID: 1883489434}
+  _flagTransfrom: {fileID: 1883489434}
 --- !u!4 &1801740915 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: b82e76f4092b7d24aaeecddf36fe8d3b, type: 3}
