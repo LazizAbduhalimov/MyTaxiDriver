@@ -34,9 +34,47 @@ namespace Core.Scripts.Game
             Unit.position = _pathFinder.GetUnitCenter(cellPosition, anchor);
             // Unit.localScale = new Vector3(unitSize.x, 1, unitSize.y);
         }
+
+        private int _frameIndex = 0;
+        private int _neighborIndex = 0;
+
+        private void DebugPath()
+        {
+            if (PathFinder.Frames.Count < 1) return;
+            var frame = PathFinder.Frames[_frameIndex];
+            Debug.DrawRay(frame.Current, Vector3Int.up, Color.green);
+            Debug.DrawRay(frame.UnitCenter, Vector3.up, Color.blue);
+            if (frame.Neighbours.Count > _neighborIndex)
+            {
+                var neigh = frame.Neighbours[_neighborIndex];
+                var anchor = frame.NeighboursAnchor[_neighborIndex];
+                Debug.DrawRay(neigh, Vector3.up, Color.yellow);
+                Debug.Log(anchor);
+                // Debug.DrawRay(new Vector3(neigh.x + anchor.x + 0.05f - 1, neigh.y, neigh.z + anchor.y - 1),
+                //     Vector3.up, Color.magenta);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Keypad6))
+            {
+                _frameIndex = Mathf.Clamp(_frameIndex +1, 0, PathFinder.Frames.Count-1);
+                _neighborIndex = 0;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Keypad4))
+            {
+                _frameIndex = Mathf.Clamp(_frameIndex -1, 0, PathFinder.Frames.Count-1);
+                _neighborIndex = 0;
+            }
+            
+            if (Input.GetKeyDown(KeyCode.Keypad3))
+                _neighborIndex = Mathf.Clamp(_neighborIndex +1, 0, frame.Neighbours.Count-1);
+            if (Input.GetKeyDown(KeyCode.Keypad1))
+                _neighborIndex = Mathf.Clamp(_neighborIndex -1, 0, frame.Neighbours.Count-1);
+        }
         
         public void Update()
         {
+            DebugPath();
             if (Input.GetMouseButtonDown(1))
             {
                 Path();
@@ -53,7 +91,7 @@ namespace Core.Scripts.Game
             var start = Vector3Int.RoundToInt(Unit.position);
             PreviewPath(start, mousePosition);
             DoPath(start, mousePosition);
-            Debug.Log(mousePosition);
+            // Debug.Log(mousePosition);
         }
 
         private void DoPath(Vector3Int start, Vector3Int finish)

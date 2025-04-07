@@ -1,10 +1,20 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using LGrid;
 using UnityEngine;
 
+public class DebugFrame
+{
+    public Vector3 UnitCenter;
+    public Vector3Int Current;
+    public List<Vector3Int> Neighbours = new ();
+    public List<Vector2Int> NeighboursAnchor = new();
+}
+
 public class PathFinder
 {
+    public static List<DebugFrame> Frames = new ();
     private static readonly Vector3Int[] Directions = {
         Vector3Int.right, Vector3Int.left, Vector3Int.forward, Vector3Int.back
     };
@@ -30,37 +40,48 @@ public class PathFinder
     }
     
     // public void SetAnchor()
-
+    private (Vector3Int, Vector3Int[]) _neighData = new ();
+    
     public List<Cell> FindPath(Vector3Int start, Vector3Int goal)
     {
+        _anchor = _fixedAnchor;
         if (!CanPlaceUnit(start))
             return new List<Cell>();
         
         if (AllAnchors.All(a => !CanPlaceUnit(goal, a)))
             return new List<Cell>();
 
-        var openSet = new SortedSet<(float, Vector3Int)>(Comparer<(float, Vector3Int)>.Create((a, b) =>
-            a.Item1.CompareTo(b.Item1) != 0 ? a.Item1.CompareTo(b.Item1) : a.Item2.GetHashCode().CompareTo(b.Item2.GetHashCode()))) { (Heuristic(start, goal), start) };
+        // такой тип нужен для оптимизации чтобы не сортировывать каждый раз
+        var openSet = new SortedSet<(float, Vector3Int, Vector2Int)>(Comparer<(float, Vector3Int, Vector2Int)>.Create((a, b) =>
+            a.Item1.CompareTo(b.Item1) != 0 ? a.Item1.CompareTo(b.Item1) : a.Item2.GetHashCode().CompareTo(b.Item2.GetHashCode()))) { (Heuristic(start, goal), start, _anchor) };
 
         var cameFrom = new Dictionary<Vector3Int, Vector3Int>();
         var cameFromCenter = new Dictionary<Vector3, Vector3>();
         var gScore = new Dictionary<Vector3Int, float> { [start] = 0 };
         var fScore = new Dictionary<Vector3Int, float> { [start] = Heuristic(start, goal) };
-
+        Frames.Clear();
         while (openSet.Count > 0)
         {
+            var debugFrame = new DebugFrame();
+            
             var current = openSet.Min.Item2;
-            var unitCenter = GetUnitCenter(current, _anchor);
-            _anchor = GetAnchor(unitCenter, goal);
+            var unitCenter = GetUnitCenter(current, openSet.Min.Item3);
             openSet.Remove(openSet.Min);
-
+            
+            debugFrame.Current = current;
+            debugFrame.UnitCenter = unitCenter;
+            
             if (current == goal)
             {
                 return ReconstructPath(cameFrom, cameFromCenter, current);
             }
-            
+
+            var anchor = _anchor;
             foreach (var neighbor in GetNeighbors(current))
             {
+                _anchor = GetAnchor(unitCenter, neighbor);
+                debugFrame.Neighbours.Add(neighbor);
+                debugFrame.NeighboursAnchor.Add(_anchor);
                 if (!CanPlaceUnit(neighbor))
                     continue;
 
@@ -68,15 +89,15 @@ public class PathFinder
 
                 if (!gScore.TryGetValue(neighbor, out var neighborGScore) || tentativeGScore < neighborGScore)
                 {
-                    // var neighAnchor = GetAnchor(current, neighbor);
-                    // var neighbourCenter = GetUnitCenter(neighbor, neighAnchor);
                     cameFromCenter[neighbor] = unitCenter;
                     cameFrom[neighbor] = current;
                     gScore[neighbor] = tentativeGScore;
                     fScore[neighbor] = tentativeGScore + Heuristic(neighbor, goal);
-                    openSet.Add((fScore[neighbor], neighbor));
+                    openSet.Add((fScore[neighbor], neighbor, _anchor));
                 }
             }
+            Frames.Add(debugFrame);
+            _anchor = anchor;
         }
         
         return new List<Cell>();
@@ -90,21 +111,16 @@ public class PathFinder
         
         while (cameFrom.TryGetValue(current, out var prev))
         {
-            if (cameFromCenter.TryGetValue(current, out var val))
-            {
-                pathCenter.Add(val);
-            }
-            else
-                Debug.Log("!");
+            pathCenter.Add(cameFromCenter[current]);
             current = prev;
             path.Add(_grid[current]);
         }
         path.Reverse();
         pathCenter.Reverse();
-        foreach (var pos in pathCenter)
-        {
-            Debug.DrawRay(pos, Vector3.up, Color.yellow, 1f);
-        }
+        // foreach (var pos in pathCenter)
+        // {
+        //     Debug.DrawRay(pos, Vector3.up, Color.yellow, 1f);
+        // }
         return path;
     }
 
@@ -154,10 +170,42 @@ public class PathFinder
 
         return neighbors;
     }
+    
+    private static List<Vector3Int> Corners = new()
+    {
+        new Vector3Int(-1, 0,  1),
+        new Vector3Int( 1, 0,  1),
+        new Vector3Int(-1, 0, -1),
+        new Vector3Int( 1, 0, -1)
+    };
+    
+    private Vector3Int[] GetNeighborCorners(Vector3Int corner)
+    {
+        if (!Corners.Contains(corner))
+            return Array.Empty<Vector3Int>();
+
+        // Возвращаем только те углы, что НЕ равны текущему и НЕ противоположны ему
+        return Corners
+            .Where(c => c != corner && (c.x == corner.x || c.z == corner.z)).ToArray();
+    }
+
+    private Cell[] GetAdjacentCornersCells(Vector3Int origin, Vector3Int destination)
+    {
+        var corner = destination - origin;
+        var adjacentCorners = GetNeighborCorners(corner);
+        var cells = new List<Cell>();
+        foreach (var adjacentCorner in adjacentCorners)
+        {
+            if (Map.Instance.IsCellExists(origin + adjacentCorner, out var cell))
+            {
+                cells.Add(cell);
+            }
+        }
+        return cells.ToArray();
+    }
 
     private void TryAddDiagonalNeighbor(List<Vector3Int> neighbors, Vector3Int cell, Vector3Int dir1, Vector3Int dir2)
     {
-        // var unitCenter = GetUnitCenter(cell, _anchor);
         var diagonal = cell + dir1 + dir2;
         var direction1 = cell + dir1;
         var direction2 = cell + dir2;
@@ -165,10 +213,12 @@ public class PathFinder
         var anchorDiagonal = GetAnchor(cell, diagonal);
         var anchor1 = GetAnchor(cell, direction1);
         var anchor2 = GetAnchor(cell, direction2);
-        // Debug.Log((unitCenter - diagonal).sqrMagnitude);
-        // if ((diagonal - unitCenter).sqrMagnitude > 4)
-        //     if (GetNeighborCells(cell, 1).Any(c => c.IsOccupied))
-        //         return;
+        
+        var unitCenter = GetUnitCenter(cell, _anchor);
+        if ((diagonal - unitCenter).sqrMagnitude > 4)
+            if (GetAdjacentCornersCells(cell, diagonal).Any(c => c.IsOccupied))
+            // if (GetNeighborCells(cell, 1).Any(c => c.IsOccupied))
+                return;
 
         if (CanPlaceUnit(diagonal, anchorDiagonal) && CanPlaceUnit(direction1, anchor1) && CanPlaceUnit(direction2, anchor2))
             neighbors.Add(diagonal);
