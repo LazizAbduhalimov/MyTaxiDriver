@@ -21,10 +21,10 @@ public class PathFinder
     
     private Dictionary<Vector3Int, Cell> _grid;
     private Vector2Int _unitSize;
-    public Vector2Int _anchor;
-    public Vector2Int _fixedAnchor;
+    public Vector2Int Anchor;
+    public Vector2Int StartAnchor;
 
-    public Vector2Int[] AllAnchors = {
+    public static readonly Vector2Int[] All2By2Anchors = {
         new(1, 1),
         new(2, 1),
         new(1, 2),
@@ -35,25 +35,22 @@ public class PathFinder
     {
         _grid = grid;
         _unitSize = unitSize;
-        _anchor = anchor;
-        _fixedAnchor = anchor;
+        Anchor = anchor;
+        StartAnchor = anchor;
     }
-    
-    // public void SetAnchor()
-    private (Vector3Int, Vector3Int[]) _neighData = new ();
     
     public List<Cell> FindPath(Vector3Int start, Vector3Int goal)
     {
-        _anchor = _fixedAnchor;
+        Anchor = StartAnchor;
         if (!CanPlaceUnit(start))
             return new List<Cell>();
         
-        if (AllAnchors.All(a => !CanPlaceUnit(goal, a)))
+        if (All2By2Anchors.All(a => !CanPlaceUnit(goal, a)))
             return new List<Cell>();
 
         // такой тип нужен для оптимизации чтобы не сортировывать каждый раз
         var openSet = new SortedSet<(float, Vector3Int, Vector2Int)>(Comparer<(float, Vector3Int, Vector2Int)>.Create((a, b) =>
-            a.Item1.CompareTo(b.Item1) != 0 ? a.Item1.CompareTo(b.Item1) : a.Item2.GetHashCode().CompareTo(b.Item2.GetHashCode()))) { (Heuristic(start, goal), start, _anchor) };
+            a.Item1.CompareTo(b.Item1) != 0 ? a.Item1.CompareTo(b.Item1) : a.Item2.GetHashCode().CompareTo(b.Item2.GetHashCode()))) { (Heuristic(start, goal), start, Anchor) };
 
         var cameFrom = new Dictionary<Vector3Int, Vector3Int>();
         var cameFromCenter = new Dictionary<Vector3, Vector3>();
@@ -73,15 +70,15 @@ public class PathFinder
             
             if (current == goal)
             {
-                return ReconstructPath(cameFrom, cameFromCenter, current);
+                return ReconstructPath(cameFrom, cameFromCenter, current, unitCenter);
             }
 
-            var anchor = _anchor;
+            var anchor = Anchor;
             foreach (var neighbor in GetNeighbors(current))
             {
-                _anchor = GetAnchor(unitCenter, neighbor);
+                Anchor = GetAnchor(unitCenter, neighbor);
                 debugFrame.Neighbours.Add(neighbor);
-                debugFrame.NeighboursAnchor.Add(_anchor);
+                debugFrame.NeighboursAnchor.Add(Anchor);
                 if (!CanPlaceUnit(neighbor))
                     continue;
 
@@ -93,20 +90,23 @@ public class PathFinder
                     cameFrom[neighbor] = current;
                     gScore[neighbor] = tentativeGScore;
                     fScore[neighbor] = tentativeGScore + Heuristic(neighbor, goal);
-                    openSet.Add((fScore[neighbor], neighbor, _anchor));
+                    openSet.Add((fScore[neighbor], neighbor, Anchor));
                 }
             }
             Frames.Add(debugFrame);
-            _anchor = anchor;
+            Anchor = anchor;
         }
         
         return new List<Cell>();
     }
 
-    private List<Cell> ReconstructPath(Dictionary<Vector3Int, Vector3Int> cameFrom, Dictionary<Vector3, Vector3> cameFromCenter, Vector3Int current)
+    private List<Cell> ReconstructPath(
+        Dictionary<Vector3Int, Vector3Int> cameFrom, 
+        Dictionary<Vector3, Vector3> cameFromCenter, 
+        Vector3Int current, 
+        Vector3 unitCenter)
     {
-        var cur = GetUnitCenter(current, _anchor);
-        var pathCenter = new List<Vector3> { cur };
+        var pathCenter = new List<Vector3> { unitCenter };
         var path = new List<Cell> { _grid[current] };
         
         while (cameFrom.TryGetValue(current, out var prev))
@@ -117,10 +117,10 @@ public class PathFinder
         }
         path.Reverse();
         pathCenter.Reverse();
-        // foreach (var pos in pathCenter)
-        // {
-        //     Debug.DrawRay(pos, Vector3.up, Color.yellow, 1f);
-        // }
+        foreach (var pos in pathCenter)
+        {
+            Debug.DrawRay(pos, Vector3.up, Color.yellow, 1f);
+        }
         return path;
     }
 
@@ -214,7 +214,7 @@ public class PathFinder
         var anchor1 = GetAnchor(cell, direction1);
         var anchor2 = GetAnchor(cell, direction2);
         
-        var unitCenter = GetUnitCenter(cell, _anchor);
+        var unitCenter = GetUnitCenter(cell, Anchor);
         if ((diagonal - unitCenter).sqrMagnitude > 4)
             if (GetAdjacentCornersCells(cell, diagonal).Any(c => c.IsOccupied))
             // if (GetNeighborCells(cell, 1).Any(c => c.IsOccupied))
@@ -240,7 +240,7 @@ public class PathFinder
 
     private bool CanPlaceUnit(Vector3Int position)
     {
-        return CanPlaceUnit(position, _anchor);
+        return CanPlaceUnit(position, Anchor);
     }
 
     public Vector3Int[] GetPlacedCells(Vector3Int position)
@@ -251,7 +251,7 @@ public class PathFinder
         {
             for (var z = 0; z < _unitSize.y; z++)
             {
-                var checkPos = new Vector3Int(position.x + x - (_anchor.x - 1), position.y, position.z + z - (_anchor.y - 1));
+                var checkPos = new Vector3Int(position.x + x - (Anchor.x - 1), position.y, position.z + z - (Anchor.y - 1));
                 placedCells[i++] = checkPos;
             }
         }
