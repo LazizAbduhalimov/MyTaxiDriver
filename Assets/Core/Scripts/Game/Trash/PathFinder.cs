@@ -4,20 +4,14 @@ using System.Linq;
 using LGrid;
 using UnityEngine;
 
-public class DebugFrame
-{
-    public Vector3 UnitCenter;
-    public Vector3Int Current;
-    public List<Vector3Int> Neighbours = new ();
-    public List<Vector2Int> NeighboursAnchor = new();
-    public Dictionary<int, List<Cell>> Corners = new ();
-}
-
 public class PathFinder
 {
     public Vector2Int StartAnchor;
     public Vector2Int LastPreviewedPathFinalAnchor = new (1, 1);
     public static readonly List<DebugFrame> Frames = new ();
+    
+    public Vector2Int UnitSize;
+    public Dictionary<Vector3Int, Cell> Grid;
     
     private static readonly Vector3Int[] Directions = {
         Vector3Int.right, 
@@ -41,30 +35,27 @@ public class PathFinder
         new(2, 2),
     };
     
-    private Dictionary<Vector3Int, Cell> _grid;
-    private Vector2Int _unitSize;
+    private DebugFrame _debugFrame;
 
     public PathFinder(Dictionary<Vector3Int, Cell> grid, Vector2Int unitSize, Vector2Int anchor)
     {
-        _grid = grid;
-        _unitSize = unitSize;
+        Grid = grid;
+        UnitSize = unitSize;
         StartAnchor = anchor;
     }
-
-    private DebugFrame _debugFrame;
-
+    
     public void ResetAnchorToFoundPathLastAnchor()
     {
         StartAnchor = LastPreviewedPathFinalAnchor;
     }
     
-    public List<Cell> FindPath(Vector3Int start, Vector3Int goal)
+    public (List<Cell>, List<Vector3>) FindPath(Vector3Int start, Vector3Int goal)
     {
         if (!CanPlaceUnit(start, StartAnchor))
-            return new List<Cell>();
+            return (new List<Cell>(), new List<Vector3>());
         
         if (All2By2Anchors.All(a => !CanPlaceUnit(goal, a)))
-            return new List<Cell>();
+            return (new List<Cell>(), new List<Vector3>());
 
         // такой тип нужен для оптимизации чтобы не сортировывать каждый раз
         var openSet = new SortedSet<(float, Vector3Int, Vector2Int)>(Comparer<(float, Vector3Int, Vector2Int)>.Create((a, b) =>
@@ -74,6 +65,11 @@ public class PathFinder
         var cameFromCenter = new Dictionary<Vector3, Vector3>();
         var gScore = new Dictionary<Vector3Int, float> { [start] = 0 };
         var fScore = new Dictionary<Vector3Int, float> { [start] = Heuristic(start, goal) };
+        var placedCells = GetOccupiedCells(start);
+        foreach (var entity in placedCells)
+        {
+            Debug.DrawLine(entity, entity.ToVector3().AddY(2f), Color.red);
+        }
         Frames.Clear();
         while (openSet.Count > 0)
         {
@@ -115,32 +111,27 @@ public class PathFinder
             Frames.Add(debugFrame);
         }
         
-        return new List<Cell>();
+        return (new List<Cell>(), new List<Vector3>());
     }
 
-    private List<Cell> ReconstructPath(
+    private (List<Cell>, List<Vector3>) ReconstructPath(
         Dictionary<Vector3Int, Vector3Int> cameFrom, 
         Dictionary<Vector3, Vector3> cameFromCenter, 
         Vector3Int current, 
         Vector3 unitCenter)
     {
         var pathCenter = new List<Vector3> { unitCenter };
-        var path = new List<Cell> { _grid[current] };
+        var path = new List<Cell> { Grid[current] };
         
         while (cameFrom.TryGetValue(current, out var prev))
         {
             pathCenter.Add(cameFromCenter[current]);
             current = prev;
-            path.Add(_grid[current]);
+            path.Add(Grid[current]);
         }
         path.Reverse();
         pathCenter.Reverse();
-        
-        //TODO: Remove after path lerping
-        foreach (var pos in pathCenter) 
-            Debug.DrawRay(pos, Vector3.up, Color.yellow, 1f);
-        
-        return path;
+        return (path, pathCenter);
     }
 
     public static Vector2Int GetAnchor(Vector3 origin, Vector3 point)
@@ -156,27 +147,12 @@ public class PathFinder
         };
     }
 
-    public static int GetQuadrant(Vector3 origin, Vector3 point)
-    {
-        var dx = point.x - origin.x;
-        var dz = point.z - origin.z;
-        if (dx >= 0 && dz >= 0) return 1;
-        if (dx < 0 && dz >= 0) return 2;
-        if (dx < 0 && dz < 0) return 3;
-        return 4;
-    }
-
-    private float Heuristic(Vector3Int a, Vector3Int b)
-    {
-        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.z - b.z);
-    }
-
     private List<Vector3Int> GetNeighbors(Vector3Int cell, Vector3 unitCenter)
     {
         var neighbors = new List<Vector3Int>(8);
         neighbors.AddRange(Directions
                     .Select(dir => cell + dir)
-                    .Where(neighbor => _grid.ContainsKey(neighbor)));
+                    .Where(neighbor => Grid.ContainsKey(neighbor)));
 
         // чекаем каждую диагональ на проходимость
         foreach (var diagonalCorner in Corners)
@@ -239,27 +215,33 @@ public class PathFinder
 
     private bool CanPlaceUnit(Vector3Int position, Vector2Int anchor)
     {
-        for (var x = 0; x < _unitSize.x; x++)
+        for (var x = 0; x < UnitSize.x; x++)
         {
-            for (var z = 0; z < _unitSize.y; z++)
+            for (var z = 0; z < UnitSize.y; z++)
             {
                 var checkPos = new Vector3Int(position.x + x - (anchor.x - 1), position.y, position.z + z - (anchor.y - 1));
-                if (!_grid.TryGetValue(checkPos, out var cell) || cell.IsOccupied)
+                if (!Grid.TryGetValue(checkPos, out var cell) || cell.IsOccupied)
                     return false;
             }
         }
         return true;
     }
 
-    public Vector3Int[] GetPlacedCells(Vector3Int position)
+    public Vector3Int[] GetIntendedCellsToOccupy(Vector3Int position)
+        => GetOccupiedCells(position, LastPreviewedPathFinalAnchor);
+
+    public Vector3Int[] GetOccupiedCells(Vector3Int position)
+        => GetOccupiedCells(position, StartAnchor);
+    
+    public Vector3Int[] GetOccupiedCells(Vector3Int position, Vector2Int anchor)
     {
-        var placedCells = new Vector3Int[_unitSize.x * _unitSize.y];
+        var placedCells = new Vector3Int[UnitSize.x * UnitSize.y];
         var i = 0;
-        for (var x = 0; x < _unitSize.x; x++)
+        for (var x = 0; x < UnitSize.x; x++)
         {
-            for (var z = 0; z < _unitSize.y; z++)
+            for (var z = 0; z < UnitSize.y; z++)
             {
-                var checkPos = new Vector3Int(position.x + x - (LastPreviewedPathFinalAnchor.x - 1), position.y, position.z + z - (LastPreviewedPathFinalAnchor.y - 1));
+                var checkPos = new Vector3Int(position.x + x - (anchor.x - 1), position.y, position.z + z - (anchor.y - 1));
                 placedCells[i++] = checkPos;
             }
         }
@@ -268,8 +250,23 @@ public class PathFinder
 
     public Vector3 GetUnitCenter(Vector3Int cellPosition, Vector2Int anchor)
     {
-        var centerX = cellPosition.x - (anchor.x - 1) + (_unitSize.x - 1) / 2f;
-        var centerZ = cellPosition.z - (anchor.y - 1) + (_unitSize.y - 1) / 2f;
+        var centerX = cellPosition.x - (anchor.x - 1) + (UnitSize.x - 1) / 2f;
+        var centerZ = cellPosition.z - (anchor.y - 1) + (UnitSize.y - 1) / 2f;
         return new Vector3(centerX, cellPosition.y, centerZ);
+    }
+    
+    private static int GetQuadrant(Vector3 origin, Vector3 point)
+    {
+        var dx = point.x - origin.x;
+        var dz = point.z - origin.z;
+        if (dx >= 0 && dz >= 0) return 1;
+        if (dx < 0 && dz >= 0) return 2;
+        if (dx < 0 && dz < 0) return 3;
+        return 4;
+    }
+    
+    private float Heuristic(Vector3Int a, Vector3Int b)
+    {
+        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.z - b.z);
     }
 }

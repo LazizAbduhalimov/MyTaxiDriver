@@ -134,8 +134,10 @@ namespace Core.Scripts.Game
 
         private void PreviewPath(Vector3Int start, Vector3Int finish)
         {
-            var path = _pathFinder.FindPath(start, finish);
-            var placingCells = _pathFinder.GetPlacedCells(finish);
+            var pathPair = _pathFinder.FindPath(start, finish);
+            var pathCells = pathPair.Item1;
+            var pathVertexes = pathPair.Item1;
+            var placingCells = _pathFinder.GetIntendedCellsToOccupy(finish);
             foreach (var placingCell in placingCells)
             {
                 if (Map.Instance.IsCellExists(placingCell, out var cell))
@@ -144,7 +146,7 @@ namespace Core.Scripts.Game
                     Debug.DrawRay(placingCell, Vector3.up, color);
                 }
             }
-            if (path.Count == 0)
+            if (pathCells.Count == 0)
             {
                 if (_tiles.TryGetValue(finish, out var tile))
                 {
@@ -159,7 +161,7 @@ namespace Core.Scripts.Game
                     tile.MeshRenderer.material.color = Color.white;
                 }
                 _unSettableTiles.Clear();
-                DrawPath(path);
+                DrawPath(pathCells);
             }
         }
 
