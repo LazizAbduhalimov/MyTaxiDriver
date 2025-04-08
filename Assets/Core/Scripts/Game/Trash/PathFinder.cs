@@ -15,7 +15,6 @@ public class DebugFrame
 
 public class PathFinder
 {
-    public Vector2Int Anchor;
     public Vector2Int StartAnchor;
     public Vector2Int LastPreviewedPathFinalAnchor = new (1, 1);
     public static readonly List<DebugFrame> Frames = new ();
@@ -49,7 +48,6 @@ public class PathFinder
     {
         _grid = grid;
         _unitSize = unitSize;
-        Anchor = anchor;
         StartAnchor = anchor;
     }
 
@@ -62,8 +60,7 @@ public class PathFinder
     
     public List<Cell> FindPath(Vector3Int start, Vector3Int goal)
     {
-        Anchor = StartAnchor;
-        if (!CanPlaceUnit(start, Anchor))
+        if (!CanPlaceUnit(start, StartAnchor))
             return new List<Cell>();
         
         if (All2By2Anchors.All(a => !CanPlaceUnit(goal, a)))
@@ -71,7 +68,7 @@ public class PathFinder
 
         // такой тип нужен для оптимизации чтобы не сортировывать каждый раз
         var openSet = new SortedSet<(float, Vector3Int, Vector2Int)>(Comparer<(float, Vector3Int, Vector2Int)>.Create((a, b) =>
-            a.Item1.CompareTo(b.Item1) != 0 ? a.Item1.CompareTo(b.Item1) : a.Item2.GetHashCode().CompareTo(b.Item2.GetHashCode()))) { (Heuristic(start, goal), start, Anchor) };
+            a.Item1.CompareTo(b.Item1) != 0 ? a.Item1.CompareTo(b.Item1) : a.Item2.GetHashCode().CompareTo(b.Item2.GetHashCode()))) { (Heuristic(start, goal), start, StartAnchor) };
 
         var cameFrom = new Dictionary<Vector3Int, Vector3Int>();
         var cameFromCenter = new Dictionary<Vector3, Vector3>();
@@ -96,13 +93,12 @@ public class PathFinder
                 return ReconstructPath(cameFrom, cameFromCenter, current, unitCenter);
             }
 
-            var anchor = Anchor;
             foreach (var neighbor in GetNeighbors(current, unitCenter))
             {
-                Anchor = GetAnchor(unitCenter, neighbor);
+                var neighborAnchor = GetAnchor(unitCenter, neighbor);
                 debugFrame.Neighbours.Add(neighbor);
-                debugFrame.NeighboursAnchor.Add(Anchor);
-                if (!CanPlaceUnit(neighbor, Anchor))
+                debugFrame.NeighboursAnchor.Add(neighborAnchor);
+                if (!CanPlaceUnit(neighbor, neighborAnchor))
                     continue;
 
                 var tentativeGScore = gScore[current] + 1;
@@ -113,11 +109,10 @@ public class PathFinder
                     cameFrom[neighbor] = current;
                     gScore[neighbor] = tentativeGScore;
                     fScore[neighbor] = tentativeGScore + Heuristic(neighbor, goal);
-                    openSet.Add((fScore[neighbor], neighbor, Anchor));
+                    openSet.Add((fScore[neighbor], neighbor, neighborAnchor));
                 }
             }
             Frames.Add(debugFrame);
-            Anchor = anchor;
         }
         
         return new List<Cell>();
