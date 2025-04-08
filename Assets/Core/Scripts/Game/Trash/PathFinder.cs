@@ -48,13 +48,18 @@ public class PathFinder
     {
         StartAnchor = LastPreviewedPathFinalAnchor;
     }
+
+    public bool CanBePlacedAt(Vector3Int position)
+    {
+        return All2By2Anchors.Any(a => CanPlaceUnit(position, a));
+    }
     
     public (List<Cell>, List<Vector3>) FindPath(Vector3Int start, Vector3Int goal)
     {
         if (!CanPlaceUnit(start, StartAnchor))
             return (new List<Cell>(), new List<Vector3>());
         
-        if (All2By2Anchors.All(a => !CanPlaceUnit(goal, a)))
+        if (!CanBePlacedAt(goal))
             return (new List<Cell>(), new List<Vector3>());
 
         // такой тип нужен для оптимизации чтобы не сортировывать каждый раз

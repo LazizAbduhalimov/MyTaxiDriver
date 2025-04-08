@@ -10,12 +10,12 @@ namespace Core.Scripts.Game
     {
         public Transform Unit;
         private PathFinder _pathFinder;
+        private Vector3Int _startingCell;
 
         private readonly Dictionary<Vector3Int, Tile> _tiles = new();
         private List<Cell> _path = new ();
         private List<Tile> _unSettableTiles = new();
 
-        private List<Cell> _unitCells = new ();
         private bool isEnabled;
 
         private void Start()
@@ -32,6 +32,7 @@ namespace Core.Scripts.Game
             // cell.IsOccupied = true;
             _pathFinder = new PathFinder(Map.Instance.Cells, unitSize, anchor);
             Unit.position = _pathFinder.GetUnitCenter(cellPosition, anchor);
+            _startingCell = Vector3Int.RoundToInt(Unit.position);
             // Unit.localScale = new Vector3(unitSize.x, 1, unitSize.y);
         }
 
@@ -44,13 +45,11 @@ namespace Core.Scripts.Game
             var frame = PathFinder.Frames[_frameIndex];
             Debug.DrawRay(frame.Current, Vector3Int.up, Color.green);
             Debug.DrawRay(frame.UnitCenter, Vector3.up, Color.blue);
-            Debug.Log($"Center {frame.UnitCenter}");
             if (frame.Neighbours.Count > _neighborIndex)
             {
                 var neigh = frame.Neighbours[_neighborIndex];
                 var anchor = frame.NeighboursAnchor[_neighborIndex];
                 Debug.DrawRay(neigh.ToVector3().AddX(0.05f), Vector3.up, Color.yellow);
-                Debug.Log($"anchor {anchor}");
                 if (frame.Corners.Count > 0)
                 {
                     if (frame.Corners.TryGetValue(_neighborIndex, out var val))
@@ -58,7 +57,6 @@ namespace Core.Scripts.Game
                         foreach (var entity in val)
                         {
                             Debug.DrawRay(entity.Position, Vector3.up, Color.red);
-                            Debug.Log($"{entity.Position} {entity.IsOccupied}");
                         }
                     }
                 }
@@ -108,20 +106,21 @@ namespace Core.Scripts.Game
         private void Path()
         {
             var mousePosition = Vector3Int.RoundToInt(MapUtils.GetMouseWorldPosition());
-            Debug.Log(mousePosition);
-            var start = Vector3Int.RoundToInt(Unit.position);
-            PreviewPath(start, mousePosition);
-            DoPath(start, mousePosition);
+            PreviewPath(_startingCell, mousePosition);
+            DoPath(_startingCell, mousePosition);
         }
 
         private void DoPath(Vector3Int start, Vector3Int finish)
         {
             if (Input.GetMouseButtonDown(0))
             {
+                if (!_pathFinder.CanBePlacedAt(finish)) return;
+                
                 if (Map.Instance.IsCellExists(finish, out var cell))
                 {
                     if (cell.IsOccupied) return;
                     _pathFinder.ResetAnchorToFoundPathLastAnchor();
+                    _startingCell = finish;
                     Unit.transform.position = _pathFinder.GetUnitCenter(finish, _pathFinder.LastPreviewedPathFinalAnchor);
                 }
                 
@@ -135,6 +134,8 @@ namespace Core.Scripts.Game
         private void PreviewPath(Vector3Int start, Vector3Int finish)
         {
             var pathPair = _pathFinder.FindPath(start, finish);
+            Debug.Log($"s {_pathFinder.StartAnchor}");
+            Debug.Log($"l {_pathFinder.LastPreviewedPathFinalAnchor}");
             var pathCells = pathPair.Item1;
             var pathVertexes = pathPair.Item1;
             var placingCells = _pathFinder.GetIntendedCellsToOccupy(finish);
