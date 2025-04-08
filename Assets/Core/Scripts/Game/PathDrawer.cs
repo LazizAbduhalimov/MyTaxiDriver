@@ -44,25 +44,37 @@ namespace Core.Scripts.Game
             var frame = PathFinder.Frames[_frameIndex];
             Debug.DrawRay(frame.Current, Vector3Int.up, Color.green);
             Debug.DrawRay(frame.UnitCenter, Vector3.up, Color.blue);
+            Debug.Log($"Center {frame.UnitCenter}");
             if (frame.Neighbours.Count > _neighborIndex)
             {
                 var neigh = frame.Neighbours[_neighborIndex];
                 var anchor = frame.NeighboursAnchor[_neighborIndex];
-                Debug.DrawRay(neigh, Vector3.up, Color.yellow);
-                Debug.Log(anchor);
-                // Debug.DrawRay(new Vector3(neigh.x + anchor.x + 0.05f - 1, neigh.y, neigh.z + anchor.y - 1),
-                //     Vector3.up, Color.magenta);
+                Debug.DrawRay(neigh.ToVector3().AddX(0.05f), Vector3.up, Color.yellow);
+                Debug.Log($"anchor {anchor}");
+                if (frame.Corners.Count > 0)
+                {
+                    if (frame.Corners.TryGetValue(_neighborIndex, out var val))
+                    {
+                        foreach (var entity in val)
+                        {
+                            Debug.DrawRay(entity.Position, Vector3.up, Color.red);
+                            Debug.Log($"{entity.Position} {entity.IsOccupied}");
+                        }
+                    }
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.Keypad6))
             {
-                _frameIndex = Mathf.Clamp(_frameIndex +1, 0, PathFinder.Frames.Count-1);
+                _frameIndex++;
+                NormalizedFrameIndex();
                 _neighborIndex = 0;
             }
 
             if (Input.GetKeyDown(KeyCode.Keypad4))
             {
-                _frameIndex = Mathf.Clamp(_frameIndex -1, 0, PathFinder.Frames.Count-1);
+                _frameIndex--;
+                NormalizedFrameIndex();
                 _neighborIndex = 0;
             }
             
@@ -70,6 +82,14 @@ namespace Core.Scripts.Game
                 _neighborIndex = Mathf.Clamp(_neighborIndex +1, 0, frame.Neighbours.Count-1);
             if (Input.GetKeyDown(KeyCode.Keypad1))
                 _neighborIndex = Mathf.Clamp(_neighborIndex -1, 0, frame.Neighbours.Count-1);
+        }
+
+        private void NormalizedFrameIndex()
+        {
+            if ( PathFinder.Frames.Count < 1 ) return;
+            while (_frameIndex < 0)
+                _frameIndex += PathFinder.Frames.Count;
+            _frameIndex %= PathFinder.Frames.Count;
         }
         
         public void Update()
@@ -88,10 +108,10 @@ namespace Core.Scripts.Game
         private void Path()
         {
             var mousePosition = Vector3Int.RoundToInt(MapUtils.GetMouseWorldPosition());
+            Debug.Log(mousePosition);
             var start = Vector3Int.RoundToInt(Unit.position);
             PreviewPath(start, mousePosition);
             DoPath(start, mousePosition);
-            // Debug.Log(mousePosition);
         }
 
         private void DoPath(Vector3Int start, Vector3Int finish)

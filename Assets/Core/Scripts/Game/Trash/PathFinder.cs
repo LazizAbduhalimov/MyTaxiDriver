@@ -10,6 +10,7 @@ public class DebugFrame
     public Vector3Int Current;
     public List<Vector3Int> Neighbours = new ();
     public List<Vector2Int> NeighboursAnchor = new();
+    public Dictionary<int, List<Cell>> Corners = new ();
 }
 
 public class PathFinder
@@ -50,7 +51,8 @@ public class PathFinder
         Anchor = anchor;
         StartAnchor = anchor;
     }
-    
+
+    private DebugFrame _debugFrame;
     public List<Cell> FindPath(Vector3Int start, Vector3Int goal)
     {
         Anchor = StartAnchor;
@@ -72,7 +74,7 @@ public class PathFinder
         while (openSet.Count > 0)
         {
             var debugFrame = new DebugFrame();
-            
+            _debugFrame = debugFrame;
             var current = openSet.Min.Item2;
             var unitCenter = GetUnitCenter(current, openSet.Min.Item3);
             openSet.Remove(openSet.Min);
@@ -86,7 +88,7 @@ public class PathFinder
             }
 
             var anchor = Anchor;
-            foreach (var neighbor in GetNeighbors(current))
+            foreach (var neighbor in GetNeighbors(current, unitCenter))
             {
                 Anchor = GetAnchor(unitCenter, neighbor);
                 debugFrame.Neighbours.Add(neighbor);
@@ -163,15 +165,16 @@ public class PathFinder
         return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.z - b.z);
     }
 
-    private List<Vector3Int> GetNeighbors(Vector3Int cell)
+    private List<Vector3Int> GetNeighbors(Vector3Int cell, Vector3 unitCenter)
     {
         var neighbors = new List<Vector3Int>(8);
         neighbors.AddRange(Directions.Select(dir => cell + dir).Where(neighbor => _grid.ContainsKey(neighbor)));
-
-        TryAddDiagonalNeighbor(neighbors, cell, Vector3Int.right, Vector3Int.forward);
-        TryAddDiagonalNeighbor(neighbors, cell, Vector3Int.right, Vector3Int.back);
-        TryAddDiagonalNeighbor(neighbors, cell, Vector3Int.left, Vector3Int.forward);
-        TryAddDiagonalNeighbor(neighbors, cell, Vector3Int.left, Vector3Int.back);
+        if (cell == new Vector3Int(-5, 0, 4))
+            Debug.Log("");
+        TryAddDiagonalNeighbor(neighbors, cell, unitCenter, Vector3Int.right, Vector3Int.forward, 4);
+        TryAddDiagonalNeighbor(neighbors, cell, unitCenter, Vector3Int.right, Vector3Int.back, 5);
+        TryAddDiagonalNeighbor(neighbors, cell, unitCenter, Vector3Int.left, Vector3Int.forward, 6);
+        TryAddDiagonalNeighbor(neighbors, cell, unitCenter, Vector3Int.left, Vector3Int.back, 7);
 
         return neighbors;
     }
@@ -201,7 +204,12 @@ public class PathFinder
         return cells.ToArray();
     }
 
-    private void TryAddDiagonalNeighbor(List<Vector3Int> neighbors, Vector3Int cell, Vector3Int dir1, Vector3Int dir2)
+    private void TryAddDiagonalNeighbor(
+        List<Vector3Int> neighbors, 
+        Vector3Int cell, 
+        Vector3 unitCenter, 
+        Vector3Int dir1, Vector3Int dir2, 
+        int nNumber)
     {
         var diagonal = cell + dir1 + dir2;
         var direction1 = cell + dir1;
@@ -211,14 +219,22 @@ public class PathFinder
         var anchor1 = GetAnchor(cell, direction1);
         var anchor2 = GetAnchor(cell, direction2);
         
-        var unitCenter = GetUnitCenter(cell, Anchor);
-        // если двигаемся диагонально проверяем нет ли премятствий у смежных углов
+        // если двигаемся диагонально (дальше от центра) проверяем нет ли премятствий у смежных углов
         // у нас 2 на 2 жирный объект и проверяется не только соседи якоря но и соседи соседей нашего якоря ;)
         // сложно и муторно крч, но так меньше лагов
         if ((diagonal - unitCenter).sqrMagnitude > 4)
-            if (GetAdjacentCornersCells(cell, diagonal).Any(c => c.IsOccupied))
+        {
+            var adjacentCornersCells = GetAdjacentCornersCells(cell, diagonal);
+            _debugFrame.Corners.Add(nNumber, adjacentCornersCells.ToList());
+            foreach (var corner in adjacentCornersCells)
+            {
+                if (corner.Position == new Vector3Int(-4, 0, 5))
+                    Debug.Log($"{corner.Position} {corner.IsOccupied}");
+            }
+            if (adjacentCornersCells.Any(c => c.IsOccupied))
                 return;
-
+        }
+        
         if (CanPlaceUnit(diagonal, anchorDiagonal) && CanPlaceUnit(direction1, anchor1) && CanPlaceUnit(direction2, anchor2))
             neighbors.Add(diagonal);
     }
