@@ -17,6 +17,7 @@ public class PathFinder
 {
     public Vector2Int Anchor;
     public Vector2Int StartAnchor;
+    public Vector2Int LastFoundPathFinalAnchor = new (1, 1);
     public static readonly List<DebugFrame> Frames = new ();
     
     private static readonly Vector3Int[] Directions = {
@@ -76,14 +77,16 @@ public class PathFinder
             var debugFrame = new DebugFrame();
             _debugFrame = debugFrame;
             var current = openSet.Min.Item2;
-            var unitCenter = GetUnitCenter(current, openSet.Min.Item3);
+            var currentAnchor = openSet.Min.Item3;
+            var unitCenter = GetUnitCenter(current, currentAnchor);
             openSet.Remove(openSet.Min);
             
             debugFrame.Current = current;
             debugFrame.UnitCenter = unitCenter;
-            
+
             if (current == goal)
             {
+                LastFoundPathFinalAnchor = currentAnchor;
                 return ReconstructPath(cameFrom, cameFromCenter, current, unitCenter);
             }
 
@@ -131,9 +134,11 @@ public class PathFinder
         }
         path.Reverse();
         pathCenter.Reverse();
+        
         //TODO: Remove after path lerping
         foreach (var pos in pathCenter) 
             Debug.DrawRay(pos, Vector3.up, Color.yellow, 1f);
+        
         return path;
     }
 
@@ -168,52 +173,49 @@ public class PathFinder
     private List<Vector3Int> GetNeighbors(Vector3Int cell, Vector3 unitCenter)
     {
         var neighbors = new List<Vector3Int>(8);
-        neighbors.AddRange(Directions.Select(dir => cell + dir).Where(neighbor => _grid.ContainsKey(neighbor)));
-        if (cell == new Vector3Int(-5, 0, 4))
-            Debug.Log("");
-        TryAddDiagonalNeighbor(neighbors, cell, unitCenter, Vector3Int.right, Vector3Int.forward, 4);
-        TryAddDiagonalNeighbor(neighbors, cell, unitCenter, Vector3Int.right, Vector3Int.back, 5);
-        TryAddDiagonalNeighbor(neighbors, cell, unitCenter, Vector3Int.left, Vector3Int.forward, 6);
-        TryAddDiagonalNeighbor(neighbors, cell, unitCenter, Vector3Int.left, Vector3Int.back, 7);
+        neighbors.AddRange(Directions
+                    .Select(dir => cell + dir)
+                    .Where(neighbor => _grid.ContainsKey(neighbor)));
+
+        // чекаем каждую диагональ на проходимость
+        foreach (var diagonalCorner in Corners)
+            TryAddDiagonalNeighbor(neighbors, cell, unitCenter, diagonalCorner, 4);
 
         return neighbors;
     }
     
-    private Vector3Int[] GetNeighborCorners(Vector3Int corner)
+    private IEnumerable<Vector3Int> GetAdjacentCorners(Vector3Int corner)
     {
         if (!Corners.Contains(corner))
             return Array.Empty<Vector3Int>();
 
         // Возвращаем только те углы, что НЕ равны текущему и НЕ противоположны ему
-        return Corners
-            .Where(c => c != corner && (c.x == corner.x || c.z == corner.z)).ToArray();
+        return Corners.Where(c => c != corner && (c.x == corner.x || c.z == corner.z));
     }
 
     private Cell[] GetAdjacentCornersCells(Vector3Int origin, Vector3Int destination)
     {
         var corner = destination - origin;
-        var adjacentCorners = GetNeighborCorners(corner);
+        var adjacentCorners = GetAdjacentCorners(corner);
         var cells = new List<Cell>();
         foreach (var adjacentCorner in adjacentCorners)
         {
             if (Map.Instance.IsCellExists(origin + adjacentCorner, out var cell))
-            {
                 cells.Add(cell);
-            }
         }
         return cells.ToArray();
     }
 
     private void TryAddDiagonalNeighbor(
-        List<Vector3Int> neighbors, 
+        ICollection<Vector3Int> neighbors, 
         Vector3Int cell, 
         Vector3 unitCenter, 
-        Vector3Int dir1, Vector3Int dir2, 
+        Vector3Int direction,
         int nNumber)
     {
-        var diagonal = cell + dir1 + dir2;
-        var direction1 = cell + dir1;
-        var direction2 = cell + dir2;
+        var diagonal = cell + direction;
+        var direction1 = Vector3Int.RoundToInt(cell.ToVector3().AddX(direction.x));
+        var direction2 = Vector3Int.RoundToInt(cell.ToVector3().AddZ(direction.z));
 
         var anchorDiagonal = GetAnchor(cell, diagonal);
         var anchor1 = GetAnchor(cell, direction1);
@@ -226,11 +228,6 @@ public class PathFinder
         {
             var adjacentCornersCells = GetAdjacentCornersCells(cell, diagonal);
             _debugFrame.Corners.Add(nNumber, adjacentCornersCells.ToList());
-            foreach (var corner in adjacentCornersCells)
-            {
-                if (corner.Position == new Vector3Int(-4, 0, 5))
-                    Debug.Log($"{corner.Position} {corner.IsOccupied}");
-            }
             if (adjacentCornersCells.Any(c => c.IsOccupied))
                 return;
         }
@@ -261,7 +258,7 @@ public class PathFinder
         {
             for (var z = 0; z < _unitSize.y; z++)
             {
-                var checkPos = new Vector3Int(position.x + x - (Anchor.x - 1), position.y, position.z + z - (Anchor.y - 1));
+                var checkPos = new Vector3Int(position.x + x - (LastFoundPathFinalAnchor.x - 1), position.y, position.z + z - (LastFoundPathFinalAnchor.y - 1));
                 placedCells[i++] = checkPos;
             }
         }
