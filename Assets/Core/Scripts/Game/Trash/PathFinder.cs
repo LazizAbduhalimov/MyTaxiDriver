@@ -17,7 +17,7 @@ public class PathFinder
 {
     public Vector2Int Anchor;
     public Vector2Int StartAnchor;
-    public Vector2Int LastFoundPathFinalAnchor = new (1, 1);
+    public Vector2Int LastPreviewedPathFinalAnchor = new (1, 1);
     public static readonly List<DebugFrame> Frames = new ();
     
     private static readonly Vector3Int[] Directions = {
@@ -54,6 +54,12 @@ public class PathFinder
     }
 
     private DebugFrame _debugFrame;
+
+    public void ResetAnchorToFoundPathLastAnchor()
+    {
+        StartAnchor = LastPreviewedPathFinalAnchor;
+    }
+    
     public List<Cell> FindPath(Vector3Int start, Vector3Int goal)
     {
         Anchor = StartAnchor;
@@ -86,7 +92,7 @@ public class PathFinder
 
             if (current == goal)
             {
-                LastFoundPathFinalAnchor = currentAnchor;
+                LastPreviewedPathFinalAnchor = currentAnchor;
                 return ReconstructPath(cameFrom, cameFromCenter, current, unitCenter);
             }
 
@@ -258,7 +264,7 @@ public class PathFinder
         {
             for (var z = 0; z < _unitSize.y; z++)
             {
-                var checkPos = new Vector3Int(position.x + x - (LastFoundPathFinalAnchor.x - 1), position.y, position.z + z - (LastFoundPathFinalAnchor.y - 1));
+                var checkPos = new Vector3Int(position.x + x - (LastPreviewedPathFinalAnchor.x - 1), position.y, position.z + z - (LastPreviewedPathFinalAnchor.y - 1));
                 placedCells[i++] = checkPos;
             }
         }

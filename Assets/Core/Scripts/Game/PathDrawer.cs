@@ -121,7 +121,8 @@ namespace Core.Scripts.Game
                 if (Map.Instance.IsCellExists(finish, out var cell))
                 {
                     if (cell.IsOccupied) return;
-                    Unit.transform.position = _pathFinder.GetUnitCenter(finish, _pathFinder.Anchor);
+                    _pathFinder.ResetAnchorToFoundPathLastAnchor();
+                    Unit.transform.position = _pathFinder.GetUnitCenter(finish, _pathFinder.LastPreviewedPathFinalAnchor);
                 }
                 
                 if (Map.Instance.IsCellExists(start, out cell))
