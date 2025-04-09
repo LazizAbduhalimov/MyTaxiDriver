@@ -90,6 +90,7 @@ namespace Client {
                 
                 #endregion
                 
+                // .Add(new HighlightPlaceSystem())
                 .Add(new SoundSystem())
                 .Add(new MusicSystem())
                 

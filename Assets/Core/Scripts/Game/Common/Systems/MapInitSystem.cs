@@ -9,6 +9,7 @@ namespace Client.Game
     {
         private EcsCustomInject<Map> _map;
         private EcsCustomInject<AllPools> _allPools;
+        private EcsPoolInject<CHighlightPlace> _cHighlightPlace;
         private const int Columns = 2; 
         private const int Rows = 1;
 
@@ -36,7 +37,8 @@ namespace Client.Game
                     }
                     else
                     {
-                        _allPools.Value.CarPlace.GetFromPool(cellCenter);
+                        var carPlace = _allPools.Value.CarPlace.GetFromPool(cellCenter).GetComponent<HighlightPlaceMb>();
+                        _cHighlightPlace.NewEntity(out _).Invoke(carPlace);
                         _map.Value.CreateCell(Vector3Int.RoundToInt(cellCenter));
                     }
                 }

@@ -48,7 +48,7 @@ namespace Client
             ref var cTaxi = ref _cTaxi.Value.Get(dragEntity);
             var transform = drag.DragAndDropMb.transform;
             var initialCell = _map.Value.GetCell(drag.LastDragInitialPoint);
-            var cellToWorld = MapUtils.GetSnappedPosition(MapUtils.GetLimitedMousePosition());
+            var cellToWorld = MapUtils.GetSnappedMousePosition();
             if (!_map.Value.IsCellExists(cellToWorld, out var cell) || cellToWorld == initialCell.Position)
             {
                 transform.position = initialCell.Position;
@@ -110,30 +110,5 @@ namespace Client
             
             _eMerged.NewEntity(out _).Invoke(dragged, merging);
         }
-        
-        // private void FillCell(Vector3Int cellPosition)
-        // {
-        //     if (!Map.Instance.IsCellExists(cellPosition, out var cell))
-        //     {
-        //         cell = Map.Instance.CreateCell(cellPosition);
-        //     }
-        //     else
-        //     {
-        //         if (cell.TaxiMb != null)
-        //         {
-        //             var emptyCell = Map.Instance.Cells.Values.FirstOrDefault(c => c.TaxiMb == null);
-        //             if (emptyCell == null)
-        //             {
-        //                 Debug.LogError("Too many objects");
-        //                 gameObject.SetActive(false);
-        //                 return;
-        //             }
-        //
-        //             cell = emptyCell;
-        //         }
-        //     }
-        //     cell.TaxiMb = _taxiMb;
-        //     transform.position = cell.Position;
-        // }
     }
 }

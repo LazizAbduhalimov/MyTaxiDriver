@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HighlightPlace : MonoBehaviour
+public class HighlightPlaceMb : MonoBehaviour
 {
     public MeshRenderer Mesh;
     public Color HighlightColor;
@@ -14,16 +14,12 @@ public class HighlightPlace : MonoBehaviour
         _defaultColor = Mesh.material.color;
     }
 
-    private void OnMouseEnter()
+    public void Highlight()
     {
-        if (Input.GetMouseButton(0))
-        {
-            Mesh.material.color = HighlightColor;
-            // Debug.Log("Changing");
-        }
+        Mesh.material.color = HighlightColor;
     }
-
-    private void OnMouseExit()
+    
+    public void DisableHighlight()
     {
         Mesh.material.color = _defaultColor;
     }
