@@ -6,9 +6,6 @@ namespace LGrid
 {
     public class Map
     {
-        public static Map Instance => _instance ??= new Map();
-        private static Map _instance;
-        
         public Dictionary<Vector3Int, Cell> Cells = new();
 
         public bool HasFreeCell(out KeyValuePair<Vector3Int, Cell> value)

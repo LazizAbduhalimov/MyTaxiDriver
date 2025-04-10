@@ -61,16 +61,8 @@ namespace Client.Saving
 
         private void LoadCoins(SaveFile file, long coinsGainedIfZero)
         {
-            if (file.HasData("Coins"))
-            {
-                var number = file.GetData<long>("Coins");
-                Bank.SetCoins(this, number);
-                Debug.Log("Coins loaded!");
-            }
-            else
-            {
-                Bank.AddCoins(this, coinsGainedIfZero);
-            }
+            var coins = file.HasData("Coins") ? file.GetData<long>("Coins") : coinsGainedIfZero;
+            Bank.SetCoins(this, coins);
         }
     }
 }

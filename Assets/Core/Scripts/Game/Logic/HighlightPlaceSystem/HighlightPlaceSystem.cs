@@ -8,6 +8,7 @@ namespace Client.Game
 {
     public class HighlightPlaceSystem : IEcsRunSystem
     {
+        private EcsCustomInject<Map> _map;
         private EcsFilterInject<Inc<EDragStart>> _eDragStart = "events";
         private EcsFilterInject<Inc<EDragEnd>> _eDragEnd = "events";
         private EcsFilterInject<Inc<CDragObject, CDragging>> _cDraggingFilter;
@@ -15,58 +16,61 @@ namespace Client.Game
 
         private HighlightPlaceMb _initial;
         private HighlightPlaceMb _lastPlace;
-        private Vector3 _lastCell;
-        
+
         public void Run(IEcsSystems systems)
         {
-            foreach (var entity in _eDragStart.Value) HighlightInitial(entity);
-            foreach (var entity in _cDraggingFilter.Value) HighlightSelected(entity);
-            foreach (var entity in _eDragEnd.Value) DisableHighlight(entity);
+            foreach (var _ in _eDragStart.Value) HighlightInitial();
+            foreach (var _ in _cDraggingFilter.Value) HighlightSelected();
+            foreach (var _ in _eDragEnd.Value) ClearHighlight();
         }
 
-        private void HighlightInitial(int entity)
+        private void HighlightInitial()
         {
             foreach (var dragEntity in _cDraggingFilter.Value)
             {
-                ref var dragData = ref _cDraggingFilter.Pools.Inc1.Get(dragEntity);
+                var dragData = _cDraggingFilter.Pools.Inc1.Get(dragEntity);
                 var position = dragData.LastDragInitialPoint;
+
                 foreach (var highlightEntity in _cHighlightFilter.Value)
                 {
-                    var place = _cHighlightFilter.Pools.Inc1.Get(highlightEntity).HighlightPlaceMb;
-                    if (place.transform.position == position)
-                        place.Highlight();
-                }
-            }
-        }
+                    var placeData = _cHighlightFilter.Pools.Inc1.Get(highlightEntity);
+                    var place = placeData.HighlightPlaceMb;
 
-        private void HighlightSelected(int entity)
-        {
-            foreach (var dragEntity in _cDraggingFilter.Value)
-            {
-                var selectedCell = MapUtils.GetSnappedMousePosition();
-                if (selectedCell != _lastCell)
-                {
-                    if (Map.Instance.IsCellExists(selectedCell, out var cell))
+                    if (place.transform.position == position)
                     {
-                        foreach (var highlightEntity in _cHighlightFilter.Value)
-                        {
-                            var place = _cHighlightFilter.Pools.Inc1.Get(highlightEntity).HighlightPlaceMb;
-                            if (place.transform.position == selectedCell)
-                            {
-                                place.Highlight();
-                                _lastCell = selectedCell;
-                                _lastPlace = place;
-                            }
-                        }
+                        _initial = place;
+                        place.Highlight();
+                        return;
                     }
                 }
             }
         }
-        
-        private void DisableHighlight(int entity)
-        { 
-            _initial.DisableHighlight();
-            _lastPlace.DisableHighlight();
+
+        private void HighlightSelected()
+        {
+            var selectedCell = MapUtils.GetSnappedMousePosition();
+
+            foreach (var highlightEntity in _cHighlightFilter.Value)
+            {
+                var placeData = _cHighlightFilter.Pools.Inc1.Get(highlightEntity);
+                var place = placeData.HighlightPlaceMb;
+
+                if (place == _lastPlace || place == _initial) continue;
+                if (placeData.CellPosition != selectedCell) continue;
+
+                place.Highlight();
+                _lastPlace?.DisableHighlight();
+                _lastPlace = place;
+                return;
+            }
+        }
+
+        private void ClearHighlight()
+        {
+            _initial?.DisableHighlight();
+            _lastPlace?.DisableHighlight();
+            _initial = null;
+            _lastPlace = null;
         }
     }
 }

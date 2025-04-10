@@ -21,7 +21,6 @@ namespace Client.Game
             var effectiveCellSize = cellSize + cellGap;
             var gridOrigin = grid.transform.position;
         
-            Gizmos.color = Color.white;
             for (var z = -Rows; z <= Rows; z++)
             {
                 for (var x = -Columns; x < Columns; x++)
@@ -38,7 +37,7 @@ namespace Client.Game
                     else
                     {
                         var carPlace = _allPools.Value.CarPlace.GetFromPool(cellCenter).GetComponent<HighlightPlaceMb>();
-                        _cHighlightPlace.NewEntity(out _).Invoke(carPlace);
+                        _cHighlightPlace.NewEntity(out _).Invoke(cellCenter, carPlace);
                         _map.Value.CreateCell(Vector3Int.RoundToInt(cellCenter));
                     }
                 }
