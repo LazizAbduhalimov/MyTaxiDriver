@@ -109,22 +109,26 @@ namespace Core.Scripts.Game
             PreviewPath(_startingCell, mousePosition);
             DoPath(_startingCell, mousePosition);
         }
-
+        
         private void DoPath(Vector3Int start, Vector3Int finish)
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if (!_pathFinder.CanBePlacedAt(finish)) return;
+                if (!_pathFinder.CanBePlacedAt(start , finish)) 
+                    return;
                 
-                if (Map.Instance.IsCellExists(finish, out var cell))
+                var occupiedCells = _pathFinder.GetOccupiedCells(start);
+                var intendedCellsToOccupy = _pathFinder.GetIntendedCellsToOccupy(finish);
+                
+                _pathFinder.ResetAnchorToFoundPathLastAnchor();
+                _startingCell = finish;
+                Unit.transform.position = _pathFinder.GetUnitCenter(finish, _pathFinder.LastPreviewedPathFinalAnchor);
+                foreach (var cell in intendedCellsToOccupy)
                 {
-                    if (cell.IsOccupied) return;
-                    _pathFinder.ResetAnchorToFoundPathLastAnchor();
-                    _startingCell = finish;
-                    Unit.transform.position = _pathFinder.GetUnitCenter(finish, _pathFinder.LastPreviewedPathFinalAnchor);
+                    cell.IsOccupied = true;
                 }
-                
-                if (Map.Instance.IsCellExists(start, out cell))
+
+                foreach (var cell in occupiedCells)
                 {
                     cell.IsOccupied = false;
                 }
@@ -141,11 +145,8 @@ namespace Core.Scripts.Game
             var placingCells = _pathFinder.GetIntendedCellsToOccupy(finish);
             foreach (var placingCell in placingCells)
             {
-                if (Map.Instance.IsCellExists(placingCell, out var cell))
-                {
-                    var color = cell.IsOccupied ? Color.magenta : Color.cyan;
-                    Debug.DrawRay(placingCell, Vector3.up, color);
-                }
+                var color = placingCell.IsOccupied ? Color.magenta : Color.cyan;
+                Debug.DrawRay(placingCell.Position, Vector3.up, color);
             }
             if (pathCells.Count == 0)
             {

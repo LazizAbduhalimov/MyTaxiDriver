@@ -83,11 +83,9 @@ namespace Client {
                 .Add(new CoinDisplaySystem())
 
                 #region Bridges
-                
                 .Add(new SoundBridgeSystem())
                 .Add(new MusicBridgeSystem())
                 .Add(new ParticleBridgeSystem())
-                
                 #endregion
                 
                 .Add(new SoundSystem())

@@ -44,22 +44,31 @@ public class PathFinder
         StartAnchor = anchor;
     }
     
+    public Cell[] GetOccupiedCells(Vector3Int position) => GetOccupiedCells(position, StartAnchor);
+    
+    public Cell[] GetIntendedCellsToOccupy(Vector3Int position) => GetOccupiedCells(position, LastPreviewedPathFinalAnchor);
+    
     public void ResetAnchorToFoundPathLastAnchor()
     {
         StartAnchor = LastPreviewedPathFinalAnchor;
     }
 
-    public bool CanBePlacedAt(Vector3Int position)
+    public bool CanBePlacedAt(Vector3Int start, Vector3Int goal)
     {
-        return All2By2Anchors.Any(a => CanPlaceUnit(position, a));
+        var occupiedCells = GetOccupiedCells(start);
+        if (occupiedCells.Any(c => c.Position == goal))
+            return false;
+        
+        if (!All2By2Anchors.Any(a => CanPlaceUnit(goal, a, occupiedCells)))
+            return false;
+        
+        return true;
     }
     
     public (List<Cell>, List<Vector3>) FindPath(Vector3Int start, Vector3Int goal)
     {
-        if (!CanPlaceUnit(start, StartAnchor))
-            return (new List<Cell>(), new List<Vector3>());
-        
-        if (!CanBePlacedAt(goal))
+        var occupiedCells = GetOccupiedCells(start);
+        if (!CanBePlacedAt(start, goal))
             return (new List<Cell>(), new List<Vector3>());
 
         // такой тип нужен для оптимизации чтобы не сортировывать каждый раз
@@ -70,11 +79,6 @@ public class PathFinder
         var cameFromCenter = new Dictionary<Vector3, Vector3>();
         var gScore = new Dictionary<Vector3Int, float> { [start] = 0 };
         var fScore = new Dictionary<Vector3Int, float> { [start] = Heuristic(start, goal) };
-        var placedCells = GetOccupiedCells(start);
-        foreach (var entity in placedCells)
-        {
-            Debug.DrawLine(entity, entity.ToVector3().AddY(2f), Color.red);
-        }
         Frames.Clear();
         while (openSet.Count > 0)
         {
@@ -96,13 +100,18 @@ public class PathFinder
 
             foreach (var neighbor in GetNeighbors(current, unitCenter))
             {
+                var isOccupiedByThisUnit = occupiedCells.Any(c => c.Position == neighbor);
                 var neighborAnchor = GetAnchor(unitCenter, neighbor);
-                debugFrame.Neighbours.Add(neighbor);
-                debugFrame.NeighboursAnchor.Add(neighborAnchor);
-                if (!CanPlaceUnit(neighbor, neighborAnchor))
-                    continue;
+                if (!isOccupiedByThisUnit)
+                {
+                    debugFrame.Neighbours.Add(neighbor);
+                    debugFrame.NeighboursAnchor.Add(neighborAnchor);
+                    if (!CanPlaceUnit(neighbor, neighborAnchor, occupiedCells))
+                        continue;   
+                }
 
-                var tentativeGScore = gScore[current] + 1;
+                var tentativeGScore = gScore[current];
+                if (!isOccupiedByThisUnit) tentativeGScore++;
 
                 if (!gScore.TryGetValue(neighbor, out var neighborGScore) || tentativeGScore < neighborGScore)
                 {
@@ -139,7 +148,7 @@ public class PathFinder
         return (path, pathCenter);
     }
 
-    public static Vector2Int GetAnchor(Vector3 origin, Vector3 point)
+    private static Vector2Int GetAnchor(Vector3 origin, Vector3 point)
     {
         var quadrant = GetQuadrant(origin, point);
         return quadrant switch
@@ -166,34 +175,8 @@ public class PathFinder
         return neighbors;
     }
     
-    private IEnumerable<Vector3Int> GetAdjacentCorners(Vector3Int corner)
-    {
-        if (!Corners.Contains(corner))
-            return Array.Empty<Vector3Int>();
-
-        // Возвращаем только те углы, что НЕ равны текущему и НЕ противоположны ему
-        return Corners.Where(c => c != corner && (c.x == corner.x || c.z == corner.z));
-    }
-
-    private Cell[] GetAdjacentCornersCells(Vector3Int origin, Vector3Int destination)
-    {
-        var corner = destination - origin;
-        var adjacentCorners = GetAdjacentCorners(corner);
-        var cells = new List<Cell>();
-        foreach (var adjacentCorner in adjacentCorners)
-        {
-            if (Map.Instance.IsCellExists(origin + adjacentCorner, out var cell))
-                cells.Add(cell);
-        }
-        return cells.ToArray();
-    }
-
     private void TryAddDiagonalNeighbor(
-        ICollection<Vector3Int> neighbors, 
-        Vector3Int cell, 
-        Vector3 unitCenter, 
-        Vector3Int direction,
-        int nNumber)
+        ICollection<Vector3Int> neighbors, Vector3Int cell, Vector3 unitCenter, Vector3Int direction, int nNumber)
     {
         var diagonal = cell + direction;
         var direction1 = Vector3Int.RoundToInt(cell.ToVector3().AddX(direction.x));
@@ -217,37 +200,55 @@ public class PathFinder
         if (CanPlaceUnit(diagonal, anchorDiagonal) && CanPlaceUnit(direction1, anchor1) && CanPlaceUnit(direction2, anchor2))
             neighbors.Add(diagonal);
     }
+    
+    private IEnumerable<Vector3Int> GetAdjacentCorners(Vector3Int corner)
+    {
+        if (!Corners.Contains(corner))
+            return Array.Empty<Vector3Int>();
 
-    private bool CanPlaceUnit(Vector3Int position, Vector2Int anchor)
+        // Возвращаем только те углы, что НЕ равны текущему и НЕ противоположны ему
+        return Corners.Where(c => c != corner && (c.x == corner.x || c.z == corner.z));
+    }
+
+    private Cell[] GetAdjacentCornersCells(Vector3Int origin, Vector3Int destination)
+    {
+        var corner = destination - origin;
+        var adjacentCorners = GetAdjacentCorners(corner);
+        var cells = new List<Cell>();
+        foreach (var adjacentCorner in adjacentCorners)
+        {
+            if (Map.Instance.IsCellExists(origin + adjacentCorner, out var cell))
+                cells.Add(cell);
+        }
+        return cells.ToArray();
+    }
+
+    private bool CanPlaceUnit(Vector3Int position, Vector2Int anchor, Cell[] excludedCells = null)
     {
         for (var x = 0; x < UnitSize.x; x++)
         {
             for (var z = 0; z < UnitSize.y; z++)
             {
                 var checkPos = new Vector3Int(position.x + x - (anchor.x - 1), position.y, position.z + z - (anchor.y - 1));
-                if (!Grid.TryGetValue(checkPos, out var cell) || cell.IsOccupied)
+                if ((!Grid.TryGetValue(checkPos, out var cell) || cell.IsOccupied) &&
+                    (excludedCells != null && !excludedCells.Contains(cell)))
                     return false;
             }
         }
         return true;
     }
 
-    public Vector3Int[] GetIntendedCellsToOccupy(Vector3Int position)
-        => GetOccupiedCells(position, LastPreviewedPathFinalAnchor);
-
-    public Vector3Int[] GetOccupiedCells(Vector3Int position)
-        => GetOccupiedCells(position, StartAnchor);
-    
-    public Vector3Int[] GetOccupiedCells(Vector3Int position, Vector2Int anchor)
+    private Cell[] GetOccupiedCells(Vector3Int position, Vector2Int anchor)
     {
-        var placedCells = new Vector3Int[UnitSize.x * UnitSize.y];
+        var placedCells = new Cell[UnitSize.x * UnitSize.y];
         var i = 0;
         for (var x = 0; x < UnitSize.x; x++)
         {
             for (var z = 0; z < UnitSize.y; z++)
             {
                 var checkPos = new Vector3Int(position.x + x - (anchor.x - 1), position.y, position.z + z - (anchor.y - 1));
-                placedCells[i++] = checkPos;
+                if (Map.Instance.IsCellExists(checkPos, out var cell))
+                    placedCells[i++] = cell;
             }
         }
         return placedCells;
