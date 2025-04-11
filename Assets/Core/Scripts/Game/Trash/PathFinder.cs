@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using LGrid;
@@ -36,6 +35,13 @@ public class PathFinder
     };
     
     private DebugFrame _debugFrame;
+    
+    public PathFinder(Dictionary<Vector3Int, Cell> grid)
+    {
+        Grid = grid;
+        UnitSize = new Vector2Int(1, 1);
+        StartAnchor = new Vector2Int(1, 1);
+    }
 
     public PathFinder(Dictionary<Vector3Int, Cell> grid, Vector2Int unitSize, Vector2Int anchor)
     {
@@ -55,14 +61,17 @@ public class PathFinder
 
     public bool CanBePlacedAt(Vector3Int start, Vector3Int goal)
     {
+        if (start == goal) return false;
+        if (IsSizeXByX(1)) return true;
+        
         var occupiedCells = GetOccupiedCells(start);
+        if (IsSizeXByX(3) && CanPlaceUnit(goal, StartAnchor, occupiedCells))
+            return true;
+        
         if (occupiedCells.Any(c => c.Position == goal))
             return false;
         
-        if (!All2By2Anchors.Any(a => CanPlaceUnit(goal, a, occupiedCells)))
-            return false;
-        
-        return true;
+        return All2By2Anchors.Any(a => CanPlaceUnit(goal, a, occupiedCells));
     }
     
     public (List<Cell>, List<Vector3>) FindPath(Vector3Int start, Vector3Int goal)
@@ -84,8 +93,7 @@ public class PathFinder
         {
             var debugFrame = new DebugFrame();
             _debugFrame = debugFrame;
-            var current = openSet.Min.Item2;
-            var currentAnchor = openSet.Min.Item3;
+            var (f, current, currentAnchor) = openSet.Min;
             var unitCenter = GetUnitCenter(current, currentAnchor);
             openSet.Remove(openSet.Min);
             
@@ -101,17 +109,25 @@ public class PathFinder
             foreach (var neighbor in GetNeighbors(current, unitCenter))
             {
                 var isOccupiedByThisUnit = occupiedCells.Any(c => c.Position == neighbor);
+                
                 var neighborAnchor = GetAnchor(unitCenter, neighbor);
-                if (!isOccupiedByThisUnit)
+                if (IsSizeXByX(2))
                 {
-                    debugFrame.Neighbours.Add(neighbor);
-                    debugFrame.NeighboursAnchor.Add(neighborAnchor);
+                    if (!isOccupiedByThisUnit)
+                    {
+                        debugFrame.Neighbours.Add(neighbor);
+                        debugFrame.NeighboursAnchor.Add(neighborAnchor);
+                        if (!CanPlaceUnit(neighbor, neighborAnchor, occupiedCells))
+                            continue;   
+                    }
+                }
+                else
+                {
                     if (!CanPlaceUnit(neighbor, neighborAnchor, occupiedCells))
-                        continue;   
+                        continue;
                 }
 
-                var tentativeGScore = gScore[current];
-                if (!isOccupiedByThisUnit) tentativeGScore++;
+                var tentativeGScore = gScore[current] + (isOccupiedByThisUnit ? 0: 1 );
 
                 if (!gScore.TryGetValue(neighbor, out var neighborGScore) || tentativeGScore < neighborGScore)
                 {
@@ -148,8 +164,11 @@ public class PathFinder
         return (path, pathCenter);
     }
 
-    private static Vector2Int GetAnchor(Vector3 origin, Vector3 point)
+    private Vector2Int GetAnchor(Vector3 origin, Vector3 point)
     {
+        if (!IsSizeXByX(2))
+            return StartAnchor;
+        
         var quadrant = GetQuadrant(origin, point);
         return quadrant switch
         {
@@ -170,13 +189,13 @@ public class PathFinder
 
         // чекаем каждую диагональ на проходимость
         foreach (var diagonalCorner in Corners)
-            TryAddDiagonalNeighbor(neighbors, cell, unitCenter, diagonalCorner, 4);
+            TryAddDiagonalNeighbor(neighbors, cell, unitCenter, diagonalCorner);
 
         return neighbors;
     }
     
     private void TryAddDiagonalNeighbor(
-        ICollection<Vector3Int> neighbors, Vector3Int cell, Vector3 unitCenter, Vector3Int direction, int nNumber)
+        ICollection<Vector3Int> neighbors, Vector3Int cell, Vector3 unitCenter, Vector3Int direction)
     {
         var diagonal = cell + direction;
         var direction1 = Vector3Int.RoundToInt(cell.ToVector3().AddX(direction.x));
@@ -192,7 +211,6 @@ public class PathFinder
         if ((diagonal - unitCenter).sqrMagnitude > 4)
         {
             var adjacentCornersCells = GetAdjacentCornersCells(cell, diagonal);
-            _debugFrame.Corners.Add(nNumber, adjacentCornersCells.ToList());
             if (adjacentCornersCells.Any(c => c.IsOccupied))
                 return;
         }
@@ -203,9 +221,6 @@ public class PathFinder
     
     private IEnumerable<Vector3Int> GetAdjacentCorners(Vector3Int corner)
     {
-        if (!Corners.Contains(corner))
-            return Array.Empty<Vector3Int>();
-
         // Возвращаем только те углы, что НЕ равны текущему и НЕ противоположны ему
         return Corners.Where(c => c != corner && (c.x == corner.x || c.z == corner.z));
     }
@@ -230,8 +245,10 @@ public class PathFinder
             for (var z = 0; z < UnitSize.y; z++)
             {
                 var checkPos = new Vector3Int(position.x + x - (anchor.x - 1), position.y, position.z + z - (anchor.y - 1));
-                if ((!Grid.TryGetValue(checkPos, out var cell) || cell.IsOccupied) &&
-                    (excludedCells != null && !excludedCells.Contains(cell)))
+                if (!Grid.TryGetValue(checkPos, out var cell))
+                    return false;
+
+                if (cell.IsOccupied && (excludedCells == null || !excludedCells.Contains(cell)))
                     return false;
             }
         }
@@ -270,6 +287,8 @@ public class PathFinder
         if (dx < 0 && dz < 0) return 3;
         return 4;
     }
+    
+    private bool IsSizeXByX(int x) => UnitSize.x == x && UnitSize.y == x;
     
     private float Heuristic(Vector3Int a, Vector3Int b)
     {

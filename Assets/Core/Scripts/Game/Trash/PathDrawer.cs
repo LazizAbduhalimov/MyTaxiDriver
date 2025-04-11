@@ -92,7 +92,7 @@ namespace Core.Scripts.Game
         
         public void Update()
         {
-            DebugPath();
+            // DebugPath();
             if (Input.GetMouseButtonDown(1))
             {
                 Path();
@@ -143,6 +143,10 @@ namespace Core.Scripts.Game
             var pathCells = pathPair.Item1;
             var pathVertexes = pathPair.Item1;
             var placingCells = _pathFinder.GetIntendedCellsToOccupy(finish);
+            foreach (var vertex in pathVertexes)
+            {
+                Debug.DrawRay(vertex.Position, Vector3.up, Color.yellow);
+            }
             foreach (var placingCell in placingCells)
             {
                 var color = placingCell.IsOccupied ? Color.magenta : Color.cyan;
