@@ -21,7 +21,7 @@ namespace Core.Scripts.Game
         private void Start()
         {
             var anchor = new Vector2Int(1, 1);
-            var unitSize = new Vector2Int(2, 2);
+            var unitSize = new Vector2Int(1, 1);
             var tiles = FindObjectsOfType<Tile>();
             foreach (var tile in tiles)
             {
@@ -141,11 +141,11 @@ namespace Core.Scripts.Game
             Debug.Log($"s {_pathFinder.StartAnchor}");
             Debug.Log($"l {_pathFinder.LastPreviewedPathFinalAnchor}");
             var pathCells = pathPair.Item1;
-            var pathVertexes = pathPair.Item1;
+            var pathVertexes = pathPair.Item2;
             var placingCells = _pathFinder.GetIntendedCellsToOccupy(finish);
             foreach (var vertex in pathVertexes)
             {
-                Debug.DrawRay(vertex.Position, Vector3.up, Color.yellow);
+                Debug.DrawRay(vertex, Vector3.up, Color.yellow);
             }
             foreach (var placingCell in placingCells)
             {
