@@ -1,4 +1,5 @@
 using Leopotam.EcsLite;
+using PrimeTween;
 using UnityEngine;
 
 namespace Client.Game
@@ -11,6 +12,7 @@ namespace Client.Game
         [HideInInspector] public float BoostPercentage = 5f;
         [HideInInspector] public float BoostCoolDown = 5f;
         [HideInInspector] public bool CanBeBoosted = true;
+        [HideInInspector] public Sequence? BoostSequence;
 
         private void Start()
         {

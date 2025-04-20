@@ -16,13 +16,14 @@ namespace Client
         {
             foreach (var eventEntity in _eSpeedBoostFilter.Value)
             {
-                var booster = _eSpeedBoostFilter.Pools.Inc1.Get(eventEntity).SpeedBoosterMb;
+                ref var boostData = ref _eSpeedBoostFilter.Pools.Inc1.Get(eventEntity);
+                var booster = boostData.SpeedBoosterMb;
                 var entity = booster.PackedEntity.FastUnpack();
-                Boost(entity);
+                Boost(entity, boostData.BoostTime);
             }    
         }
 
-        private void Boost(int entity)
+        private void Boost(int entity, float duration)
         {
             ref var cBooster = ref _cSpeedBooster.Value.Get(entity);
             var taxiMb = _cTaxi.Value.Get(entity).TaxiMb;
@@ -30,10 +31,11 @@ namespace Client
             var startSpeed = taxiMb.Follower.speed;
             var boostedSpeed = startSpeed + startSpeed * booster.BoostPercentage;
             SetBoostState(booster, true);
-            Sequence.Create(cycles: 2, CycleMode.Yoyo, Ease.OutSine)
+            booster.BoostSequence?.Complete();
+            booster.BoostSequence = Sequence.Create(cycles: 2, CycleMode.Yoyo, Ease.OutSine)
                     .Chain(Tween.Custom(startSpeed, boostedSpeed, duration: 0.5f, 
                         value => taxiMb.Follower.speed = value))
-                    .Chain(Tween.Delay(1f)
+                    .Chain(Tween.Delay(duration)
                     .OnComplete(() =>
                     {
                         Tween.Delay(booster.BoostCoolDown, () => SetBoostState(booster, false));
