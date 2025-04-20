@@ -14,7 +14,6 @@ namespace Client
         
         public void Init(IEcsSystems systems)
         {
-            // Links.Instance.CarsConfig.Configurate();
             var taxis = Object.FindObjectsOfType<TaxiMb>(true);
             foreach (var taxi in taxis) taxi.Init();
         }
