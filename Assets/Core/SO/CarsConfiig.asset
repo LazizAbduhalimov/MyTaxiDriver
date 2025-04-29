@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58b23de9519169b40bebc8e54aace06d, type: 3}
   m_Name: CarsConfiig
   m_EditorClassIdentifier: 
-  SpeedBoundries: {x: 10, y: 200}
+  SpeedBoundries: {x: 10, y: 180}
   Speed:
     serializedVersion: 2
     m_Curve:
@@ -28,16 +28,16 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0.35492042
-      outSlope: 0.35492042
+      inSlope: 1.2656485
+      outSlope: 1.2656485
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.07989687
+      inWeight: 0.057989717
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  ProfitBoundries: {x: 10, y: 8000}
+  ProfitBoundries: {x: 10, y: 6000}
   Profit:
     serializedVersion: 2
     m_Curve:
@@ -62,7 +62,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  CostBoundries: {x: 20, y: 200}
+  CostBoundries: {x: 20, y: 220}
   Cost:
     serializedVersion: 2
     m_Curve:
@@ -78,11 +78,11 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
+      inSlope: 0.87174916
+      outSlope: 0.87174916
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.06314427
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

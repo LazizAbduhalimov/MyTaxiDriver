@@ -10,6 +10,7 @@ namespace UI
         private EcsFilterInject<Inc<CInterface>> _cInterfaceFilter;
 
         private EcsPoolInject<CBuyVehicle> _cBuyVehicle;
+        private EcsPoolInject<CWatchVideo> _cWatchVideo;
         
         public void Init(IEcsSystems systems)
         {
@@ -18,6 +19,8 @@ namespace UI
                 ref var ui = ref _cInterfaceFilter.Pools.Inc1.Get(entity);
                 ref var buyVehicle = ref UIUtils.InitButton(ui.BuyVehicleButton, _cBuyVehicle.Value);
                 buyVehicle.Text = ui.BuyVehicleCostText;
+                
+                UIUtils.InitButton(ui.RewardVideoButton, _cWatchVideo.Value);
             }
         }
     }

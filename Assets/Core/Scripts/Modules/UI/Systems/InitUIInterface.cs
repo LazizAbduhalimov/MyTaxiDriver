@@ -14,6 +14,7 @@ namespace UI
             var ui = Object.FindObjectOfType<UILinks>();
             cInterface.BuyVehicleButton = ui.BuyVehicleButton;
             cInterface.BuyVehicleCostText = ui.BuyVehicleCostText;
+            cInterface.RewardVideoButton = ui.RewardVideoButton;
         }
     }
 }

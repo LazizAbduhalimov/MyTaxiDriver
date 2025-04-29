@@ -24,11 +24,12 @@ namespace Client
                 {
                     continue;
                 }
-                var bonusCarLevel = Mathf.Clamp(CarLevel, 1, 7);
+                var bonusCarLevel = Mathf.Clamp(CarLevel+2, 1, 7);
                 var taxiMb = _allPools.Value.CarsPool[bonusCarLevel].GetFromPool(pair.Key);
                 var taxiEntity = taxiMb.PackedEntity.FastUnpack();
                 taxiMb.Drive();
                 pair.Value.IsOccupied = true;
+                Debug.Log($"Given bonus car level {bonusCarLevel}");
                 _cActive.Value.Add(taxiEntity);
                 _eBonusCar.Pools.Inc1.Del(entity);
             }

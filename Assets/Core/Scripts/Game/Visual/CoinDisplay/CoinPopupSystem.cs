@@ -10,11 +10,19 @@ namespace Client
     public class CoinPopupSystem : IEcsRunSystem
     {
         private EcsCustomInject<AllPools> _allPools;
-        private EcsFilterInject<Inc<EEarnMoney>> _eEarnMoneyFilter = "events";
         private EcsFilterInject<Inc<EMerged>> _eMergeFilter = "events";
+        private EcsFilterInject<Inc<EEarnMoney>> _eEarnMoneyFilter = "events";
+        private EcsFilterInject<Inc<EDisplayFloatingCoin>> _eDisplayCoinFilter = "events";
         
         public void Run(IEcsSystems systems)
         {
+            foreach (var entity in _eDisplayCoinFilter.Value)
+            {
+                ref var displayData = ref _eDisplayCoinFilter.Pools.Inc1.Get(entity);
+                PopupCoin(displayData.Position, displayData.Value, displayData.Duration);
+                _eDisplayCoinFilter.Pools.Inc1.Del(entity);
+            }
+            
             foreach (var entity in _eEarnMoneyFilter.Value)
             {
                 ref var earnData = ref _eEarnMoneyFilter.Pools.Inc1.Get(entity);
@@ -33,11 +41,11 @@ namespace Client
             }
         }
 
-        private void PopupCoin(Vector3 position, long value)
+        private void PopupCoin(Vector3 position, long value, float duration = 0.5f)
         {
             var poolObject = _allPools.Value.PopupsPool.GetFromPool<Popup>(position.AddY(10f));
             poolObject.Text.text = "+" + value;
-            Tween.LocalPositionY(poolObject.transform, poolObject.transform.position.y + 5f, duration: 0.5f, Ease.OutSine)
+            Tween.LocalPositionY(poolObject.transform, poolObject.transform.position.y + 5f, duration, Ease.OutSine)
                 .OnComplete(() => poolObject.gameObject.SetActive(false));
         }
     }

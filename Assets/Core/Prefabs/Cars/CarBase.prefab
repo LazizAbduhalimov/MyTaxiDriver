@@ -180,6 +180,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Particle: {fileID: 216722310634462591}
+  Trails: {fileID: 0}
+  BoostPercentage: 5
+  BoostCoolDown: 0
+  CanBeBoosted: 1
 --- !u!1 &5141480796310365530
 GameObject:
   m_ObjectHideFlags: 0
@@ -650,7 +654,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Level: 1
   Speed: 10
-  MoneyForCircle: 5
+  MoneyForCircle: 10
   Follower: {fileID: 0}
   TransparentGfx: {fileID: 0}
 --- !u!114 &-1937244042975327101

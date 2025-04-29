@@ -35,8 +35,9 @@ namespace UI
 
         public static IEcsSystems AddUIEventsDestroyers(this IEcsSystems systems)
         {
-            return 
-                systems.DelHere<EBuyVehicleClicked>()
+            return systems
+                    .DelHere<EBuyVehicleClicked>()
+                    .DelHere<ERewardVideoClicked>()
                 ;
         }
     }

@@ -73,6 +73,14 @@ namespace Client {
                 .AddWorld(_eventsWorld, "events")
                 .Add(new DragAndDropMarkerSystem())
                 .Add(new DragHandleSystem())
+                
+                .Add(new BonusGiveSystem())
+                .Add(new BonusHandleSystem())
+                .Add(new BonusCarSystem())
+                .Add(new BonusCoinsSystem())
+                .Add(new BonusDoubledCoinsSystems())
+                .Add(new BonusBoostAllCarsSystem())
+                
                 .Add(new EarnMoneySystem())
                 
                 .Add(new VehiclePurchaseSystem())

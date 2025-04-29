@@ -8,9 +8,9 @@ namespace Client.Game
     {
         public EcsPackedEntity PackedEntity;
         public GameObject Particle;
+        public float BoostCoolDown => 3f;
         [HideInInspector] public Transform Trails;
         [HideInInspector] public float BoostPercentage = 5f;
-        [HideInInspector] public float BoostCoolDown = 5f;
         [HideInInspector] public bool CanBeBoosted = true;
         [HideInInspector] public Sequence? BoostSequence;
 
