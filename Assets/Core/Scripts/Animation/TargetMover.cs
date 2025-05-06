@@ -68,9 +68,8 @@ public class TargetMover : MonoBehaviour
         var ray = new Ray(rayOrigin, Vector3.down);
         Debug.DrawLine(body.position, rayOrigin, Color.green);
 
-        if (_lerp < 1 && _otherFoot.IsMoving()) return;
-        if (!Physics.Raycast(ray, out var info, 10, _terrainLayer.value)) return;
-        
+        if (_lerp < 1 || _otherFoot.IsMoving()) return;
+        if(!Physics.Raycast(ray, out var info, 10, _terrainLayer.value)) return;
         var distance = Vector3.Distance(NewPosition, info.point);
         if (distance > _stepDistance)
         {
