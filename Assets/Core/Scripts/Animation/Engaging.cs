@@ -11,10 +11,11 @@ public class Engaging : MonoBehaviour
     void Update()
     {
         if (Victim == null) return;
-        if (Vector3.Distance(Victim.position, transform.position) < 1) return;
+        if (Vector3.Distance(Victim.position, transform.position) < 2) return;
         
         // Поворачиваемся к цели по всем осям
         var direction = (transform.position - Victim.position).normalized;
+        direction.y = 0;
         if (direction != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction);

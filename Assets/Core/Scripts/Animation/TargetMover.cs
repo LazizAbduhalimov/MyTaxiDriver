@@ -33,7 +33,7 @@ public class TargetMover : MonoBehaviour
         _lerp = 1;
     }
 
-    private void Update()
+    public void Update()
     {
         transform.position = CurrentPosition;
         transform.up = CurrentNormal;
@@ -41,6 +41,8 @@ public class TargetMover : MonoBehaviour
 
         if (_lerp < 1 && !_otherFoot.IsMoving())
         {
+            Debug.Log($"Lerping {name}");
+            Debug.DrawRay(transform.position, Vector3.up, Color.magenta);
             LerpLegPosition();
         }
 

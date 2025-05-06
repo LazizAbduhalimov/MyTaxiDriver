@@ -1,29 +1,48 @@
 using UnityEngine;
 
-public class BodySwayer : MonoBehaviour
+public class transformSwayer : MonoBehaviour
 {
-    public float swayAmount = 2f;
-    public float swaySpeed = 4f;
-    public Transform spiderBody;
+    [Header("Swaying rotation")]
+    public Vector3 SwayAmount;
+    public Vector3 SwaySpeed;
 
-    private Vector3 initialRotation;
-    private Vector3 LastSway;
+    [Space]
+    [Header("Shifting position")]
+    public Vector3 ShiftAmount;
+    public Vector3 ShiftSpeed;
 
-    void Start()
-    {
-        if (spiderBody == null) spiderBody = transform;
-    }
+    private Vector3 _lastSwayRotation;
+    private Vector3 _lastSwatPosition;
 
     void Update()
     {
-        // Расчёт раскачивания по синусоиде
-        var swayX = Mathf.Sin(Time.time * swaySpeed) * swayAmount;
-        var swayZ = Mathf.Sin(Time.time * swaySpeed * 0.5f) * swayAmount * 0.5f;
-        var initialRotation = spiderBody.localEulerAngles - LastSway;
-        LastSway = new Vector3(swayX, 0f, swayZ);
-        var swayRotation = initialRotation + LastSway;
+        SwayRotation();
+        SwayPosition();
+    }
 
-        // Применяем качку к текущей ориентации, используя компонент вращения
-        spiderBody.localRotation = Quaternion.Euler(swayRotation);
+    private void SwayPosition()
+    {
+        var initialPosition = transform.localPosition - _lastSwatPosition;
+        _lastSwatPosition = GetChangedSin(ShiftSpeed, ShiftAmount);
+        var swayRotation = initialPosition + _lastSwatPosition;
+        transform.localPosition = swayRotation;
+    }
+
+    private void SwayRotation()
+    {
+        var initialRotation = transform.localEulerAngles - _lastSwayRotation;
+        _lastSwayRotation = GetChangedSin(SwaySpeed, SwayAmount);
+        var swayRotation = initialRotation + _lastSwayRotation;
+        transform.localRotation = Quaternion.Euler(swayRotation);
+    }
+
+    private Vector3 GetChangedSin(Vector3 speed, Vector3 amount)
+    {
+        // Расчёт раскачивания по синусоиде
+        return new Vector3 {
+            x = Mathf.Sin(Time.time * speed.x) * amount.x,
+            y = Mathf.Sin(Time.time * speed.y) * amount.y,
+            z = Mathf.Sin(Time.time * speed.z) * amount.z
+        };
     }
 }

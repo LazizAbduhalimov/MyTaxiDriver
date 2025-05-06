@@ -16,15 +16,17 @@ public class Spider : MonoBehaviour
         timer += Time.deltaTime;
 
         // Если все ноги текущей группы уже не двигаются и интервал прошёл
-        if (!IsGroupMoving(isGroupATurn ? groupA : groupB))
-        {
-            // Принудительно обнови позицию ног в этой группе (триггер начала шага)
-            TriggerStep(isGroupATurn ? groupA : groupB);
-
-            // Переключи группу
-            isGroupATurn = !isGroupATurn;
-            timer = 0f;
-        }
+        // var group = isGroupATurn ? groupA : groupB;
+        // Interanl(group);
+        // if (!IsGroupMoving(group))
+        // {
+        //     // Принудительно обнови позицию ног в этой группе (триггер начала шага)
+        //     TriggerStep(group);
+        //
+        //     // Переключи группу
+        //     isGroupATurn = !isGroupATurn;
+        //     timer = 0f;
+        // }
     }
 
     bool IsGroupMoving(List<TargetMover> group)
@@ -34,6 +36,18 @@ public class Spider : MonoBehaviour
 
     void TriggerStep(List<TargetMover> group)
     {
-        
+        Debug.Log("Reposition");
+        foreach (var leg in group)
+        {
+            leg.RepositionTarget();
+        }
+    }
+
+    private void Interanl(List<TargetMover> group)
+    {
+        foreach (var leg in group)
+        {
+            // leg.Internal();
+        }
     }
 }

@@ -4,9 +4,9 @@ using UnityEngine;
 [RequireComponent(typeof(TargetMover))]
 public class TargetMoverGizmos : MonoBehaviour
 {
-    private TargetMover _targetMover;
+    public TargetMover _targetMover;
 
-    private void Awake()
+    private void OnValidate()
     {
         _targetMover = GetComponent<TargetMover>();
     }
@@ -21,7 +21,7 @@ public class TargetMoverGizmos : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        if (_targetMover == null || _targetMover.IsMoving()) return;
+        if (_targetMover == null) return;
         var spider = _targetMover.Spider;
         if (spider == null) return;
 

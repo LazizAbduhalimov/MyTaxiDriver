@@ -191,6 +191,7 @@ GameObject:
   m_Component:
   - component: {fileID: 52602464}
   - component: {fileID: 52602465}
+  - component: {fileID: 52602466}
   m_Layer: 0
   m_Name: R3 IK_target
   m_TagString: Untagged
@@ -231,10 +232,22 @@ MonoBehaviour:
   _spider: {fileID: 919132148821351758}
   _otherFoot: {fileID: 1765671765}
   _speed: 5
-  _stepDistance: 2
+  _stepDistance: 1.6
   _stepHeight: 1.5
-  _footOffset: {x: 0, y: 0, z: -1.24}
-  FootSpacing: 3.8406382
+  _footOffset: {x: 3.84, y: 0.1, z: -1.61}
+--- !u!114 &52602466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 52602463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4baa4ef3be344f08a14cb1ff2aaec009, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetMover: {fileID: 52602465}
 --- !u!1 &53270878
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,13 +275,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53270878}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 40149bda232f3604390471288c7a239c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Victim: {fileID: 543450652824766448}
-  Speed: 6
+  Speed: 8
   RotationSpeed: 5
 --- !u!65 &53270880
 BoxCollider:
@@ -757,6 +770,7 @@ GameObject:
   m_Component:
   - component: {fileID: 738603383}
   - component: {fileID: 738603384}
+  - component: {fileID: 738603385}
   m_Layer: 0
   m_Name: R1 IK_target
   m_TagString: Untagged
@@ -799,8 +813,20 @@ MonoBehaviour:
   _speed: 5
   _stepDistance: 2
   _stepHeight: 1.5
-  _footOffset: {x: 0, y: 0, z: 4.21}
-  FootSpacing: 4.4710937
+  _footOffset: {x: 4.47, y: 0.09, z: 4.16}
+--- !u!114 &738603385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 738603382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4baa4ef3be344f08a14cb1ff2aaec009, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetMover: {fileID: 738603384}
 --- !u!1 &758287735
 GameObject:
   m_ObjectHideFlags: 0
@@ -811,6 +837,7 @@ GameObject:
   m_Component:
   - component: {fileID: 758287736}
   - component: {fileID: 758287737}
+  - component: {fileID: 758287738}
   m_Layer: 0
   m_Name: R2 IK_target
   m_TagString: Untagged
@@ -851,10 +878,22 @@ MonoBehaviour:
   _spider: {fileID: 919132148821351758}
   _otherFoot: {fileID: 738603384}
   _speed: 5
-  _stepDistance: 2
+  _stepDistance: 1.8
   _stepHeight: 1.5
-  _footOffset: {x: 0, y: 0, z: 1.04}
-  FootSpacing: 3.9688401
+  _footOffset: {x: 3.97, y: 0.23, z: 1.01}
+--- !u!114 &758287738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 758287735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4baa4ef3be344f08a14cb1ff2aaec009, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetMover: {fileID: 758287737}
 --- !u!1 &783593818
 GameObject:
   m_ObjectHideFlags: 0
@@ -1160,6 +1199,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1397289906}
   - component: {fileID: 1397289907}
+  - component: {fileID: 1397289908}
   m_Layer: 0
   m_Name: L2 IK_target
   m_TagString: Untagged
@@ -1200,10 +1240,22 @@ MonoBehaviour:
   _spider: {fileID: 919132148821351758}
   _otherFoot: {fileID: 1765671765}
   _speed: 5
-  _stepDistance: 2
+  _stepDistance: 1.8
   _stepHeight: 1.5
-  _footOffset: {x: 0, y: 0, z: 0.41}
-  FootSpacing: -3.8891184
+  _footOffset: {x: -3.89, y: 0.23, z: 0.44}
+--- !u!114 &1397289908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397289905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4baa4ef3be344f08a14cb1ff2aaec009, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetMover: {fileID: 1397289907}
 --- !u!1 &1439190435
 GameObject:
   m_ObjectHideFlags: 0
@@ -1451,6 +1503,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1765671764}
   - component: {fileID: 1765671765}
+  - component: {fileID: 1765671766}
   m_Layer: 0
   m_Name: L1 IK_target
   m_TagString: Untagged
@@ -1493,8 +1546,20 @@ MonoBehaviour:
   _speed: 5
   _stepDistance: 2
   _stepHeight: 1.5
-  _footOffset: {x: 0, y: 0, z: 4.34}
-  FootSpacing: -4.436619
+  _footOffset: {x: -4.44, y: 0.17, z: 4.19}
+--- !u!114 &1765671766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1765671763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4baa4ef3be344f08a14cb1ff2aaec009, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetMover: {fileID: 1765671765}
 --- !u!1 &2007005470
 GameObject:
   m_ObjectHideFlags: 0
@@ -1505,6 +1570,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2007005471}
   - component: {fileID: 2007005472}
+  - component: {fileID: 2007005473}
   m_Layer: 0
   m_Name: L3 IK_target
   m_TagString: Untagged
@@ -1545,10 +1611,22 @@ MonoBehaviour:
   _spider: {fileID: 919132148821351758}
   _otherFoot: {fileID: 738603384}
   _speed: 5
-  _stepDistance: 2
+  _stepDistance: 1.6
   _stepHeight: 1.5
-  _footOffset: {x: 0, y: 0, z: -1.24}
-  FootSpacing: -4.087089
+  _footOffset: {x: -4.09, y: 0.23, z: -1.77}
+--- !u!114 &2007005473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007005470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4baa4ef3be344f08a14cb1ff2aaec009, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetMover: {fileID: 2007005472}
 --- !u!1 &2034466046
 GameObject:
   m_ObjectHideFlags: 0
@@ -1835,9 +1913,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a770666196b842d5bfe9fc72aae6dab8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swayAmount: 3
-  swaySpeed: 4
-  spiderBody: {fileID: 543450652824766448}
+  SwayAmount: {x: 2, y: 0, z: 1}
+  SwaySpeed: {x: 4, y: 0, z: 2}
+  ShiftAmount: {x: 0, y: 0.3, z: 0}
+  ShiftSpeed: {x: 0, y: 4, z: 0}
 --- !u!114 &919132148821351758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1858,7 +1937,7 @@ MonoBehaviour:
   - {fileID: 1397289907}
   - {fileID: 738603384}
   - {fileID: 52602465}
-  stepInterval: 0.3
+  stepInterval: 0.1
 --- !u!114 &919132148821351759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2041,8 +2120,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5982504292288946275}
+  - component: {fileID: 5982504292288946276}
   m_Layer: 0
-  m_Name: Bone.037
+  m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2705,14 +2785,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5968186392630373547}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7982927, y: 0.004153411, z: 0.0041534104, w: 0.60224116}
+  m_LocalRotation: {x: -0.7900356, y: 0.004162997, z: 0.004162997, w: 0.6130327}
   m_LocalPosition: {x: -0.0000000011676037, y: -0.000000034978395, z: -0.000000091722754}
   m_LocalScale: {x: 1, y: 0.99999994, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 309233316268407552}
   m_Father: {fileID: 129230333699468523}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -104.38, y: 0.33999634, z: 0.33999634}
 --- !u!4 &3430820620202660028
 Transform:
   m_ObjectHideFlags: 0
@@ -3499,13 +3579,30 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3324600301777937645}
+  - component: {fileID: 5968186392630373548}
   m_Layer: 0
-  m_Name: Bone.040
+  m_Name: Butt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &5968186392630373548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5968186392630373547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a770666196b842d5bfe9fc72aae6dab8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SwayAmount: {x: 2, y: 0, z: 4}
+  SwaySpeed: {x: 4, y: 0, z: 8}
+  ShiftAmount: {x: 0, y: 0, z: 0}
+  ShiftSpeed: {x: 0, y: 0, z: 0}
 --- !u!4 &5982504292288946275
 Transform:
   m_ObjectHideFlags: 0
@@ -3523,6 +3620,22 @@ Transform:
   - {fileID: 9072944642287253521}
   m_Father: {fileID: 129230333699468523}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5982504292288946276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795291067834696310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a770666196b842d5bfe9fc72aae6dab8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SwayAmount: {x: 0, y: 0, z: 6}
+  SwaySpeed: {x: 0, y: 0, z: 8}
+  ShiftAmount: {x: 0, y: 0, z: 0}
+  ShiftSpeed: {x: 0, y: 0, z: 0}
 --- !u!1 &6075536298468572379
 GameObject:
   m_ObjectHideFlags: 0
