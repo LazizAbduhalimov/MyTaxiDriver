@@ -21,10 +21,8 @@ public class TargetMoverGizmos : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        if (_targetMover == null) return;
+        if (Application.isPlaying || _targetMover == null) return;
         var spider = _targetMover.Spider;
-        if (spider == null) return;
-
         var position = spider.transform.position + _targetMover.FootOffset;
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(position, 0.1f);
