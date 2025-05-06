@@ -34,9 +34,6 @@ public class Spider : MonoBehaviour
 
     void TriggerStep(List<TargetMover> group)
     {
-        foreach (var leg in group)
-        {
-            leg.ForceUpdateStep(); // мы сейчас добавим эту функцию в TargetMover
-        }
+        
     }
 }

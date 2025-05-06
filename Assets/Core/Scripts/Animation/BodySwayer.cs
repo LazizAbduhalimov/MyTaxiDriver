@@ -7,21 +7,23 @@ public class BodySwayer : MonoBehaviour
     public Transform spiderBody;
 
     private Vector3 initialRotation;
+    private Vector3 LastSway;
 
     void Start()
     {
         if (spiderBody == null) spiderBody = transform;
-        initialRotation = spiderBody.localEulerAngles;
     }
 
     void Update()
     {
-            // Расчёт раскачивания по синусоиде
-            var swayX = Mathf.Sin(Time.time * swaySpeed) * swayAmount;
-            var swayZ = Mathf.Sin(Time.time * swaySpeed * 0.5f) * swayAmount * 0.5f;
+        // Расчёт раскачивания по синусоиде
+        var swayX = Mathf.Sin(Time.time * swaySpeed) * swayAmount;
+        var swayZ = Mathf.Sin(Time.time * swaySpeed * 0.5f) * swayAmount * 0.5f;
+        var initialRotation = spiderBody.localEulerAngles - LastSway;
+        LastSway = new Vector3(swayX, 0f, swayZ);
+        var swayRotation = initialRotation + LastSway;
 
-            // Применение покачивания
-            spiderBody.localEulerAngles = initialRotation + new Vector3(swayX, 0f, swayZ);
-            // spiderBody.localEulerAngles = Vector3.Lerp(spiderBody.localEulerAngles, initialRotation, Time.deltaTime * 5f);
+        // Применяем качку к текущей ориентации, используя компонент вращения
+        spiderBody.localRotation = Quaternion.Euler(swayRotation);
     }
 }
