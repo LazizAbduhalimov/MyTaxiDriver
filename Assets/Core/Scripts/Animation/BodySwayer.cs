@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class transformSwayer : MonoBehaviour
+public class TransformSwayer : MonoBehaviour
 {
     [Header("Swaying rotation")]
     public Vector3 SwayAmount;

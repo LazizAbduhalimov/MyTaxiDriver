@@ -5,14 +5,15 @@ public class TargetMover : MonoBehaviour
 {
     public Spider Spider => _spider;
     public float StepDistance => _stepDistance;
+    public float StepLength => _stepLength;
     public float StepHeight => _stepHeight;
     public Vector3 FootOffset => _footOffset;
 
     [SerializeField] private LayerMask _terrainLayer;
     [SerializeField] private Spider _spider;
-    [SerializeField] private TargetMover _otherFoot;
     [SerializeField] private float _speed;
     [SerializeField] private float _stepDistance;
+    [SerializeField] private float _stepLength;
     [SerializeField] private float _stepHeight;
     [SerializeField] private Vector3 _footOffset;
 
@@ -37,12 +38,9 @@ public class TargetMover : MonoBehaviour
     {
         transform.position = CurrentPosition;
         transform.up = CurrentNormal;
-        RepositionTarget();
 
-        if (_lerp < 1 && !_otherFoot.IsMoving())
+        if (_lerp < 1)
         {
-            Debug.Log($"Lerping {name}");
-            Debug.DrawRay(transform.position, Vector3.up, Color.magenta);
             LerpLegPosition();
         }
 
@@ -70,14 +68,31 @@ public class TargetMover : MonoBehaviour
         var ray = new Ray(rayOrigin, Vector3.down);
         Debug.DrawLine(body.position, rayOrigin, Color.green);
 
-        if (_lerp < 1 || _otherFoot.IsMoving()) return;
+        if (_lerp < 1) return;
         if(!Physics.Raycast(ray, out var info, 10, _terrainLayer.value)) return;
         var distance = Vector3.Distance(NewPosition, info.point);
         if (distance > _stepDistance)
         {
             _lerp = 0;
             var direction = body.InverseTransformPoint(info.point).z > body.InverseTransformPoint(NewPosition).z ? 1 : -1;
-            NewPosition = info.point + body.forward * (direction * _stepDistance);
+            NewPosition = info.point + body.forward * (direction * _stepLength);
+            NewNormal = info.normal;
+        }
+    }
+
+    public void ForceRepositionTarget()
+    {
+        var body = _spider.transform;
+        var rayOrigin = Vector3.up / 2 + body.position + body.TransformDirection(_footOffset);
+        var ray = new Ray(rayOrigin, Vector3.down);
+        
+        if (_lerp < 1) return;
+        if(!Physics.Raycast(ray, out var info, 10, _terrainLayer.value)) return;
+        var distance = Vector3.Distance(NewPosition, info.point);
+        if (distance > _stepDistance / 4)
+        {
+            _lerp = 0;
+            NewPosition = info.point;
             NewNormal = info.normal;
         }
     }
