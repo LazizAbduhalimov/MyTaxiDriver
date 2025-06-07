@@ -12,7 +12,7 @@ namespace Client
         private EcsFilterInject<Inc<EBoostAllCarsBonus>> _eBoostAllCarsBonus = "events";
         private EcsPoolInject<EBoostSpeed> _eBoostSpeed = "events";
         
-        private const int StartDuration = 5;
+        private const float StartDuration = 10f;
         
         public void Run(IEcsSystems systems)
         {

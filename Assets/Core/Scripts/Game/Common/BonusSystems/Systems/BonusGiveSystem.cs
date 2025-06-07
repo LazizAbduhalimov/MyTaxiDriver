@@ -16,7 +16,7 @@ namespace Client
         
         public void Init(IEcsSystems systems)
         {
-            _tween = HideRewardButtonForSeconds(10);
+            _tween = HideRewardButtonForSeconds(1);
         }
         
         public void Run(IEcsSystems systems)
@@ -25,7 +25,7 @@ namespace Client
             {
                 _eGiveRandomBonus.NewEntity(out _);
                 _tween?.Stop();
-                _tween = HideRewardButtonForSeconds(45);
+                _tween = HideRewardButtonForSeconds(10);
             }
         }
 

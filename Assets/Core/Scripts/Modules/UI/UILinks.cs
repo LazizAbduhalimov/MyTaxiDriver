@@ -6,6 +6,7 @@ namespace UI
 {
     public class UILinks : MonoBehaviour
     {
+        public TMP_Text BonusText;
         public TMP_Text BuyVehicleCostText;
         public Button BuyVehicleButton;
         public Button RewardVideoButton;

@@ -24,7 +24,7 @@ namespace Client
                 {
                     continue;
                 }
-                var bonusCarLevel = Mathf.Clamp(CarLevel+2, 1, 7);
+                var bonusCarLevel = Mathf.Clamp(CarLevel+2, 1, 8);
                 var taxiMb = _allPools.Value.CarsPool[bonusCarLevel].GetFromPool(pair.Key);
                 var taxiEntity = taxiMb.PackedEntity.FastUnpack();
                 _eCarOccured.NewEntity(out _).Invoke(taxiMb);

@@ -20,7 +20,7 @@ namespace Client
         {
             foreach (var eventEntity in _eDoubledCoinsBonusFilter.Value)
             {
-                _cDoubledCoinsBonus.NewEntity(out _).Invoke(10f);
+                _cDoubledCoinsBonus.NewEntity(out _).Invoke(15f);
                 _eDoubledCoinsBonusFilter.Pools.Inc1.Del(eventEntity);
             }
             
