@@ -110,6 +110,7 @@ namespace Client {
                 .DelHere<EDragEnd>("events")
                 
                 .DelHere<EMerged>("events")
+                .DelHere<ECarOccured>("events")
                 .DelHere<EBoostSpeed>("events")
                 .DelHere<EBankValueChanged>("events")
                 .AddUIEventsDestroyers()

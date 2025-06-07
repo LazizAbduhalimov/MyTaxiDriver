@@ -10,7 +10,7 @@ namespace UI
         private EcsFilterInject<Inc<CInterface>> _cInterfaceFilter;
 
         private EcsPoolInject<CBuyVehicle> _cBuyVehicle;
-        private EcsPoolInject<CWatchVideo> _cWatchVideo;
+        private EcsPoolInject<CRewardVideoButton> _cWatchVideo;
         
         public void Init(IEcsSystems systems)
         {

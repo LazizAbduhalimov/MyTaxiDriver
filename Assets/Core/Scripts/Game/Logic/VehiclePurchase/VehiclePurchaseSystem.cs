@@ -18,6 +18,8 @@ namespace Client
 
         private EcsPoolInject<CBuyVehicle> _cBuyVehicle;
         private EcsPoolInject<CActive> _cActive;
+
+        private EcsPoolInject<ECarOccured> _eCarOccured = "events"; 
         private Sequence? _sequence;
 
         private int CarLevel => _gameData.Value.GetBuyingCarLevel();
@@ -32,6 +34,7 @@ namespace Client
                 var button = _cBuyVehicle.Value.Get(entity).Handler.Button;
                 var taxiMb = _allPools.Value.CarsPool[CarLevel].GetFromPool(pair.Key);
                 var taxiEntity = taxiMb.PackedEntity.FastUnpack();
+                _eCarOccured.NewEntity(out _).Invoke(taxiMb);
                 taxiMb.Drive();
                 pair.Value.IsOccupied = true;
                 _cActive.Value.Add(taxiEntity);

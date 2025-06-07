@@ -6,7 +6,7 @@ namespace UI.Buttons
 {
     public struct ERewardVideoClicked {}
   
-    public struct CWatchVideo : IButton
+    public struct CRewardVideoButton : IButton
     {
         public ButtonHandler Handler; 
 

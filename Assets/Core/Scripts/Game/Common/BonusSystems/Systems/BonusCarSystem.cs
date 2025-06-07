@@ -12,9 +12,9 @@ namespace Client
         private EcsCustomInject<AllPools> _allPools;
         private EcsPoolInject<CActive> _cActive;
         private EcsFilterInject<Inc<EBonusCar>> _eBonusCar = "events";
+        private EcsPoolInject<ECarOccured> _eCarOccured = "events";
         
         private int CarLevel => _gameData.Value.GetBuyingCarLevel();
-
         
         public void Run(IEcsSystems systems)
         {
@@ -27,6 +27,7 @@ namespace Client
                 var bonusCarLevel = Mathf.Clamp(CarLevel+2, 1, 7);
                 var taxiMb = _allPools.Value.CarsPool[bonusCarLevel].GetFromPool(pair.Key);
                 var taxiEntity = taxiMb.PackedEntity.FastUnpack();
+                _eCarOccured.NewEntity(out _).Invoke(taxiMb);
                 taxiMb.Drive();
                 pair.Value.IsOccupied = true;
                 Debug.Log($"Given bonus car level {bonusCarLevel}");

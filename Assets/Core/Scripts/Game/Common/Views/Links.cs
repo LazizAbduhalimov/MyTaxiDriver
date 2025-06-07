@@ -1,6 +1,4 @@
-using System;
 using PathCreation;
-using PoolSystem.Alternative;
 using UnityEngine;
 
 namespace Client.Game
@@ -9,7 +7,6 @@ namespace Client.Game
     {
         public Grid Grid;
         public PathCreator PathCreator;
-        public CarsConfig CarsConfig;
         
         public static Links Instance => _instance;
         private static Links _instance;
