@@ -1,7 +1,7 @@
 using Leopotam.EcsLite;
 using UnityEngine;
 
-namespace Client
+namespace Game
 {
     public struct EDragEnd
     {

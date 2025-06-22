@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Client.UI
+namespace Game.UI
 {
     public class LookToCamera : MonoBehaviour
     {

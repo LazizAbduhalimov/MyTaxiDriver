@@ -1,13 +1,13 @@
-using Client.Game;
-using Client.Game.Test;
 using Core.Scripts.Game;
+using Game.Game;
+using Game.Game.Test;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using LGrid;
 using PrimeTween;
 using UnityEngine;
 
-namespace Client
+namespace Game
 {
     public class DragHandleSystem : IEcsRunSystem
     {

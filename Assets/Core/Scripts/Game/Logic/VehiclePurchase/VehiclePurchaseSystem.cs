@@ -1,4 +1,4 @@
-using Client.Game;
+using Game.Game;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using LGrid;
@@ -6,7 +6,7 @@ using PrimeTween;
 using UI.Buttons;
 using UnityEngine;
 
-namespace Client
+namespace Game
 {
     public class VehiclePurchaseSystem : IEcsRunSystem
     {

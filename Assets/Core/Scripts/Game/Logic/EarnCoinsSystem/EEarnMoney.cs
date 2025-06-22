@@ -1,4 +1,4 @@
-namespace Client.Game
+namespace Game.Game
 {
     public struct EEarnMoney
     {

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Client.Game
+namespace Game.Game
 {
     public class Collector : MonoBehaviour
     {

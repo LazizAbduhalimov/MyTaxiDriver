@@ -1,7 +1,7 @@
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 
-namespace Client.Game
+namespace Game.Game
 {
     public class EarnMoneySystem : IEcsRunSystem
     {

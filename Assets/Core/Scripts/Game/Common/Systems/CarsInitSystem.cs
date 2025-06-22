@@ -1,10 +1,10 @@
-using Client.Game;
-using Client.Game.Test;
+using Game.Game;
+using Game.Game.Test;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityEngine;
 
-namespace Client
+namespace Game
 {
     public class CarsInitSystem : IEcsInitSystem
     {

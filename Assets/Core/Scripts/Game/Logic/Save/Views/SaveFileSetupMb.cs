@@ -2,7 +2,7 @@ using Esper.ESave;
 using LGrid;
 using UnityEngine;
 
-namespace Client.Saving
+namespace Game.Saving
 {
     public class SaveFileSetupMb : MonoBehaviour
     {

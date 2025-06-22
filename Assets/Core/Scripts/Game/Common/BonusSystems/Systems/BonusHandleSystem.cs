@@ -7,7 +7,7 @@ using UI;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Client
+namespace Game
 {
     public class BonusHandleSystem : IEcsRunSystem
     {

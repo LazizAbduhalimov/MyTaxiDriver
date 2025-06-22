@@ -2,7 +2,7 @@ using LGrid;
 using PoolSystem.Alternative;
 using UnityEngine;
 
-namespace Client
+namespace Game
 {
     public class GameData
     {

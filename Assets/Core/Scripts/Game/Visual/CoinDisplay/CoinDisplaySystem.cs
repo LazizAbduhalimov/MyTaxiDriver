@@ -3,7 +3,7 @@ using Leopotam.EcsLite.Di;
 using Module.Bank;
 using UnityEngine;
 
-namespace Client.Game
+namespace Game.Game
 {
     public class CoinDisplaySystem : IEcsInitSystem, IEcsRunSystem
     {

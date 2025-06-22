@@ -1,9 +1,9 @@
-using Client.Game.Test;
+using Game.Game.Test;
 using Leopotam.EcsLite;
 using PathCreation.Examples;
 using UnityEngine;
 
-namespace Client.Game
+namespace Game.Game
 {
     public class TaxiMb : MonoBehaviour
     {

@@ -4,7 +4,7 @@ using Module.Bank;
 using UI.Buttons;
 using UnityEngine;
 
-namespace Client
+namespace Game
 {
     public class VehiclePurchaseButtonStateHandleSystem : IEcsInitSystem, IEcsRunSystem
     {

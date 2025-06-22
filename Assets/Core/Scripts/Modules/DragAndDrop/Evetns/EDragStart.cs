@@ -1,6 +1,6 @@
 using Leopotam.EcsLite;
 
-namespace Client
+namespace Game
 {
     public struct EDragStart
     {

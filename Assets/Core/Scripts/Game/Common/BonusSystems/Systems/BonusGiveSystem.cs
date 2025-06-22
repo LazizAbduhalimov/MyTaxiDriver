@@ -3,7 +3,7 @@ using Leopotam.EcsLite.Di;
 using PrimeTween;
 using UI.Buttons;
 
-namespace Client
+namespace Game
 {
     public class BonusGiveSystem : IEcsInitSystem, IEcsRunSystem
     {

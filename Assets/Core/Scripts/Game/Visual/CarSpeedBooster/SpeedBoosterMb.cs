@@ -2,7 +2,7 @@ using Leopotam.EcsLite;
 using PrimeTween;
 using UnityEngine;
 
-namespace Client.Game
+namespace Game.Game
 {
     public class SpeedBoosterMb : MonoBehaviour
     {

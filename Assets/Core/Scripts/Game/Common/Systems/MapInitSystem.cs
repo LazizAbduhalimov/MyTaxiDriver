@@ -3,7 +3,7 @@ using Leopotam.EcsLite.Di;
 using LGrid;
 using UnityEngine;
 
-namespace Client.Game
+namespace Game.Game
 {
     public class MapInitSystem : IEcsInitSystem
     {

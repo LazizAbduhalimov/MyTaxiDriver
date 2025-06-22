@@ -1,7 +1,7 @@
 using PathCreation;
 using UnityEngine;
 
-namespace Client.Game
+namespace Game.Game
 {
     public class Links : MonoBehaviour
     {

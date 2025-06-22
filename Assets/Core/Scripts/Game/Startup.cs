@@ -1,10 +1,10 @@
 using Leopotam.EcsLite;
 using UnityEngine;
 using AB_Utility.FromSceneToEntityConverter;
-using Client.Game;
-using Client.Game.Test;
-using Client.Saving;
 using Game;
+using Game.Game;
+using Game.Game.Test;
+using Game.Saving;
 using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.ExtendedSystems;
 using LGrid;
@@ -13,7 +13,7 @@ using Module.Bank;
 using PoolSystem.Alternative;
 using UI;
 
-namespace Client {
+namespace Game {
     public sealed class Startup : MonoBehaviour
     {
         private EcsWorld _world, _eventsWorld;        

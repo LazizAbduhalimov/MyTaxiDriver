@@ -1,10 +1,10 @@
-using Client.Game.Test;
+using Game.Game.Test;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using LGrid;
 using UnityEngine;
 
-namespace Client.Game
+namespace Game.Game
 {
     public class HighlightPlaceSystem : IEcsRunSystem
     {

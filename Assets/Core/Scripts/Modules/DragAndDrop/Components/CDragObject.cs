@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Client.Game.Test
+namespace Game.Game.Test
 {
     public struct CDragObject
     {

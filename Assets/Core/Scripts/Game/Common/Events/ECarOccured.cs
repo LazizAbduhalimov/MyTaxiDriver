@@ -1,6 +1,6 @@
-using Client.Game;
+using Game.Game;
 
-namespace Client
+namespace Game
 {
     public struct ECarOccured
     {

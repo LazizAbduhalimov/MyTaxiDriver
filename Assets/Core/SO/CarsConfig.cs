@@ -1,4 +1,4 @@
-using Client.Game;
+using Game.Game;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "SO/Car")]

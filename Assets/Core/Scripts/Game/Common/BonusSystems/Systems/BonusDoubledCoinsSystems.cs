@@ -1,9 +1,9 @@
-using Client.Game;
+using Game.Game;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityEngine;
 
-namespace Client
+namespace Game
 {
     public class BonusDoubledCoinsSystems : IEcsRunSystem
     {

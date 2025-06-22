@@ -1,6 +1,6 @@
 using TMPro;
 
-namespace Client
+namespace Game
 {
     public struct CCoinDisplayer
     {

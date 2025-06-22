@@ -1,7 +1,7 @@
 using Leopotam.EcsLite;
 using UnityEngine;
 
-namespace Client.Game
+namespace Game.Game
 {
     public class SettingsSystem : IEcsInitSystem
     {

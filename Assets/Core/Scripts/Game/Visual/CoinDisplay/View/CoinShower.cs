@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Client.Game
+namespace Game.Game
 {
     public class CoinShower : MonoBehaviour
     {

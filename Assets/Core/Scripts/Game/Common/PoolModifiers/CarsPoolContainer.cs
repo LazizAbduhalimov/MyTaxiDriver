@@ -1,9 +1,9 @@
 using System;
-using Client.Game;
+using Game.Game;
 using PoolSystem.Alternative;
 using UnityEngine;
 
-namespace Client
+namespace Game
 {
     public class CarsPoolContainer : MonoBehaviour
     {

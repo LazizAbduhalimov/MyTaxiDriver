@@ -1,7 +1,7 @@
 using System;
 using Esper.ESave.SavableObjects;
 
-namespace Client.Saving
+namespace Game.Saving
 {
     [Serializable]
     public class CellsData

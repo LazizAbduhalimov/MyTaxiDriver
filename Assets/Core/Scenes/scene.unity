@@ -23237,6 +23237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b4dc29cff6e4aa1ad61a1de96fc34bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BonusText: {fileID: 0}
   BuyVehicleCostText: {fileID: 133699717}
   BuyVehicleButton: {fileID: 753473708}
   RewardVideoButton: {fileID: 1228457500}

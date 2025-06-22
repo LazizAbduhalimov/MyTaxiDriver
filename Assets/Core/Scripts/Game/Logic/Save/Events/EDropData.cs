@@ -1,4 +1,4 @@
-namespace Client.Saving
+namespace Game.Saving
 {
     public struct EDropData { }
 }

@@ -2,7 +2,7 @@ using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityEngine;
 
-namespace Client.Game.Test
+namespace Game.Game.Test
 {
     public class DragAndDropMarkerSystem : IEcsRunSystem
     {

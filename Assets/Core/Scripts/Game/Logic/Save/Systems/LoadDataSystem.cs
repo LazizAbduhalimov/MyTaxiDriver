@@ -4,7 +4,7 @@ using Leopotam.EcsLite.Di;
 using LGrid;
 using UnityEngine;
 
-namespace Client.Saving
+namespace Game.Saving
 {
     public class LoadDataSystem : IEcsInitSystem
     {

@@ -1,8 +1,8 @@
-using Client.Game;
+using Game.Game;
 using LGrid;
 using UnityEngine;
 
-namespace Client
+namespace Game
 {
     public struct CTaxi : ICellStandable
     {

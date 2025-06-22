@@ -3,7 +3,7 @@ using Leopotam.EcsLite.Di;
 using LGrid;
 using UnityEngine;
 
-namespace Client
+namespace Game
 {
     public class BonusCarSystem : IEcsRunSystem
     {

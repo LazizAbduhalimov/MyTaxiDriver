@@ -1,6 +1,6 @@
-using Client;
-using Client.Game;
-using Client.Game.Test;
+using Game;
+using Game.Game;
+using Game.Game.Test;
 
 namespace Core.Scripts.Game
 {
