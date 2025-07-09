@@ -2,6 +2,7 @@ using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using PrimeTween;
 using UI.Buttons;
+using YG;
 
 namespace Game
 {
@@ -23,9 +24,12 @@ namespace Game
         {
             foreach (var entity in _eRewardVideoClickedFilter.Value)
             {
-                _eGiveRandomBonus.NewEntity(out _);
-                _tween?.Stop();
-                _tween = HideRewardButtonForSeconds(10);
+                YG2.RewardedAdvShow("Random", () =>
+                {
+                    _eGiveRandomBonus.NewEntity(out _);
+                    _tween?.Stop();
+                    _tween = HideRewardButtonForSeconds(10); 
+                });
             }
         }
 
