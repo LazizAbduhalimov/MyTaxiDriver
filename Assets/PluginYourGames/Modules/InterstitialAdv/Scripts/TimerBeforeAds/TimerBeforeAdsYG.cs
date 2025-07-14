@@ -38,7 +38,7 @@ namespace YG
         {
             YG2.onOpenAnyAdv -= RestartTimer;
         }
-
+        
         IEnumerator CheckTimerAd()
         {
             while (true)
@@ -53,7 +53,7 @@ namespace YG
                     if (secondsPanelObject)
                         secondsPanelObject.SetActive(true);
 
-                    YG2.PauseGame(true);
+                    // YG2.PauseGame(true);
 
                     timerAdShowCoroutine = StartCoroutine(TimerAdShow());
                     checkTimerAdCoroutine = null;
@@ -91,20 +91,20 @@ namespace YG
             }
         }
 
-        IEnumerator BackupTimerClosure()
+        public IEnumerator BackupTimerClosure()
         {
             yield return new WaitForSecondsRealtime(2f);
 
             if (objSecCounter != 0)
             {
                 RestartTimer();
-                YG2.PauseGame(false);
+                // YG2.PauseGame(false);
             }
 
             backupTimerClosureCoroutine = null;
         }
 
-        private void RestartTimer()
+        public void RestartTimer()
         {
             secondsPanelObject.SetActive(false);
             foreach (var obj in secondObjects)
@@ -112,7 +112,7 @@ namespace YG
 
             onHideTimer?.Invoke();
             objSecCounter = 0;
-
+            
             if (checkTimerAdCoroutine == null)
             {
                 if (secondObjects.Length > 0)

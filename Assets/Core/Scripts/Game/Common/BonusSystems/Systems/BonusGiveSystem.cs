@@ -2,7 +2,9 @@ using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using PrimeTween;
 using UI.Buttons;
+using UnityEngine;
 using YG;
+using YG.Insides;
 
 namespace Game
 {
@@ -14,10 +16,12 @@ namespace Game
         private EcsPoolInject<EGiveRandomBonus> _eGiveRandomBonus = "events";
 
         private Tween? _tween;
+        private TimerBeforeAdsYG timerBeforeAds;
         
         public void Init(IEcsSystems systems)
         {
             _tween = HideRewardButtonForSeconds(1);
+            timerBeforeAds = Object.FindObjectOfType<TimerBeforeAdsYG>();
         }
         
         public void Run(IEcsSystems systems)

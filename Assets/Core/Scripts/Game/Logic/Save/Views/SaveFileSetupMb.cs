@@ -34,7 +34,7 @@ namespace Game.Saving
             saveFile.Save();
             Debug.Log("Игра сохранена!");
         }
-
+        
         private void SaveCost(SaveFile saveFile)
         {
             saveFile.AddOrUpdateData("PurchaseNumber", GameData.Instance.PurchaseNumber);

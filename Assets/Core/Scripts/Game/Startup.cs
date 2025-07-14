@@ -12,6 +12,7 @@ using LSound;
 using Module.Bank;
 using PoolSystem.Alternative;
 using UI;
+using YG.Systems;
 
 namespace Game {
     public sealed class Startup : MonoBehaviour
@@ -61,7 +62,8 @@ namespace Game {
                 .Add(new MapInitSystem())
                 .Add(new GridInitSystem())
                 .Add(new CarsInitSystem())
-                .Add(new LoadDataSystem())
+                .Add(new LoadYG2DataSystem())
+                // .Add(new LoadDataSystem())
                 .Add(new InitUIInterface())
                 .Add(new InitUIButtons())
                 ;
@@ -102,7 +104,8 @@ namespace Game {
                 .Add(new SoundSystem())
                 .Add(new MusicSystem())
                 
-                .Add(new DropDataSystem())
+                // .Add(new DropDataSystem())
+                .Add(new DropDataYG2System())
                 
                 .DelHere<EEarnMoney>("events")
                 

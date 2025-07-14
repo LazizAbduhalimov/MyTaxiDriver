@@ -1,0 +1,31 @@
+{
+    "CellsData": [
+        {
+            "Position": {
+                "x": -7.0,
+                "y": 0.0,
+                "z": -9.0
+            },
+            "TaxiLevel": 2
+        },
+        {
+            "Position": {
+                "x": 7.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "TaxiLevel": 4
+        }
+    ],
+    "Coins": 347,
+    "Cost": 11,
+    "intExample": 5,
+    "strExample": "Hello!",
+    "boolExample": [
+        false,
+        false,
+        false,
+        false
+    ],
+    "idSave": 1
+}
