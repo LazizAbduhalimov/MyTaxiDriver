@@ -6,7 +6,23 @@
                 "y": 0.0,
                 "z": -9.0
             },
-            "TaxiLevel": 2
+            "TaxiLevel": 1
+        },
+        {
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": -9.0
+            },
+            "TaxiLevel": 4
+        },
+        {
+            "Position": {
+                "x": 7.0,
+                "y": 0.0,
+                "z": -9.0
+            },
+            "TaxiLevel": 5
         },
         {
             "Position": {
@@ -14,11 +30,11 @@
                 "y": 0.0,
                 "z": 0.0
             },
-            "TaxiLevel": 4
+            "TaxiLevel": 3
         }
     ],
-    "Coins": 347,
-    "Cost": 11,
+    "Coins": 4635,
+    "Cost": 30,
     "intExample": 5,
     "strExample": "Hello!",
     "boolExample": [
@@ -27,5 +43,5 @@
         false,
         false
     ],
-    "idSave": 1
+    "idSave": 25
 }
