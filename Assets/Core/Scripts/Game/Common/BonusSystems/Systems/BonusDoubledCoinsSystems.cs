@@ -20,7 +20,7 @@ namespace Game
         {
             foreach (var eventEntity in _eDoubledCoinsBonusFilter.Value)
             {
-                _cDoubledCoinsBonus.NewEntity(out _).Invoke(15f);
+                _cDoubledCoinsBonus.NewEntity(out _).Invoke(17.5f);
                 _eDoubledCoinsBonusFilter.Pools.Inc1.Del(eventEntity);
             }
             

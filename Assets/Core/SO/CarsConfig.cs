@@ -32,9 +32,20 @@ public class CarsConfig : ScriptableObject
     [ContextMenu("Configurate")]
     public void Configurate()
     {
+        Debug.Log("Configuring Cars");
         foreach (var taxiBase in Cars)
         {
             taxiBase.Configurate(this);
         }
+    }
+}
+
+public static class CarsConfigurator
+{
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void Configure()
+    {
+        var config = Resources.Load<CarsConfig>("CarsConfig");
+        config.Configurate();
     }
 }

@@ -12,7 +12,7 @@ namespace Game
         private EcsFilterInject<Inc<EBoostAllCarsBonus>> _eBoostAllCarsBonus = "events";
         private EcsPoolInject<EBoostSpeed> _eBoostSpeed = "events";
         
-        private const float StartDuration = 10f;
+        private const float StartDuration = 12.5f;
         
         public void Run(IEcsSystems systems)
         {
