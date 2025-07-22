@@ -9,5 +9,6 @@ namespace UI
         public TMP_Text BuyVehicleCostText; 
         public Button BuyVehicleButton;
         public Button RewardVideoButton;
+        public Button RewardVideoButtonInner;
     }
 }

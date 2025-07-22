@@ -38,13 +38,11 @@ namespace Game
                 {
                     case 1:
                         _eBonusCar.NewEntity(out _);
-                        // ShowBonusInfo(typeof(EBonusCar));
-                        ShowBonusInfo(typeof(EBoostAllCarsBonus));
+                        ShowBonusInfo(typeof(EBonusCar));
                         break;
                     case 2:
                         _eBonusCoins.NewEntity(out _);
-                        // ShowBonusInfo(typeof(EBonusCoins));
-                        ShowBonusInfo(typeof(EDoubledCoinsBonus));
+                        ShowBonusInfo(typeof(EBonusCoins));
                         break;
                     case 3:
                         _eDoubledCoinsBonus.NewEntity(out _);

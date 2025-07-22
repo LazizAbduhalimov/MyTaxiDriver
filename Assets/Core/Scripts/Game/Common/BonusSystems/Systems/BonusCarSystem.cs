@@ -24,7 +24,7 @@ namespace Game
                 {
                     continue;
                 }
-                var bonusCarLevel = Mathf.Clamp(CarLevel+3, 4, 8);
+                var bonusCarLevel = Mathf.Clamp(CarLevel+3, 4, 7);
                 var taxiMb = _allPools.Value.CarsPool[bonusCarLevel].GetFromPool(pair.Key);
                 var taxiEntity = taxiMb.PackedEntity.FastUnpack();
                 _eCarOccured.NewEntity(out _).Invoke(taxiMb);

@@ -20,4 +20,7 @@ MonoBehaviour:
   - Name: UI
     Id: 1083643635
     TextAsset: {fileID: 4900000, guid: 6cb72ce077bf7ff418634b88a255d8c9, type: 3}
+  - Name: Info
+    Id: 1698186702
+    TextAsset: {fileID: 4900000, guid: e450c560b1adb314cb46013b6a8fddfc, type: 3}
   SaveFolder: {fileID: 102900000, guid: c392831e85f928548b8494fefd912562, type: 3}

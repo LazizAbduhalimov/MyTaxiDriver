@@ -21,6 +21,7 @@ namespace UI
                 buyVehicle.Text = ui.BuyVehicleCostText;
                 
                 UIUtils.InitButton(ui.RewardVideoButton, _cWatchVideo.Value);
+                UIUtils.InitButton(ui.RewardVideoButtonInner, _cWatchVideo.Value);
             }
         }
     }

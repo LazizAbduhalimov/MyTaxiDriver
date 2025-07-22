@@ -16,6 +16,7 @@ namespace UI
             cInterface.BuyVehicleCostText = ui.BuyVehicleCostText;
             cInterface.RewardVideoButton = ui.RewardVideoButton;
             cInterface.BonusText = ui.BonusText;
+            cInterface.RewardVideoButtonInner = ui.RewardVideoButtonInner;
         }
     }
 }

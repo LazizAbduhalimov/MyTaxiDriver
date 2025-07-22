@@ -42,7 +42,7 @@ namespace Game
             booster.BoostSequence = Sequence.Create(cycles: 2, CycleMode.Yoyo, Ease.OutSine)
                     .Chain(Tween.Custom(startSpeed, boostedSpeed, duration: duration * 0.15f, 
                         value => taxiMb.Follower.speed = value))
-                    .Chain(Tween.Delay(duration * 0.70f))
+                    .Chain(Tween.Delay(duration * 0.35f))
                     .OnComplete(() => {
                         Tween.Delay(booster.BoostCoolDown, () => SetBoostState(booster, false));
                     });

@@ -42,7 +42,7 @@ namespace Game
 
     public class BonusesData
     {
-        public float SpeedBoostDuration => 12.5f;
-        public float DoubledCoinsDuration => 17.5f;
+        public float SpeedBoostDuration => 12f;
+        public float DoubledCoinsDuration => 15f;
     }
 }

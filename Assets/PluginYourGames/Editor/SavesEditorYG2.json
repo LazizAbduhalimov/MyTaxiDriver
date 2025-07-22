@@ -6,61 +6,21 @@
                 "y": 0.0,
                 "z": -9.0
             },
-            "TaxiLevel": 3
+            "TaxiLevel": 1
         },
         {
             "Position": {
                 "x": -7.0,
                 "y": 0.0,
                 "z": -9.0
-            },
-            "TaxiLevel": 3
-        },
-        {
-            "Position": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": -9.0
-            },
-            "TaxiLevel": 3
-        },
-        {
-            "Position": {
-                "x": 7.0,
-                "y": 0.0,
-                "z": -9.0
-            },
-            "TaxiLevel": 3
-        },
-        {
-            "Position": {
-                "x": -14.0,
-                "y": 0.0,
-                "z": 0.0
             },
             "TaxiLevel": 6
         },
         {
             "Position": {
-                "x": 7.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "TaxiLevel": 9
-        },
-        {
-            "Position": {
-                "x": -7.0,
-                "y": 0.0,
-                "z": 9.0
-            },
-            "TaxiLevel": 9
-        },
-        {
-            "Position": {
                 "x": 0.0,
                 "y": 0.0,
-                "z": 9.0
+                "z": -9.0
             },
             "TaxiLevel": 4
         },
@@ -68,13 +28,69 @@
             "Position": {
                 "x": 7.0,
                 "y": 0.0,
+                "z": -9.0
+            },
+            "TaxiLevel": 1
+        },
+        {
+            "Position": {
+                "x": -14.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "TaxiLevel": 2
+        },
+        {
+            "Position": {
+                "x": -7.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "TaxiLevel": 1
+        },
+        {
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "TaxiLevel": 1
+        },
+        {
+            "Position": {
+                "x": 7.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "TaxiLevel": 4
+        },
+        {
+            "Position": {
+                "x": -14.0,
+                "y": 0.0,
                 "z": 9.0
             },
-            "TaxiLevel": 7
+            "TaxiLevel": 1
+        },
+        {
+            "Position": {
+                "x": -7.0,
+                "y": 0.0,
+                "z": 9.0
+            },
+            "TaxiLevel": 1
+        },
+        {
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 9.0
+            },
+            "TaxiLevel": 1
         }
     ],
-    "Coins": 3724559,
-    "Cost": 173,
+    "Coins": 168675,
+    "Cost": 26,
     "intExample": 5,
     "strExample": "Hello!",
     "boolExample": [
@@ -83,5 +99,5 @@
         false,
         false
     ],
-    "idSave": 121
+    "idSave": 11
 }

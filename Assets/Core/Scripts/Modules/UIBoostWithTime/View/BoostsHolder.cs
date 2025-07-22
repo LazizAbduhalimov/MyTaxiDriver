@@ -13,7 +13,7 @@ namespace UI
         {
             var boostMb = PoolContainer.GetFromPool<BoostMb>();
             boostMb.Setup(icon, duration);
-            CurrentBoosts.Add(id,  boostMb);
+            // CurrentBoosts.Add(id,  boostMb);
             return boostMb;
         }
     }
