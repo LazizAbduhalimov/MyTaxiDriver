@@ -6,7 +6,7 @@
                 "y": 0.0,
                 "z": -9.0
             },
-            "TaxiLevel": 1
+            "TaxiLevel": 3
         },
         {
             "Position": {
@@ -14,7 +14,15 @@
                 "y": 0.0,
                 "z": -9.0
             },
-            "TaxiLevel": 2
+            "TaxiLevel": 3
+        },
+        {
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": -9.0
+            },
+            "TaxiLevel": 3
         },
         {
             "Position": {
@@ -22,7 +30,39 @@
                 "y": 0.0,
                 "z": -9.0
             },
+            "TaxiLevel": 3
+        },
+        {
+            "Position": {
+                "x": -14.0,
+                "y": 0.0,
+                "z": 0.0
+            },
             "TaxiLevel": 6
+        },
+        {
+            "Position": {
+                "x": 7.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "TaxiLevel": 9
+        },
+        {
+            "Position": {
+                "x": -7.0,
+                "y": 0.0,
+                "z": 9.0
+            },
+            "TaxiLevel": 9
+        },
+        {
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 9.0
+            },
+            "TaxiLevel": 4
         },
         {
             "Position": {
@@ -30,11 +70,11 @@
                 "y": 0.0,
                 "z": 9.0
             },
-            "TaxiLevel": 4
+            "TaxiLevel": 7
         }
     ],
-    "Coins": 11495,
-    "Cost": 44,
+    "Coins": 3724559,
+    "Cost": 173,
     "intExample": 5,
     "strExample": "Hello!",
     "boolExample": [
@@ -43,5 +83,5 @@
         false,
         false
     ],
-    "idSave": 3
+    "idSave": 121
 }

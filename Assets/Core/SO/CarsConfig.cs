@@ -32,7 +32,6 @@ public class CarsConfig : ScriptableObject
     [ContextMenu("Configurate")]
     public void Configurate()
     {
-        Debug.Log("Configuring Cars");
         foreach (var taxiBase in Cars)
         {
             taxiBase.Configurate(this);

@@ -24,6 +24,8 @@ namespace PoolSystem.Alternative
             Pool = new PoolMono<PoolObject>(_poolObject, _poolCount, _container);
             Pool.AutoExpand = _autoExpand;
         }
+        
+        public T GetFromPool<T>() where T : PoolObject => (T)Pool.GetFreeElement();
 
         public T GetFromPool<T>(Vector3 position) where T : PoolObject
         {

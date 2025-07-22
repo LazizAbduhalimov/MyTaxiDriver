@@ -1,0 +1,16 @@
+{
+    "name": "UIBoostWithTime",
+    "rootNamespace": "",
+    "references": [
+        "GUID:a11871ad145387643bca28cd090202af"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

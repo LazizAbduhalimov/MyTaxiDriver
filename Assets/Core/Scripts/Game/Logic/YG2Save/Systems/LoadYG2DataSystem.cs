@@ -18,7 +18,6 @@ namespace YG.Systems
             LoadCellsData();
             LoadCoins();
             LoadCost();
-            Debug.Log("Loaded!");
         }
 
         private void LoadCost()
@@ -39,7 +38,7 @@ namespace YG.Systems
                     car.Drive();
                     cell.IsOccupied = true;
                     _cActive.Value.Add(car.PackedEntity.FastUnpack());
-                    Debug.Log("Cell loaded!");
+                    // Debug.Log("Cell loaded!");
                 }
             }
         }

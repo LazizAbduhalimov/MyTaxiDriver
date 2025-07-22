@@ -1,6 +1,7 @@
 using Leopotam.EcsLite;
 using UnityEngine;
 using AB_Utility.FromSceneToEntityConverter;
+using Core.UI;
 using Game;
 using Game.Game;
 using Game.Game.Test;
@@ -91,7 +92,8 @@ namespace Game {
                 
                 .Add(new CoinPopupSystem())
                 .Add(new CoinDisplaySystem())
-
+                .Add(new DisplayBoostsSystem())
+                
                 #region Bridges
                 
                 .Add(new SoundBridgeSystem())
@@ -100,6 +102,7 @@ namespace Game {
                 
                 #endregion
                 
+                .Add(new ShowBannerSystem())
                 .Add(new HighlightPlaceSystem())
                 .Add(new SoundSystem())
                 .Add(new MusicSystem())
@@ -116,6 +119,9 @@ namespace Game {
                 .DelHere<ECarOccured>("events")
                 .DelHere<EBoostSpeed>("events")
                 .DelHere<EBankValueChanged>("events")
+                
+                .DelHere<EDoubledCoinsBonus>("events")
+                .DelHere<EBoostAllCarsBonus>("events")
                 .AddUIEventsDestroyers()
                 ;
         }
@@ -130,8 +136,6 @@ namespace Game {
 
             _world?.Destroy ();
             _world = null;
-            
-            Debug.Log("Destroy");
         }
 
         private void AddEditorSystems() 

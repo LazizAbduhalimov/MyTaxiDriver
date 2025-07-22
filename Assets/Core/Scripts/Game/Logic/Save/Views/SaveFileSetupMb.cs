@@ -32,7 +32,7 @@ namespace Game.Saving
             SaveCoins(saveFile);
             SaveCost(saveFile);
             saveFile.Save();
-            Debug.Log("Игра сохранена!");
+            // Debug.Log("Игра сохранена!");
         }
         
         private void SaveCost(SaveFile saveFile)

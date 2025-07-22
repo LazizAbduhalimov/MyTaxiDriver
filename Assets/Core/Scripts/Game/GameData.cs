@@ -9,6 +9,7 @@ namespace Game
         public static GameData Instance { get; private set; }
         public int VehicleDefaultCost { get; private set; } = 5;
         public int PurchaseNumber { get; set; } = 1;
+        public BonusesData BonusesData { get; private set; }
         
         public Map Map;
         public PoolService PoolService;
@@ -19,6 +20,7 @@ namespace Game
         {
             Instance = this;
             Map = new Map();
+            BonusesData = new BonusesData();
             AllPools = Object.FindObjectOfType<AllPools>();
             PoolService = new PoolService("Pools");
             Postponer = new Postponer(CommonUtilities.EventsWorld);
@@ -36,5 +38,11 @@ namespace Game
         {
             return gameData.PurchaseNumber / 63;
         } 
+    }
+
+    public class BonusesData
+    {
+        public float SpeedBoostDuration => 12.5f;
+        public float DoubledCoinsDuration => 17.5f;
     }
 }

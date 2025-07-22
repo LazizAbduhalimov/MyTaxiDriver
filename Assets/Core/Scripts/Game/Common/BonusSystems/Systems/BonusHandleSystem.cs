@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Assets.SimpleLocalization.Scripts;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using PrimeTween;
@@ -20,10 +21,10 @@ namespace Game
         
         private readonly Dictionary<Type, string> _bonusInfos = new()
         {
-            { typeof(EBonusCar), "New Car!"},
-            { typeof(EBonusCoins), "You Got Coins!"},
-            { typeof(EDoubledCoinsBonus), "2X Coins!"},
-            { typeof(EBoostAllCarsBonus), "All Cars Boosted!"},
+            { typeof(EBonusCar), "UI.NewCar"},
+            { typeof(EBonusCoins), "UI.Coins"},
+            { typeof(EDoubledCoinsBonus), "UI.2XCoins"},
+            { typeof(EBoostAllCarsBonus), "UI.Boost"},
         };
 
         private Tween? _tween;
@@ -37,11 +38,13 @@ namespace Game
                 {
                     case 1:
                         _eBonusCar.NewEntity(out _);
-                        ShowBonusInfo(typeof(EBonusCar));
+                        // ShowBonusInfo(typeof(EBonusCar));
+                        ShowBonusInfo(typeof(EBoostAllCarsBonus));
                         break;
                     case 2:
                         _eBonusCoins.NewEntity(out _);
-                        ShowBonusInfo(typeof(EBonusCoins));
+                        // ShowBonusInfo(typeof(EBonusCoins));
+                        ShowBonusInfo(typeof(EDoubledCoinsBonus));
                         break;
                     case 3:
                         _eDoubledCoinsBonus.NewEntity(out _);
@@ -53,15 +56,13 @@ namespace Game
                         break;
                 }
                 
-                Debug.Log($"Bonus {r}");
                 _eGiveRandomBonusFilter.Pools.Inc1.Del(entity);
             }
         }
         
         private void ShowBonusInfo(Type type)
         {
-            Debug.Log("Show");
-            var bonusText = $"<b>{_bonusInfos[type]}<b>\n<i><size=60>bonus</size></i>";
+            var bonusText = GetBonusText(type);
             foreach (var entity in _cInterfaceFilter.Value)
             {
                 var text = _cInterfaceFilter.Pools.Inc1.Get(entity).BonusText;
@@ -77,6 +78,14 @@ namespace Game
                             text.rectTransform.localPosition = rectInitial;
                         });
             }
+        }
+
+        private string GetBonusText(Type bonusType)
+        {
+            var bonusText = LocalizationManager.Localize(_bonusInfos[bonusType]);
+            var bonus = LocalizationManager.Localize("UI.Bonus");
+            var text = $"<b>{bonusText}<b>\n<i><size=60>{bonus}</size></i>";
+            return text;
         }
     }
 }

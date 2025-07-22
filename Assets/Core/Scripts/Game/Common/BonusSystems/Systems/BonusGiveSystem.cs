@@ -16,12 +16,10 @@ namespace Game
         private EcsPoolInject<EGiveRandomBonus> _eGiveRandomBonus = "events";
 
         private Tween? _tween;
-        private TimerBeforeAdsYG timerBeforeAds;
         
         public void Init(IEcsSystems systems)
         {
             _tween = HideRewardButtonForSeconds(1);
-            timerBeforeAds = Object.FindObjectOfType<TimerBeforeAdsYG>();
         }
         
         public void Run(IEcsSystems systems)
@@ -32,7 +30,7 @@ namespace Game
                 {
                     _eGiveRandomBonus.NewEntity(out _);
                     _tween?.Stop();
-                    _tween = HideRewardButtonForSeconds(15); 
+                    _tween = HideRewardButtonForSeconds(5); 
                 });
             }
         }

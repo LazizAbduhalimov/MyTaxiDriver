@@ -25,7 +25,7 @@ namespace Game.Game.Test
             ref var dragObject = ref _cDragObject.Value.Get(unpacked);
             dragObject.LastDragInitialPoint = dragObject.DragAndDropMb.transform.position;
             _cDragging.Value.TryAdd(unpacked, out _);
-            Debug.Log($"Start dragging {dragObject.DragAndDropMb.name}");
+            // Debug.Log($"Start dragging {dragObject.DragAndDropMb.name}");
         }
         
         private void UnmarkDragging(int entity)
@@ -34,7 +34,7 @@ namespace Game.Game.Test
             var unpacked = dragData.PackedEntity.FastUnpack();
             ref var dragObject = ref _cDragObject.Value.Get(unpacked);
             _cDragging.Value.Del(unpacked);
-            Debug.Log($"End dragging {dragObject.DragAndDropMb.name}");
+            // Debug.Log($"End dragging {dragObject.DragAndDropMb.name}");
         }
     }
 }

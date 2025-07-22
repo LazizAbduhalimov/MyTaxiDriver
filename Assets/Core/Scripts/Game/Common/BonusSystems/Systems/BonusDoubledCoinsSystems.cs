@@ -15,13 +15,14 @@ namespace Game
         
         private EcsFilterInject<Inc<CDoubledCoinsBonus>> _cDoubledCoinsBonusFilter;
         private EcsPoolInject<CDoubledCoinsBonus> _cDoubledCoinsBonus;
+        private float Duration => GameData.Instance.BonusesData.DoubledCoinsDuration;
         
         public void Run(IEcsSystems systems)
         {
             foreach (var eventEntity in _eDoubledCoinsBonusFilter.Value)
             {
-                _cDoubledCoinsBonus.NewEntity(out _).Invoke(17.5f);
-                _eDoubledCoinsBonusFilter.Pools.Inc1.Del(eventEntity);
+                Debug.Log("Doubler");
+                _cDoubledCoinsBonus.NewEntity(out _).Invoke(Duration);
             }
             
             foreach (var entity in _cDoubledCoinsBonusFilter.Value)

@@ -11,21 +11,18 @@ namespace Game
 
         private EcsFilterInject<Inc<EBoostAllCarsBonus>> _eBoostAllCarsBonus = "events";
         private EcsPoolInject<EBoostSpeed> _eBoostSpeed = "events";
-        
-        private const float StartDuration = 12.5f;
+        private float Duration => GameData.Instance.BonusesData.SpeedBoostDuration; 
         
         public void Run(IEcsSystems systems)
         {
             foreach (var eventEntity in _eBoostAllCarsBonus.Value)
             {
-                Debug.Log("Boosting");
+                Debug.Log("Booster");
                 foreach (var entity in _activeTaxies.Value)
                 {
                     ref var boost = ref _cSpeedBooster.Value.Get(entity);
-                    var duration = StartDuration; 
-                    _eBoostSpeed.NewEntity(out _).Invoke(boost.SpeedBoosterMb, duration);
+                    _eBoostSpeed.NewEntity(out _).Invoke(boost.SpeedBoosterMb, Duration);
                 }
-                _eBoostAllCarsBonus.Pools.Inc1.Del(eventEntity);
             }
         }
     }
