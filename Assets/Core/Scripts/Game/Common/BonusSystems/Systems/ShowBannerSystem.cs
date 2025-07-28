@@ -9,7 +9,7 @@ namespace Game
 {
     public class ShowBannerSystem : IEcsInitSystem, IEcsRunSystem
     {
-        private EcsFilterInject<Inc<EMerged>> _eMergeFilter = "events";
+        private EcsFilterInject<Inc<EStartMerge>> _eStartMergeFilter = "events";
         private EcsFilterInject<Inc<ERewardVideoClicked>> _eRewardVideoClickedFilter;
         
         private bool _showAdv;
@@ -30,10 +30,10 @@ namespace Game
                 RestartAdvInterval(_advIntervar);
             }
             
-            foreach (var entity in _eMergeFilter.Value)
+            foreach (var entity in _eStartMergeFilter.Value)
             {
                 if (!_showAdv) return;
-                YG2.InterstitialAdvShow();
+                Tween.Delay(0.1f, YG2.InterstitialAdvShow);
                 _showAdv = false;
                 RestartAdvInterval(_advIntervar);
             }

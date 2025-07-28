@@ -22,6 +22,7 @@ namespace Game
         private EcsPoolInject<CActive> _cActive;
         private EcsPoolInject<CTaxi> _cTaxi;
         private EcsPoolInject<EMerged> _eMerged = "events";
+        private EcsPoolInject<EStartMerge> _eStartMerge = "events";
 
         private const float XOffset = 2f;
         private const float Duration = 0.5f;
@@ -88,6 +89,7 @@ namespace Game
             dragTransform.position = mergeTransform.position;
             dragged.GetDragAndDropMb().SetEnabled(false);
             merging.GetDragAndDropMb().SetEnabled(false);
+            _eStartMerge.NewEntity(out _).Invoke(dragged, merging);
             Sequence.Create(2, CycleMode.Yoyo, Ease.OutSine)
                 .Group(Tween.PositionX(dragTransform, dragTransform.position.x + XOffset, HalfDuration))
                 .Group(Tween.PositionX(mergeTransform, mergeTransform.position.x - XOffset, HalfDuration))

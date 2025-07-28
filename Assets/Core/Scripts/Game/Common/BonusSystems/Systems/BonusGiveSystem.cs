@@ -30,7 +30,7 @@ namespace Game
                 {
                     _eGiveRandomBonus.NewEntity(out _);
                     _tween?.Stop();
-                    _tween = HideRewardButtonForSeconds(5); 
+                    _tween = HideRewardButtonForSeconds(15); 
                 });
             }
         }
