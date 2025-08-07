@@ -83,7 +83,6 @@ namespace Game
         
         private void MergeAnimation(TaxiMb dragged, TaxiMb merging)
         {
-            Debug.Log($"Upgrade! from level {dragged.Level} to {dragged.Level+1}");
             var dragTransform = dragged.transform;
             var mergeTransform = merging.transform;
             dragTransform.position = mergeTransform.position;
