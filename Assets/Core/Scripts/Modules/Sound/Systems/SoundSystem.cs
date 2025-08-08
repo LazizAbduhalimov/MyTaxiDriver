@@ -16,7 +16,7 @@ namespace LSound
         public void Init(IEcsSystems systems)
         {
             var sound = Object.FindObjectOfType<SoundRefs>();
-            _audioSourcePool = _poolService.Value.GetOrRegisterPool(sound.SoundSourceObject, 10);
+            _audioSourcePool = _poolService.Value.GetOrRegisterPool(sound.SoundSourceObject, 1);
         }
 
         public void Run(IEcsSystems systems)

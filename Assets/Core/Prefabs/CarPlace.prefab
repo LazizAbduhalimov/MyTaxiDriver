@@ -153,6 +153,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Mesh: {fileID: 7057876189096726491}
   HighlightColor: {r: 0.4188679, g: 0.4188679, b: 0.4188679, a: 0}
+  DefaultMaterial: {fileID: 2100000, guid: 50f1a7f22655d64458f1bb971dcbce89, type: 2}
+  HighlightMaterial: {fileID: 2100000, guid: ee36cf4fbe5f0054c8e05d6818d41f97, type: 2}
 --- !u!114 &-8797088991947771725
 MonoBehaviour:
   m_ObjectHideFlags: 0

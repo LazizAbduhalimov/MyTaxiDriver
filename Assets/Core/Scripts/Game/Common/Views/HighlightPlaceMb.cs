@@ -4,20 +4,17 @@ public class HighlightPlaceMb : MonoBehaviour
 {
     public MeshRenderer Mesh;
     public Color HighlightColor;
-    private Color _defaultColor;
-
-    private void Awake()
-    {
-        _defaultColor = Mesh.material.color;
-    }
+    
+    public Material DefaultMaterial;
+    public Material HighlightMaterial;
 
     public void Highlight()
     {
-        Mesh.material.color = HighlightColor;
+        Mesh.material = HighlightMaterial;
     }
     
     public void DisableHighlight()
     {
-        Mesh.material.color = _defaultColor;
+        Mesh.material = DefaultMaterial;
     }
 }
