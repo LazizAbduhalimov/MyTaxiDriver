@@ -55,7 +55,6 @@ namespace Game.Game
             Follower.transform.localRotation = Quaternion.identity;
             Follower.GetComponent<BoxCollider>().enabled = true;
             TransparentGfx.gameObject.SetActive(true);
-            SoundManager.Instance.PlayFX(AllSfxSounds.ToPark, transform.position);
         }
     }
 }

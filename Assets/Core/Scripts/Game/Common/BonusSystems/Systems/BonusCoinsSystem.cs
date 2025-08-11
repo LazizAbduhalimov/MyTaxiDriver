@@ -10,7 +10,7 @@ namespace Game
         private EcsFilterInject<Inc<EBonusCoins>> _eBonusCoinsSystem = "events";
         private EcsPoolInject<EDisplayFloatingCoin> _eDisplayCoins = "events";
         
-        private Vector2Int _bonusScaler = new (2, 5);
+        private Vector2Int _bonusScaler = new (3, 6);
         
         public void Run(IEcsSystems systems)
         {

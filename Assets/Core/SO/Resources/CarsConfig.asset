@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58b23de9519169b40bebc8e54aace06d, type: 3}
   m_Name: CarsConfig
   m_EditorClassIdentifier: 
-  SpeedBoundries: {x: 10, y: 150}
+  SpeedBoundries: {x: 10, y: 200}
   Speed:
     serializedVersion: 2
     m_Curve:
@@ -37,7 +37,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  ProfitBoundries: {x: 20, y: 6000}
+  ProfitBoundries: {x: 20, y: 10000}
   Profit:
     serializedVersion: 2
     m_Curve:
@@ -102,7 +102,10 @@ MonoBehaviour:
   - {fileID: 7544445395660354709, guid: 74c7bef68aba82a4bb333b91bbea8a90, type: 3}
   - {fileID: 3303539293448171345, guid: ebac1a6713c32944db76ad43416d34a4, type: 3}
   - {fileID: 3303539293448171345, guid: 42d23ed424489a34d8257b172501e552, type: 3}
+  - {fileID: 987153218657774504, guid: 1e3aacd19dad1d44884b4f14d2a3686b, type: 3}
+  - {fileID: 3311152088286211847, guid: 6b30d4960d8ab6e4c8594dd9601e04d2, type: 3}
   - {fileID: 3303539293448171345, guid: 44c73edbd2f403f42b9e1be6cb899681, type: 3}
   - {fileID: 3303539293448171345, guid: 2e644b3c0a5fc4a4b9143cdf6522254d, type: 3}
   - {fileID: 3303539293448171345, guid: 697da56d1a53fec42b4e575676455c2d, type: 3}
+  - {fileID: 1893210017125638129, guid: 52c55b53d0cadec47902407c1a6e8375, type: 3}
   - {fileID: 3303539293448171345, guid: fe8b52bf5a389ab42bf707b3133263f3, type: 3}

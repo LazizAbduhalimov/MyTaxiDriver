@@ -19,13 +19,13 @@ public class CarsConfig : ScriptableObject
 
     public float GetSpeed(int level)
     {
-        var t = Speed.Evaluate((level-1) / 8f);
+        var t = Speed.Evaluate((level-1) / (float)(Cars.Length-1));
         return Mathf.Lerp(SpeedBoundries.x, SpeedBoundries.y, t);
     }
     
     public float GetProfit(int level)
     {
-        var t = Profit.Evaluate((level-1) / 8f);
+        var t = Profit.Evaluate((level-1) / (float)(Cars.Length-1));
         return Mathf.Lerp(ProfitBoundries.x, ProfitBoundries.y, t);
     }
 

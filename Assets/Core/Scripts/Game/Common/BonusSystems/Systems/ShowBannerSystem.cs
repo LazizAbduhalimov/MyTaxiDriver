@@ -13,7 +13,7 @@ namespace Game
         private EcsFilterInject<Inc<ERewardVideoClicked>> _eRewardVideoClickedFilter;
         
         private bool _showAdv;
-        private const float _advIntervar = 45f;
+        private const float _advIntervar = 30f;
         private Tween _tween;
         
         public void Init(IEcsSystems systems)
