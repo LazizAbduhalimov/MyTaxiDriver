@@ -24,9 +24,11 @@ namespace Game
                 Debug.Log("Doubler");
                 _cDoubledCoinsBonus.NewEntity(out _).Invoke(Duration);
             }
-            
+
+            var offset = 0f; 
             foreach (var entity in _cDoubledCoinsBonusFilter.Value)
             {
+                offset += 1.5f;
                 ref var doubledCoinsBonus = ref _cDoubledCoinsBonusFilter.Pools.Inc1.Get(entity);
                 foreach (var eventEntity in _eEarnMoneyFilter.Value)
                 {
@@ -35,7 +37,7 @@ namespace Game
                     var value = collector.TaxiMb.MoneyForCircle; 
                     Earn(value);
                     _eDisplayCoin.NewEntity(out _).Invoke(
-                        collector.transform.position.AddY(2f).AddZ(2f), value);
+                        collector.transform.position.AddY(offset).AddZ(offset), value);
                 }
                 
                 doubledCoinsBonus.PassedTime += Time.deltaTime;

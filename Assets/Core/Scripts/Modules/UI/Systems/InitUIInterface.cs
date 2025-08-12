@@ -17,6 +17,9 @@ namespace UI
             cInterface.RewardVideoButton = ui.RewardVideoButton;
             cInterface.BonusText = ui.BonusText;
             cInterface.RewardVideoButtonInner = ui.RewardVideoButtonInner;
+            cInterface.TwoBonusesButton = ui.TwoBonusesButton;
+            cInterface.TwoBonusesButtonParent = ui.TwoBonusesButtonParent;
+            cInterface.TwoBonusesButtonInnerParent = ui.TwoBonusesButtonInnerParent;
         }
     }
 }

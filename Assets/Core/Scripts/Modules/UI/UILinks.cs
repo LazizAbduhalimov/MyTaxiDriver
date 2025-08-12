@@ -11,5 +11,9 @@ namespace UI
         public Button BuyVehicleButton;
         public Button RewardVideoButton;
         public Button RewardVideoButtonInner;
+        
+        public Button TwoBonusesButton;
+        public Transform TwoBonusesButtonParent;
+        public Transform TwoBonusesButtonInnerParent;
     }
 }

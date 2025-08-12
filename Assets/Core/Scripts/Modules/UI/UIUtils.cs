@@ -38,6 +38,7 @@ namespace UI
             return systems
                     .DelHere<EBuyVehicleClicked>()
                     .DelHere<ERewardVideoClicked>()
+                    .DelHere<ETwoBonusesVideoClicked>()
                 ;
         }
     }

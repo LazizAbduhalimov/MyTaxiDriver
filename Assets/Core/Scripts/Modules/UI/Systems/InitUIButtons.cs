@@ -11,6 +11,7 @@ namespace UI
 
         private EcsPoolInject<CBuyVehicle> _cBuyVehicle;
         private EcsPoolInject<CRewardVideoButton> _cWatchVideo;
+        private EcsPoolInject<CTwoBonusesVideo> _cTwoBonusesVideo;
         
         public void Init(IEcsSystems systems)
         {
@@ -22,6 +23,8 @@ namespace UI
                 
                 UIUtils.InitButton(ui.RewardVideoButton, _cWatchVideo.Value);
                 UIUtils.InitButton(ui.RewardVideoButtonInner, _cWatchVideo.Value);
+                ref var button = ref UIUtils.InitButton(ui.TwoBonusesButton, _cTwoBonusesVideo.Value);
+                button.Parent = ui.TwoBonusesButtonParent;
             }
         }
     }

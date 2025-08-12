@@ -2,19 +2,19 @@
     "CellsData": [
         {
             "Position": {
-                "x": 0.0,
+                "x": 7.0,
                 "y": 0.0,
                 "z": -9.0
             },
-            "TaxiLevel": 4
+            "TaxiLevel": 2
         },
         {
             "Position": {
-                "x": 0.0,
+                "x": 7.0,
                 "y": 0.0,
                 "z": 0.0
             },
-            "TaxiLevel": 5
+            "TaxiLevel": 6
         },
         {
             "Position": {
@@ -22,11 +22,27 @@
                 "y": 0.0,
                 "z": 9.0
             },
+            "TaxiLevel": 9
+        },
+        {
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 9.0
+            },
             "TaxiLevel": 7
+        },
+        {
+            "Position": {
+                "x": 7.0,
+                "y": 0.0,
+                "z": 9.0
+            },
+            "TaxiLevel": 8
         }
     ],
-    "Coins": 19680,
-    "Cost": 77,
+    "Coins": 6811008,
+    "Cost": 164,
     "intExample": 5,
     "strExample": "Hello!",
     "boolExample": [
@@ -35,5 +51,5 @@
         false,
         false
     ],
-    "idSave": 3
+    "idSave": 84
 }

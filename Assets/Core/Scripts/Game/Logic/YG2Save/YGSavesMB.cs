@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Core.Data;
 using Game;
@@ -9,6 +10,16 @@ namespace YG
 {
     public class YGSavesMB : MonoBehaviour
     {
+        private void OnEnable()
+        {
+            YG2.onHideWindowGame += SaveGame;
+        }
+
+        private void OnDisable()
+        {
+            YG2.onHideWindowGame -= SaveGame;
+        }
+
         private void OnApplicationQuit()
         {
             SaveGame();

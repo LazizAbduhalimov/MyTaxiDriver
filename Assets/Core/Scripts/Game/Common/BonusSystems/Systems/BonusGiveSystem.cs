@@ -1,25 +1,29 @@
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using PrimeTween;
+using UI;
 using UI.Buttons;
 using UnityEngine;
 using YG;
-using YG.Insides;
 
 namespace Game
 {
     public class BonusGiveSystem : IEcsInitSystem, IEcsRunSystem
     {
+        private EcsFilterInject<Inc<CInterface>> _cInterfaceFilter;
         private EcsFilterInject<Inc<ERewardVideoClicked>> _eRewardVideoClickedFilter;
+        private EcsFilterInject<Inc<ETwoBonusesVideoClicked>> _eTwoBonusesVideoClicked;
         private EcsFilterInject<Inc<CRewardVideoButton>> _cRewardVideoButtonFilter;
         
         private EcsPoolInject<EGiveRandomBonus> _eGiveRandomBonus = "events";
+        private EcsPoolInject<EBoostAllCarsBonus> _eBoostAllCarsBonus = "events";
+        private EcsPoolInject<EDoubledCoinsBonus> _eDoubledCoinsBonus = "events";
 
-        private Tween? _tween;
+        private Sequence? _sequence;
         
         public void Init(IEcsSystems systems)
         {
-            _tween = HideRewardButtonForSeconds(1);
+            RestartRewardTween(1);
         }
         
         public void Run(IEcsSystems systems)
@@ -29,9 +33,39 @@ namespace Game
                 YG2.RewardedAdvShow("Random", () =>
                 {
                     _eGiveRandomBonus.NewEntity(out _);
-                    _tween?.Stop();
-                    _tween = HideRewardButtonForSeconds(15); 
+                    RestartRewardTween(15);
                 });
+            }
+
+            foreach (var entity in _eTwoBonusesVideoClicked.Value)
+            {
+                YG2.RewardedAdvShow("Random", () =>
+                {
+                    _eBoostAllCarsBonus.NewEntity(out _);
+                    _eDoubledCoinsBonus.NewEntity(out _);
+                    RestartRewardTween(15);
+                });
+            }
+        }
+
+        private void RestartRewardTween(float hideSeconds)
+        {
+            _sequence?.Stop();
+            _sequence = Sequence.Create()
+                    .Chain(HideRewardButtonForSeconds(hideSeconds)
+                    .Chain(Tween.Delay(duration: 20f, ShowTwoBonuses)))
+                    ;
+        }
+
+        private void ShowTwoBonuses()
+        {
+            foreach (var entity in _cInterfaceFilter.Value)
+            {
+                ref var ui  = ref _cInterfaceFilter.Pools.Inc1.Get(entity);
+                ui.TwoBonusesButtonParent.gameObject.SetActive(true);
+                var parent = ui.TwoBonusesButtonInnerParent;
+                parent.localScale = Vector3.zero;
+                Tween.Scale(parent, 1, .25f, Ease.InSine);
             }
         }
 
